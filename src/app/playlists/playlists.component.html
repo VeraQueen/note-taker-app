@@ -3,7 +3,7 @@
   *ngFor="let playlist of playlists"
 >
   <div
-    class="playlist aspect-video flex flex-col justify-evenly text-center rounded-md"
+    class="playlist aspect-video flex flex-col justify-evenly text-center rounded-md shadow-md"
     [ngStyle]="{
       backgroundImage:
         'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url(&quot;' +
@@ -13,7 +13,9 @@
       backgroundSize: 'cover'
     }"
   >
-    <p class="text-2xl px-2">{{ playlist.name }}</p>
+    <p class="text-xl line-clamp-2 xl:line-clamp-none px-2">
+      {{ playlist.name }}
+    </p>
     <div class="flex flex-col gap-1">
       <p class="text-md">{{ playlist.author }}</p>
       <p class="text-xs">{{ playlist.numOfVideos }} videos</p>
