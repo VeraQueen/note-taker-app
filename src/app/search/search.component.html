@@ -1,1 +1,5 @@
-<p>search works!</p>
+<form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+  <input type="text" id="searchInput" formControlName="searchInput" />
+  <label for="searchInput">Search for a playlist:</label>
+  <button type="submit">Search</button>
+</form>
