@@ -21,23 +21,23 @@
     </div>
   </form>
 
-  <div class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4">
+  <div
+    class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4"
+    *ngFor="let playlist of response.items"
+  >
     <div class="p-2 bg-slate-50 bg-opacity-40 rounded-md shadow-sm">
-      <img
-        class="aspect-video rounded-md"
-        src="https://www.mobilelive.ca/wp-content/uploads/2022/08/Angular_Banner.jpg"
-      />
+      <img class="rounded-md" [src]="playlist.snippet.thumbnails.high.url" />
       <p class="text-gray-900 font-semibold">
-        implementing angular core features in template-driven forms
+        {{ playlist.snippet.title }}
       </p>
       <div class="flex justify-between mt-3">
-        <div class="">
-          <p class="text-gray-900 text-sm font-semibold">Fireship</p>
-          <p class="text-gray-900 text-xs">5 videos</p>
-        </div>
+        <p class="text-gray-900 text-sm font-semibold self-center">
+          {{ playlist.snippet.channelTitle }}
+        </p>
+
         <button
           type="button"
-          class="h-max px-4 py-1 rounded-md self-end text-slate-50 font-semibold bg-red-600 hover:bg-red-700 hover:text-white"
+          class="h-max px-4 py-1 rounded-md self-center text-slate-50 font-semibold bg-red-600 hover:bg-red-700 hover:text-white"
         >
           Add
         </button>
