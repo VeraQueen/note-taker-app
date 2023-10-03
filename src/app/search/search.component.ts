@@ -26,7 +26,8 @@ export class SearchComponent implements OnInit {
     const urlParams = new HttpParams()
       .set('part', 'snippet')
       .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
-      .set('q', this.searchForm.get('searchInput').value);
+      .set('q', this.searchForm.get('searchInput').value)
+      .set('type', 'playlist');
 
     const options = { params: urlParams };
 

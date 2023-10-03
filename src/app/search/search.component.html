@@ -21,11 +21,11 @@
     </div>
   </form>
 
-  <div
-    class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4"
-    *ngFor="let playlist of response.items"
-  >
-    <div class="p-2 bg-slate-50 bg-opacity-40 rounded-md shadow-sm">
+  <div class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4">
+    <div
+      class="p-2 bg-slate-50 bg-opacity-40 rounded-md shadow-sm"
+      *ngFor="let playlist of response.items"
+    >
       <img class="rounded-md" [src]="playlist.snippet.thumbnails.high.url" />
       <p class="text-gray-900 font-semibold">
         {{ playlist.snippet.title }}
