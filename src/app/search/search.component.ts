@@ -37,9 +37,9 @@ export class SearchComponent implements OnInit {
     const options = { params: urlParams };
 
     this.http.get(url, options).subscribe((data) => {
+      console.log(data);
       this.playlists = data;
       this.isLoading = false;
-      console.log(this.playlists);
     });
   }
 

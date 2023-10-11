@@ -9,23 +9,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
   styleUrls: ['./playlists.component.css'],
 })
 export class PlaylistsComponent implements OnInit {
-  playlistIds = [];
-  playlists: Playlist[] = [
-    {
-      name: 'Angular and its many perks and love at first sight and all the other stuff',
-      author: 'Fireship',
-      numOfVideos: 5,
-      imgPath:
-        'https://www.mobilelive.ca/wp-content/uploads/2022/08/Angular_Banner.jpg',
-    },
-    {
-      name: 'Automate YouTube Video Production with Ruby on Rails using the YouTube API',
-      author: 'fireship',
-      numOfVideos: 5,
-      imgPath:
-        'https://miro.medium.com/v2/resize:fit:1400/1*_6ooq0R60ba3UT5c-QVemA.png',
-    },
-  ];
+  playlists: Playlist[];
 
   constructor(
     private playlistService: PlaylistService,
@@ -33,25 +17,33 @@ export class PlaylistsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.playlists = this.playlistService.getPlaylists();
     this.playlistService.playlistIdEmitter.subscribe((playlistIdString) => {
-      this.playlistIds.push(playlistIdString);
-      this.getPlaylist();
+      this.getPlaylist(playlistIdString);
     });
   }
 
-  private getPlaylist() {
-    for (const [i, el] of this.playlistIds.entries()) {
-      const url = 'https://www.googleapis.com/youtube/v3/playlists';
-      const urlParams = new HttpParams()
-        .set('part', 'snippet, contentDetails')
-        .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
-        .set('id', el);
+  private getPlaylist(id: string) {
+    const url = 'https://www.googleapis.com/youtube/v3/playlists';
+    const urlParams = new HttpParams()
+      .set('part', 'snippet, contentDetails')
+      .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
+      .set('id', id);
 
-      const options = { params: urlParams };
+    const options = { params: urlParams };
 
-      this.http.get(url, options).subscribe((data) => {
-        console.log(data);
-      });
-    }
+    this.http.get(url, options).subscribe((data) => {
+      const plName = data['items'][0].snippet.localized.title;
+      const plAuthor = data['items'][0].snippet.channelTitle;
+      const plNumVideos = data['items'][0].contentDetails.itemCount;
+      const plImgPath = data['items'][0].snippet.thumbnails.default.url;
+      const newPlaylist = new Playlist(
+        plName,
+        plAuthor,
+        plNumVideos,
+        plImgPath
+      );
+      this.playlistService.addPlaylist(newPlaylist);
+    });
   }
 }
