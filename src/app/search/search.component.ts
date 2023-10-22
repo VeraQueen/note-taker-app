@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs/internal/Subscription';
+
 import { PlaylistService } from '../playlist.service';
 
 @Component({
@@ -8,7 +10,8 @@ import { PlaylistService } from '../playlist.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css'],
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
+  httpGetSub: Subscription;
   searchForm: FormGroup;
   isLoading = false;
   playlists: any = {};
@@ -36,17 +39,25 @@ export class SearchComponent implements OnInit {
 
     const options = { params: urlParams };
 
-    this.http.get(url, options).subscribe((data) => {
-      console.log(data);
+    this.httpGetSub = this.http.get(url, options).subscribe((data) => {
+      console.log('search:', data);
       this.playlists = data;
       this.isLoading = false;
     });
   }
 
   onAdd(id: number) {
-    console.log('button id', this.playlists.items[id].id.playlistId);
+    console.log(
+      'add button clicked',
+      'id:',
+      this.playlists.items[id].id.playlistId
+    );
     this.playlistService.playlistIdEmitter.next(
       this.playlists.items[id].id.playlistId
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.httpGetSub !== undefined) this.httpGetSub.unsubscribe();
   }
 }

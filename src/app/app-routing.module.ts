@@ -5,6 +5,10 @@ import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {
+    path: '',
+    component: MyPlaylistsComponent,
+  },
+  {
     path: 'playlists',
     component: MyPlaylistsComponent,
   },
