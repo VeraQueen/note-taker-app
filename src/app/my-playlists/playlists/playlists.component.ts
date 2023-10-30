@@ -23,7 +23,6 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log('execution');
     this.playlists = this.playlistService.getPlaylists();
     this.playlistService.playlistAddedEmitter.subscribe((playlists) => {
       this.playlists = playlists;
@@ -33,7 +32,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
         console.log('emitted');
         this.getPlaylist(playlistIdString);
         this.subscription.unsubscribe();
-        this.router.navigate(['/playlists'], { relativeTo: this.activeRoute });
+        this.router.navigate(['/playlists']);
       }
     );
   }
