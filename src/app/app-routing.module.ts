@@ -6,7 +6,8 @@ import { SearchComponent } from './search/search.component';
 const routes: Routes = [
   {
     path: '',
-    component: MyPlaylistsComponent,
+    redirectTo: '/playlists',
+    pathMatch: 'full',
   },
   {
     path: 'playlists',

@@ -7,18 +7,17 @@ import { Playlist } from './my-playlists/playlists/playlist.model';
   providedIn: 'root',
 })
 export class PlaylistService {
-  playlistIdEmitter = new Subject<string>();
-  playlistAddedEmitter = new EventEmitter<Playlist[]>();
+  // playlistAddedEmitter = new EventEmitter<Playlist[]>();
   private playlists: Playlist[] = [];
 
+  constructor() {}
+
   getPlaylists() {
-    console.log(this.playlists.slice());
     return this.playlists.slice();
   }
 
-  addPlaylist(playlist: Playlist) {
-    this.playlists.push(playlist);
-    console.log('added');
-    this.playlistAddedEmitter.emit(this.playlists.slice());
+  addPlaylist(newPlaylist: Playlist) {
+    this.playlists.push(newPlaylist);
+    // this.playlistAddedEmitter.emit(this.playlists.slice());
   }
 }

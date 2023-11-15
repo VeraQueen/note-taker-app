@@ -1,10 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Playlist } from './playlist.model';
 import { PlaylistService } from 'src/app/playlist.service';
-import { Observable, Subscribable, Subscription, take } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-playlists',
@@ -12,55 +10,22 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./playlists.component.css'],
 })
 export class PlaylistsComponent implements OnInit, OnDestroy {
-  playlists: Playlist[];
-  subscription: Subscription;
+  playlists: Playlist[] = [];
+  httpGetSub: Subscription;
+  emitIdSub: Subscription;
+  emitPlaylistsSub: Subscription;
+  componentActive = true;
 
-  constructor(
-    private playlistService: PlaylistService,
-    private http: HttpClient,
-    private router: Router,
-    private activeRoute: ActivatedRoute
-  ) {}
+  constructor(private playlistService: PlaylistService) {}
 
   ngOnInit() {
     this.playlists = this.playlistService.getPlaylists();
-    this.playlistService.playlistAddedEmitter.subscribe((playlists) => {
-      this.playlists = playlists;
-    });
-    this.subscription = this.playlistService.playlistIdEmitter.subscribe(
-      (playlistIdString) => {
-        console.log('emitted');
-        this.getPlaylist(playlistIdString);
-        this.subscription.unsubscribe();
-        this.router.navigate(['/playlists']);
-      }
-    );
+    // this.playlistService.playlistAddedEmitter.subscribe((playlists) => {
+    //   this.playlists = playlists;
+    // });
   }
 
-  private getPlaylist(id: string) {
-    const url = 'https://www.googleapis.com/youtube/v3/playlists';
-    const urlParams = new HttpParams()
-      .set('part', 'snippet, contentDetails')
-      .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
-      .set('id', id);
-
-    const options = { params: urlParams };
-
-    this.http.get(url, options).subscribe((data) => {
-      console.log(data);
-      const plName = data['items'][0].snippet.localized.title;
-      const plAuthor = data['items'][0].snippet.channelTitle;
-      const plNumVideos = data['items'][0].contentDetails.itemCount;
-      const plImgPath = data['items'][0].snippet.thumbnails.high.url;
-      const newPlaylist = new Playlist(
-        plName,
-        plAuthor,
-        plNumVideos,
-        plImgPath
-      );
-      this.playlistService.addPlaylist(newPlaylist);
-    });
+  ngOnDestroy(): void {
+    if (this.emitPlaylistsSub) this.emitPlaylistsSub.unsubscribe();
   }
-
-  ngOnDestroy() {}
 }

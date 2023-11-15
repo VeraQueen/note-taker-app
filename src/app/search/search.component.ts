@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 import { PlaylistService } from '../playlist.service';
+import { HttpService } from '../http.service';
+import { Playlist } from '../my-playlists/playlists/playlist.model';
 
 @Component({
   selector: 'app-search',
@@ -17,7 +18,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   playlists: any = {};
 
   constructor(
-    private http: HttpClient,
+    private httpService: HttpService,
     private playlistService: PlaylistService
   ) {}
 
@@ -29,35 +30,36 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onSearch() {
     this.isLoading = true;
-    const url = 'https://www.googleapis.com/youtube/v3/search';
-    const urlParams = new HttpParams()
-      .set('part', 'snippet')
-      .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
-      .set('q', this.searchForm.get('searchInput').value)
-      .set('type', 'playlist')
-      .set('maxResults', 24);
-
-    const options = { params: urlParams };
-
-    this.httpGetSub = this.http.get(url, options).subscribe((data) => {
-      console.log('search:', data);
-      this.playlists = data;
-      this.isLoading = false;
-    });
+    const searchInputValue = this.searchForm.get('searchInput').value;
+    this.httpGetSub = this.httpService
+      .fetchPlaylists(searchInputValue)
+      .subscribe((playlists) => {
+        this.playlists = playlists;
+        this.isLoading = false;
+      });
   }
 
   onAdd(id: number) {
-    console.log(
-      'add button clicked',
-      'id:',
-      this.playlists.items[id].id.playlistId
-    );
-    this.playlistService.playlistIdEmitter.next(
-      this.playlists.items[id].id.playlistId
-    );
+    const playlistId = this.playlists.items[id].id.playlistId;
+    console.log('add btn clicked', 'id:', playlistId);
+
+    this.httpService.getPlaylist(playlistId).subscribe((data) => {
+      console.log(data);
+      const plName = data['items'][0].snippet.localized.title;
+      const plAuthor = data['items'][0].snippet.channelTitle;
+      const plNumVideos = data['items'][0].contentDetails.itemCount;
+      const plImgPath = data['items'][0].snippet.thumbnails.high.url;
+      const newPlaylist = new Playlist(
+        plName,
+        plAuthor,
+        plNumVideos,
+        plImgPath
+      );
+      this.playlistService.addPlaylist(newPlaylist);
+    });
   }
 
   ngOnDestroy(): void {
-    if (this.httpGetSub !== undefined) this.httpGetSub.unsubscribe();
+    if (this.httpGetSub) this.httpGetSub.unsubscribe();
   }
 }
