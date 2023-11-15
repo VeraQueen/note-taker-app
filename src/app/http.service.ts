@@ -13,7 +13,6 @@ export class HttpService {
       .set('q', searchInputValue)
       .set('type', 'playlist')
       .set('maxResults', 24);
-
     const options = { params: urlParams };
 
     return this.http.get(url, options);
@@ -25,9 +24,9 @@ export class HttpService {
       .set('part', 'snippet, contentDetails')
       .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
       .set('id', playlistId);
-
     const options = { params: urlParams };
-    console.log('called the function');
+
     return this.http.get(url, options);
   }
 }
+// https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&key=AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg&playlistId=PLsHhMRkG9uA4QBcN5u2pFlLWeodG6mWVJ

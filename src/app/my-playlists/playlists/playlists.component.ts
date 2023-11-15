@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Playlist } from './playlist.model';
 import { PlaylistService } from 'src/app/playlist.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-playlists',
@@ -11,10 +10,6 @@ import { Subscription } from 'rxjs';
 })
 export class PlaylistsComponent implements OnInit, OnDestroy {
   playlists: Playlist[] = [];
-  httpGetSub: Subscription;
-  emitIdSub: Subscription;
-  emitPlaylistsSub: Subscription;
-  componentActive = true;
 
   constructor(private playlistService: PlaylistService) {}
 
@@ -25,7 +20,5 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     // });
   }
 
-  ngOnDestroy(): void {
-    if (this.emitPlaylistsSub) this.emitPlaylistsSub.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 }

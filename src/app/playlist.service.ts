@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 
 import { Playlist } from './my-playlists/playlists/playlist.model';
 

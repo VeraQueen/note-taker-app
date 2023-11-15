@@ -12,7 +12,8 @@ import { Playlist } from '../my-playlists/playlists/playlist.model';
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
-  httpGetSub: Subscription;
+  searchPlaylistsSub: Subscription;
+  getAndAddPlaylistSub: Subscription;
   searchForm: FormGroup;
   isLoading = false;
   playlists: any = {};
@@ -31,7 +32,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   onSearch() {
     this.isLoading = true;
     const searchInputValue = this.searchForm.get('searchInput').value;
-    this.httpGetSub = this.httpService
+    this.searchPlaylistsSub = this.httpService
       .fetchPlaylists(searchInputValue)
       .subscribe((playlists) => {
         this.playlists = playlists;
@@ -41,25 +42,28 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onAdd(id: number) {
     const playlistId = this.playlists.items[id].id.playlistId;
-    console.log('add btn clicked', 'id:', playlistId);
+    // console.log('add btn clicked', 'id:', playlistId);
 
-    this.httpService.getPlaylist(playlistId).subscribe((data) => {
-      console.log(data);
-      const plName = data['items'][0].snippet.localized.title;
-      const plAuthor = data['items'][0].snippet.channelTitle;
-      const plNumVideos = data['items'][0].contentDetails.itemCount;
-      const plImgPath = data['items'][0].snippet.thumbnails.high.url;
-      const newPlaylist = new Playlist(
-        plName,
-        plAuthor,
-        plNumVideos,
-        plImgPath
-      );
-      this.playlistService.addPlaylist(newPlaylist);
-    });
+    this.getAndAddPlaylistSub = this.httpService
+      .getPlaylist(playlistId)
+      .subscribe((data) => {
+        console.log(data);
+        const plName = data['items'][0].snippet.localized.title;
+        const plAuthor = data['items'][0].snippet.channelTitle;
+        const plNumVideos = data['items'][0].contentDetails.itemCount;
+        const plImgPath = data['items'][0].snippet.thumbnails.high.url;
+        const newPlaylist = new Playlist(
+          plName,
+          plAuthor,
+          plNumVideos,
+          plImgPath
+        );
+        this.playlistService.addPlaylist(newPlaylist);
+      });
   }
 
   ngOnDestroy(): void {
-    if (this.httpGetSub) this.httpGetSub.unsubscribe();
+    if (this.searchPlaylistsSub) this.searchPlaylistsSub.unsubscribe();
+    if (this.getAndAddPlaylistSub) this.getAndAddPlaylistSub.unsubscribe();
   }
 }
