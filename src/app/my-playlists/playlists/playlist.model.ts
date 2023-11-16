@@ -3,6 +3,7 @@ export class Playlist {
     public name: string,
     public author: string,
     public numOfVideos: number,
-    public imgPath: string
+    public imgPath: string,
+    public id: string
   ) {}
 }

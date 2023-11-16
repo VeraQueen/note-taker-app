@@ -28,5 +28,16 @@ export class HttpService {
 
     return this.http.get(url, options);
   }
+
+  getVideos(playlistId: string) {
+    const url = 'https://www.googleapis.com/youtube/v3/playlistItems';
+    const urlParamns = new HttpParams()
+      .set('part', 'snippet')
+      .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
+      .set('maxResults', 10)
+      .set('playlistId', playlistId);
+    const options = { params: urlParamns };
+
+    return this.http.get(url, options);
+  }
 }
-// https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&key=AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg&playlistId=PLsHhMRkG9uA4QBcN5u2pFlLWeodG6mWVJ

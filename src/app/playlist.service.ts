@@ -8,6 +8,7 @@ import { Playlist } from './my-playlists/playlists/playlist.model';
 export class PlaylistService {
   // playlistAddedEmitter = new EventEmitter<Playlist[]>();
   private playlists: Playlist[] = [];
+  private videos = [];
 
   constructor() {}
 
@@ -18,5 +19,13 @@ export class PlaylistService {
   addPlaylist(newPlaylist: Playlist) {
     this.playlists.push(newPlaylist);
     // this.playlistAddedEmitter.emit(this.playlists.slice());
+  }
+
+  getVideos() {
+    return this.videos.slice();
+  }
+
+  addVideos(videos: {}) {
+    this.videos.push(videos);
   }
 }

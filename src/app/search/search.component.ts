@@ -52,11 +52,13 @@ export class SearchComponent implements OnInit, OnDestroy {
         const plAuthor = data['items'][0].snippet.channelTitle;
         const plNumVideos = data['items'][0].contentDetails.itemCount;
         const plImgPath = data['items'][0].snippet.thumbnails.high.url;
+        const plId = data['items'][0].id;
         const newPlaylist = new Playlist(
           plName,
           plAuthor,
           plNumVideos,
-          plImgPath
+          plImgPath,
+          plId
         );
         this.playlistService.addPlaylist(newPlaylist);
       });
