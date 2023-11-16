@@ -15,8 +15,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   constructor(
     private playlistService: PlaylistService,
-    private httpService: HttpService,
-    private router: Router
+    private httpService: HttpService
   ) {}
 
   ngOnInit() {
@@ -36,7 +35,6 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
       };
       this.playlistService.addVideos(playlistVideos);
     });
-    this.router.navigate(['/playlist']);
   }
 
   ngOnDestroy(): void {}
