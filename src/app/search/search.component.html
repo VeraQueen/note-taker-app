@@ -1,4 +1,4 @@
-<div class="flex flex-col bg-amber-300">
+<div class="flex flex-col">
   <form
     class="w-full max-w-lg self-center p-4"
     [formGroup]="searchForm"
@@ -9,12 +9,12 @@
         type="text"
         placeholder="e.g. Angular"
         aria-label="Playlist name"
-        class="text-center text-gray-900 border-b border-cyan-400 py-2 m-2 focus:outline-none focus:outline-cyan-400 focus:outline-1 rounded-md"
+        class="text-center text-gray-900 border-b border-amber-400 py-2 m-2 focus:outline-none focus:outline-amber-400 focus:outline-1 focus:border-0 rounded-md"
         formControlName="searchInput"
       />
       <button
         type="submit"
-        class="w-1/4 mx-auto flex-auto bg-cyan-400 hover:bg-cyan-500 text-md text-slate-50 font-semibold py-2 rounded-md"
+        class="w-1/4 mx-auto flex-auto bg-amber-300 hover:bg-amber-400 text-md text-slate-50 font-semibold py-2 rounded-md"
       >
         Search
       </button>

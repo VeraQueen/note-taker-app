@@ -1,9 +1,7 @@
-<div
-  class="grid grid-cols-1 grid-rows-1 text-slate-50 mb-2"
-  *ngFor="let playlist of playlists; let i = index"
->
+<div class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4 text-slate-50 m-2">
   <div
     class="aspect-video flex flex-col justify-evenly text-center rounded-md shadow-md"
+    *ngFor="let playlist of playlists; let i = index"
     (click)="onOpen(i)"
     [ngStyle]="{
       backgroundImage:
