@@ -26,6 +26,11 @@ export class PlaylistService {
   }
 
   addVideos(videos: {}) {
+    console.log(videos);
+    if (this.videos.length > 0) {
+      this.videos.splice(-1);
+    }
     this.videos.push(videos);
+    console.log(this.videos);
   }
 }

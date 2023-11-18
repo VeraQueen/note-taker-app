@@ -9,7 +9,6 @@ import { HeaderComponent } from './header/header.component';
 import { PlaylistsComponent } from './my-playlists/playlists/playlists.component';
 import { PlaylistComponent } from './my-playlists/playlist/playlist.component';
 import { NotesComponent } from './my-playlists/notes/notes.component';
-import { MyPlaylistsComponent } from './my-playlists/my-playlists.component';
 import { SearchComponent } from './search/search.component';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { SearchComponent } from './search/search.component';
     PlaylistsComponent,
     PlaylistComponent,
     NotesComponent,
-    MyPlaylistsComponent,
     SearchComponent,
   ],
   imports: [
