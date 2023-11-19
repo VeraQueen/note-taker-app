@@ -1,25 +1,24 @@
-<div
-  class="grid grid-cols-1 grid-rows-1 text-slate-50 mb-2"
-  *ngFor="let video of videos; let i = index"
->
+<div>
+  <button (click)="onBack()">Back to my playlists</button>
+</div>
+
+<div class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4 text-slate-50 m-2">
   <div
     class="aspect-video flex flex-col justify-evenly text-center rounded-md shadow-md"
+    *ngFor="let video of videos[0].videos; let i = index"
     (click)="onOpen(i)"
     [ngStyle]="{
       backgroundImage:
         'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url(&quot;' +
-        playlist.imgPath +
+        video.snippet.thumbnails.standard.url +
         '&quot;)',
       backgroundPosition: 'center',
       backgroundSize: 'cover'
     }"
   >
     <p class="text-xl line-clamp-2 xl:line-clamp-none px-2">
-      {{ playlist.name }}
+      {{ video.snippet.title }}
     </p>
-    <div class="flex flex-col gap-1">
-      <p class="text-md">{{ playlist.author }}</p>
-      <p class="text-xs">{{ playlist.numOfVideos }} videos</p>
-    </div>
+    <p class="text-md">{{ video.snippet.channelTitle }}</p>
   </div>
 </div>

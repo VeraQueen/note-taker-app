@@ -42,7 +42,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onAdd(id: number) {
     const playlistId = this.playlists.items[id].id.playlistId;
-    // console.log('add btn clicked', 'id:', playlistId);
 
     this.getAndAddPlaylistSub = this.httpService
       .getPlaylist(playlistId)

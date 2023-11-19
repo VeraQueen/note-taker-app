@@ -4,6 +4,7 @@ import { Playlist } from './playlist.model';
 import { PlaylistService } from 'src/app/playlist.service';
 import { HttpService } from 'src/app/http.service';
 import { Route, Router } from '@angular/router';
+import { mergeMap, take } from 'rxjs';
 
 @Component({
   selector: 'app-playlists',
@@ -15,7 +16,8 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   constructor(
     private playlistService: PlaylistService,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -29,11 +31,20 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   onOpen(i: number) {
     const playlistId = this.playlists[i].id;
     this.httpService.getVideos(playlistId).subscribe((data) => {
+      const filteredVideos = [];
+      data['items'].forEach((el) => {
+        console.log(el, el.status);
+        if (el.status.privacyStatus === 'public') {
+          filteredVideos.push(el);
+        }
+      });
+
       const playlistVideos = {
         nextPageToken: data['nextPageToken'],
-        videos: data['items'],
+        videos: filteredVideos,
       };
       this.playlistService.addVideos(playlistVideos);
+      this.router.navigate(['/playlist']);
     });
   }
 

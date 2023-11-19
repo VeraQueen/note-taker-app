@@ -32,9 +32,9 @@ export class HttpService {
   getVideos(playlistId: string) {
     const url = 'https://www.googleapis.com/youtube/v3/playlistItems';
     const urlParamns = new HttpParams()
-      .set('part', 'snippet')
+      .set('part', 'snippet, status')
       .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
-      .set('maxResults', 10)
+      .set('maxResults', 12)
       .set('playlistId', playlistId);
     const options = { params: urlParamns };
 
