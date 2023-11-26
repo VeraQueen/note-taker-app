@@ -10,6 +10,13 @@ import { PlaylistsComponent } from './my-playlists/playlists/playlists.component
 import { PlaylistComponent } from './my-playlists/playlist/playlist.component';
 import { NotesComponent } from './my-playlists/notes/notes.component';
 import { SearchComponent } from './search/search.component';
+import { NgIconsModule } from '@ng-icons/core';
+import {
+  heroArrowLeft,
+  heroFolderOpen,
+  heroPlay,
+  heroPlus,
+} from '@ng-icons/heroicons/outline';
 
 @NgModule({
   declarations: [
@@ -25,6 +32,12 @@ import { SearchComponent } from './search/search.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgIconsModule.withIcons({
+      heroPlus,
+      heroFolderOpen,
+      heroPlay,
+      heroArrowLeft,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

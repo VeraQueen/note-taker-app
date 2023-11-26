@@ -1,24 +1,39 @@
-<div>
-  <button (click)="onBack()">Back to my playlists</button>
-</div>
-
-<div class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4 text-slate-50 m-2">
+<div class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4 p-2">
   <div
-    class="aspect-video flex flex-col justify-evenly text-center rounded-md shadow-md"
+    class="flex flex-col items-center"
     *ngFor="let video of videos[0].videos; let i = index"
-    (click)="onOpen(i)"
-    [ngStyle]="{
-      backgroundImage:
-        'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url(&quot;' +
-        video.snippet.thumbnails.standard.url +
-        '&quot;)',
-      backgroundPosition: 'center',
-      backgroundSize: 'cover'
-    }"
   >
-    <p class="text-xl line-clamp-2 xl:line-clamp-none px-2">
-      {{ video.snippet.title }}
-    </p>
-    <p class="text-md">{{ video.snippet.channelTitle }}</p>
+    <img
+      class="aspect-video rounded-md border-gray-700 border border-solid"
+      [src]="video.snippet.thumbnails.medium.url"
+    />
+    <div
+      class="bg-gradient-to-b from-gray-300 to-gray-100 rounded-md mt-1 py-2 flex flex-col gap-1 relative w-11/12"
+    >
+      <p class="text-gray-900 text-lg font-bold leading-tight pl-2 w-5/6">
+        {{ video.snippet.title }}
+      </p>
+      <p class="text-gray-900 text-sm font-semibold pl-2 w-5/6">
+        {{ video.snippet.channelTitle }}
+      </p>
+      <button
+        type="button"
+        class="w-10 h-10 rounded-full flex items-center justify-center bg-red-600 hover:bg-red-700 absolute inset-y-1/2 -translate-x-1/2 -translate-y-1/2 left-full focus:outline-none focus:outline-gray-700"
+      >
+        <ng-icon
+          name="heroPlay"
+          class="text-white text-3xl text-bold"
+        ></ng-icon>
+      </button>
+    </div>
   </div>
+</div>
+<div>
+  <button
+    (click)="onBack()"
+    class="mx-auto bg-gray-600 hover:bg-gray-700 text-md text-slate-50 text-lg text-bold flex gap-3 items-center p-2 m-2 rounded-md focus:outline-none focus:outline-gray-700"
+  >
+    <ng-icon name="heroArrowLeft" class="text-3xl text-bold"></ng-icon>
+    Back to my playlists
+  </button>
 </div>

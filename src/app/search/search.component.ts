@@ -42,15 +42,13 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onAdd(id: number) {
     const playlistId = this.playlists.items[id].id.playlistId;
-
     this.getAndAddPlaylistSub = this.httpService
       .getPlaylist(playlistId)
       .subscribe((data) => {
-        console.log(data);
         const plName = data['items'][0].snippet.localized.title;
         const plAuthor = data['items'][0].snippet.channelTitle;
         const plNumVideos = data['items'][0].contentDetails.itemCount;
-        const plImgPath = data['items'][0].snippet.thumbnails.high.url;
+        const plImgPath = data['items'][0].snippet.thumbnails.medium.url;
         const plId = data['items'][0].id;
         const newPlaylist = new Playlist(
           plName,

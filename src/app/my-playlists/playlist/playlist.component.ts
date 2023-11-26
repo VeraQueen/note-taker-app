@@ -15,8 +15,6 @@ export class PlaylistComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.videos = this.playlistService.getVideos();
-    console.log(this.videos[0].videos);
-    // console.log(this.videos[0].videos[0].snippet.thumbnails.standard);
   }
 
   onBack() {

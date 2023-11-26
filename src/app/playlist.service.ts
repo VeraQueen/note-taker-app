@@ -7,8 +7,6 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class PlaylistService {
-  // playlistAddedEmitter = new EventEmitter<Playlist[]>();
-  playlistIdSubject = new Subject<string>();
   private playlists: Playlist[] = [];
   private videos = [];
 
@@ -20,11 +18,9 @@ export class PlaylistService {
 
   addPlaylist(newPlaylist: Playlist) {
     this.playlists.push(newPlaylist);
-    // this.playlistAddedEmitter.emit(this.playlists.slice());
   }
 
   getVideos() {
-    // console.log('playlistService getvideos function', this.videos);
     return this.videos.slice();
   }
 
