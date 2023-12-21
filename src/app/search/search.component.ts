@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { Observable } from 'rxjs';
 
 import { PlaylistService } from '../playlist.service';
-import { HttpService } from '../http.service';
+import { FetchPlaylistsData, HttpService } from '../http.service';
 import { Playlist } from '../my-playlists/playlists/playlist.model';
 
 @Component({
@@ -15,8 +16,11 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchPlaylistsSub: Subscription;
   getAndAddPlaylistSub: Subscription;
   searchForm: FormGroup;
+  searchInputValue: string;
+  nextPageToken: string;
   isLoading = false;
-  playlists: any = {};
+  playlists: [];
+  searchObs: Observable<FetchPlaylistsData>;
 
   constructor(
     private httpService: HttpService,
@@ -31,17 +35,22 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onSearch() {
     this.isLoading = true;
-    const searchInputValue = this.searchForm.get('searchInput').value;
-    this.searchPlaylistsSub = this.httpService
-      .fetchPlaylists(searchInputValue)
-      .subscribe((playlists) => {
-        this.playlists = playlists;
-        this.isLoading = false;
-      });
+    this.searchInputValue = this.searchForm.get('searchInput').value;
+    this.searchObs = this.httpService.fetchPlaylists(this.searchInputValue);
+    this.searchObsSubscribe();
+  }
+
+  onScroll() {
+    this.isLoading = true;
+    this.searchObs = this.httpService.fetchPlaylists(
+      this.searchInputValue,
+      this.nextPageToken
+    );
+    this.searchObsSubscribe();
   }
 
   onAdd(id: number) {
-    const playlistId = this.playlists.items[id].id.playlistId;
+    const playlistId = this.playlists[id]['id']['playlistId'];
     this.getAndAddPlaylistSub = this.httpService
       .getPlaylist(playlistId)
       .subscribe((data) => {
@@ -64,5 +73,17 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.searchPlaylistsSub) this.searchPlaylistsSub.unsubscribe();
     if (this.getAndAddPlaylistSub) this.getAndAddPlaylistSub.unsubscribe();
+  }
+
+  private searchObsSubscribe() {
+    this.searchPlaylistsSub = this.searchObs.subscribe((playlists) => {
+      this.nextPageToken = playlists.nextPageToken;
+      if (this.playlists === undefined) {
+        this.playlists = [...playlists.items];
+      } else {
+        this.playlists = [...this.playlists, ...playlists.items];
+      }
+      this.isLoading = false;
+    });
   }
 }

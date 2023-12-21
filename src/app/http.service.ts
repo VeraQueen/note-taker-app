@@ -1,21 +1,33 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+export interface FetchPlaylistsData {
+  kind: string;
+  etag: string;
+  nextPageToken: string;
+  prevPageToken: string;
+  regionCode: string;
+  pageInfo: object;
+  items: [];
+}
+
 @Injectable({ providedIn: 'root' })
 export class HttpService {
   constructor(private http: HttpClient) {}
 
-  fetchPlaylists(searchInputValue: string) {
+  fetchPlaylists(searchInputValue: string, pageToken: string = '') {
     const url = 'https://www.googleapis.com/youtube/v3/search';
     const urlParams = new HttpParams()
       .set('part', 'snippet')
       .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
       .set('q', searchInputValue)
       .set('type', 'playlist')
-      .set('maxResults', 24);
+      .set('maxResults', 24)
+      .set('pageToken', pageToken);
+
     const options = { params: urlParams };
 
-    return this.http.get(url, options);
+    return this.http.get<FetchPlaylistsData>(url, options);
   }
 
   getPlaylist(playlistId: string) {

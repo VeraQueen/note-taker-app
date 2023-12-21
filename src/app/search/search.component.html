@@ -21,10 +21,16 @@
     </div>
   </form>
 
-  <div class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4 p-2">
+  <div
+    class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4 p-2"
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+  >
     <div
       class="flex flex-col items-center"
-      *ngFor="let playlist of playlists.items; let i = index"
+      *ngFor="let playlist of playlists; let i = index"
     >
       <img
         class="aspect-video rounded-md border-gray-700 border border-solid"

@@ -17,6 +17,7 @@ import {
   heroPlay,
   heroPlus,
 } from '@ng-icons/heroicons/outline';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {
       heroPlay,
       heroArrowLeft,
     }),
+    InfiniteScrollModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
