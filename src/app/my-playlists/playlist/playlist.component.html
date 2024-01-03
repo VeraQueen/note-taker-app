@@ -1,20 +1,23 @@
-<div class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4 p-2">
-  <div
-    class="flex flex-col items-center"
-    *ngFor="let video of videos[0].videos; let i = index"
-  >
+<div
+  class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4 p-2"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()"
+>
+  <div class="flex flex-col items-center" *ngFor="let video of videos">
     <img
       class="aspect-video rounded-md border-gray-700 border border-solid"
-      [src]="video.snippet.thumbnails.medium.url"
+      [src]="video.snippet?.thumbnails?.medium?.url"
     />
     <div
       class="bg-gradient-to-b from-gray-300 to-gray-100 rounded-md mt-1 py-2 flex flex-col gap-1 relative w-11/12"
     >
       <p class="text-gray-900 text-lg font-bold leading-tight pl-2 w-5/6">
-        {{ video.snippet.title }}
+        {{ video.snippet?.title }}
       </p>
       <p class="text-gray-900 text-sm font-semibold pl-2 w-5/6">
-        {{ video.snippet.channelTitle }}
+        {{ video.snippet?.channelTitle }}
       </p>
       <button
         type="button"
@@ -28,6 +31,7 @@
     </div>
   </div>
 </div>
+
 <div>
   <button
     (click)="onBack()"

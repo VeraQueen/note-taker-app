@@ -42,11 +42,13 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onScroll() {
     this.isLoading = true;
-    this.searchObs = this.httpService.fetchPlaylists(
-      this.searchInputValue,
-      this.nextPageToken
-    );
-    this.searchObsSubscribe();
+    if (this.nextPageToken !== undefined) {
+      this.searchObs = this.httpService.fetchPlaylists(
+        this.searchInputValue,
+        this.nextPageToken
+      );
+      this.searchObsSubscribe();
+    }
   }
 
   onAdd(id: number) {
@@ -77,7 +79,10 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   private searchObsSubscribe() {
     this.searchPlaylistsSub = this.searchObs.subscribe((playlists) => {
-      this.nextPageToken = playlists.nextPageToken;
+      console.log(playlists);
+      this.nextPageToken = playlists.nextPageToken
+        ? playlists.nextPageToken
+        : undefined;
       if (this.playlists === undefined) {
         this.playlists = [...playlists.items];
       } else {

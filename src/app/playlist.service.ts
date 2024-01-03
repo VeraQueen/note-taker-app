@@ -1,14 +1,26 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
+import { BehaviorSubject, take } from 'rxjs';
 import { Playlist } from './my-playlists/playlists/playlist.model';
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlaylistService {
   private playlists: Playlist[] = [];
-  private videos = [];
+  private videos: {}[] = [];
+  private playlistIdAndTokenSubject = new BehaviorSubject<{
+    playlistId: string;
+    nextPageToken: string;
+  }>(null);
+
+  sendData(data: any) {
+    this.playlistIdAndTokenSubject.next(data);
+  }
+
+  getData() {
+    return this.playlistIdAndTokenSubject.asObservable().pipe(take(1));
+  }
 
   constructor() {}
 
@@ -24,10 +36,15 @@ export class PlaylistService {
     return this.videos.slice();
   }
 
-  addVideos(videos: {}) {
+  addVideos(videos: {}[]) {
     if (this.videos.length > 0) {
-      this.videos.splice(-1);
+      this.videos.splice(0, this.videos.length);
+      videos.forEach((el) => {
+        this.videos.push(el);
+      });
     }
-    this.videos.push(videos);
+    if (this.videos.length === 0) {
+      videos.forEach((el) => this.videos.push(el));
+    }
   }
 }

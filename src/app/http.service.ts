@@ -11,6 +11,15 @@ export interface FetchPlaylistsData {
   items: [];
 }
 
+export interface FetchVideosData {
+  kind: string;
+  etag: string;
+  nextPageToken: string;
+  prevPageToken: string;
+  pageInfo: object;
+  items: [];
+}
+
 @Injectable({ providedIn: 'root' })
 export class HttpService {
   constructor(private http: HttpClient) {}
@@ -41,15 +50,16 @@ export class HttpService {
     return this.http.get(url, options);
   }
 
-  getVideos(playlistId: string) {
+  getVideos(playlistId: string, pageToken: string = '') {
     const url = 'https://www.googleapis.com/youtube/v3/playlistItems';
     const urlParamns = new HttpParams()
       .set('part', 'snippet, status')
       .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
-      .set('maxResults', 12)
-      .set('playlistId', playlistId);
+      .set('maxResults', 8)
+      .set('playlistId', playlistId)
+      .set('pageToken', pageToken);
     const options = { params: urlParamns };
 
-    return this.http.get(url, options);
+    return this.http.get<FetchVideosData>(url, options);
   }
 }

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Playlist } from './playlist.model';
 import { PlaylistService } from 'src/app/playlist.service';
 import { HttpService } from 'src/app/http.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-playlists',
@@ -24,25 +24,15 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   onOpen(i: number) {
     const playlistId = this.playlists[i].id;
-    this.httpService.getVideos(playlistId).subscribe((data) => {
-      const filteredVideos = [];
-      data['items'].forEach((el: any) => {
-        if (
-          el.status.privacyStatus === 'public' ||
-          el.status.privacyStatus === 'unlisted'
-        ) {
-          filteredVideos.push(el);
-        }
+    this.httpService.getVideos(playlistId).subscribe((videos) => {
+      this.playlistService.sendData({
+        playlistId: playlistId,
+        nextPageToken: videos.nextPageToken,
       });
-
-      const playlistVideos = {
-        nextPageToken: data['nextPageToken'],
-        videos: filteredVideos,
-      };
-      this.playlistService.addVideos(playlistVideos);
+      this.playlistService.addVideos(videos.items);
       this.router.navigate(['/playlist']);
     });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy() {}
 }
