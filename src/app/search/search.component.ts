@@ -15,12 +15,13 @@ import { Playlist } from '../my-playlists/playlists/playlist.model';
 export class SearchComponent implements OnInit, OnDestroy {
   searchPlaylistsSub: Subscription;
   getAndAddPlaylistSub: Subscription;
+  searchObs: Observable<FetchPlaylistsData>;
   searchForm: FormGroup;
+  isLoading = false;
+  showMsg: boolean = false;
   searchInputValue: string;
   nextPageToken: string;
-  isLoading = false;
   playlists: [];
-  searchObs: Observable<FetchPlaylistsData>;
 
   constructor(
     private httpService: HttpService,
@@ -83,6 +84,8 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.nextPageToken = playlists.nextPageToken
         ? playlists.nextPageToken
         : undefined;
+      if (this.nextPageToken === undefined) this.showMsg = true;
+      console.log(this.nextPageToken);
       if (this.playlists === undefined) {
         this.playlists = [...playlists.items];
       } else {

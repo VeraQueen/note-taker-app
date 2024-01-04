@@ -14,11 +14,11 @@ export class PlaylistService {
     nextPageToken: string;
   }>(null);
 
-  sendData(data: any) {
+  sendIdAndToken(data: { playlistId: string; nextPageToken: string }) {
     this.playlistIdAndTokenSubject.next(data);
   }
 
-  getData() {
+  getIdAndToken() {
     return this.playlistIdAndTokenSubject.asObservable().pipe(take(1));
   }
 

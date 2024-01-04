@@ -55,7 +55,7 @@ export class HttpService {
     const urlParamns = new HttpParams()
       .set('part', 'snippet, status')
       .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
-      .set('maxResults', 8)
+      .set('maxResults', 24)
       .set('playlistId', playlistId)
       .set('pageToken', pageToken);
     const options = { params: urlParamns };
