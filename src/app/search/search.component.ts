@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Observable } from 'rxjs';
+import { Observable, fromEvent, map } from 'rxjs';
 
-import { PlaylistService } from '../playlist.service';
 import { FetchPlaylistsData, HttpService } from '../http.service';
+import { PlaylistService } from '../playlist.service';
 import { Playlist } from '../my-playlists/playlists/playlist.model';
 
 @Component({
@@ -16,16 +17,38 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchPlaylistsSub: Subscription;
   getAndAddPlaylistSub: Subscription;
   searchObs: Observable<FetchPlaylistsData>;
-  searchForm: FormGroup;
   isLoading = false;
   showMsg: boolean = false;
+  showScrollToTopBtn: boolean = false;
+  scrollPosition: Number[];
+  searchForm: FormGroup;
   searchInputValue: string;
   nextPageToken: string;
   playlists: [];
 
+  showScroll = fromEvent(document, 'scroll')
+    .pipe(
+      map(
+        () =>
+          (this.scrollPosition = [
+            this.viewport.getScrollPosition()[0],
+            this.viewport.getScrollPosition()[1],
+          ])
+      )
+    )
+    .subscribe((val) => {
+      console.log(val[1]);
+      if (val[1] > 1) {
+        this.showScrollToTopBtn = true;
+      } else {
+        this.showScrollToTopBtn = false;
+      }
+    });
+
   constructor(
     private httpService: HttpService,
-    private playlistService: PlaylistService
+    private playlistService: PlaylistService,
+    private viewport: ViewportScroller
   ) {}
 
   ngOnInit() {
@@ -50,6 +73,10 @@ export class SearchComponent implements OnInit, OnDestroy {
       );
       this.searchObsSubscribe();
     }
+  }
+
+  scrollToTop() {
+    this.viewport.scrollToPosition([0, 0]);
   }
 
   onAdd(id: number) {
@@ -80,12 +107,10 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   private searchObsSubscribe() {
     this.searchPlaylistsSub = this.searchObs.subscribe((playlists) => {
-      console.log(playlists);
       this.nextPageToken = playlists.nextPageToken
         ? playlists.nextPageToken
         : undefined;
       if (this.nextPageToken === undefined) this.showMsg = true;
-      console.log(this.nextPageToken);
       if (this.playlists === undefined) {
         this.playlists = [...playlists.items];
       } else {

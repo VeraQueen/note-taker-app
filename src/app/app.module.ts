@@ -16,6 +16,7 @@ import {
   heroFolderOpen,
   heroPlay,
   heroPlus,
+  heroArrowUp,
 } from '@ng-icons/heroicons/outline';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
@@ -38,6 +39,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
       heroFolderOpen,
       heroPlay,
       heroArrowLeft,
+      heroArrowUp,
     }),
     InfiniteScrollModule,
   ],
