@@ -36,6 +36,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onSearch() {
     this.isLoading = true;
+    this.playlists = [];
     this.searchInputValue = this.searchForm.get('searchInput').value;
     this.searchObs = this.httpService.fetchPlaylists(this.searchInputValue);
     this.searchObsSubscribe();
