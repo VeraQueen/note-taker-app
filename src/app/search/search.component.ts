@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ViewportScroller } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Observable, fromEvent, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { FetchPlaylistsData, HttpService } from '../http.service';
 import { PlaylistService } from '../playlist.service';
@@ -19,36 +18,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchObs: Observable<FetchPlaylistsData>;
   isLoading = false;
   showMsg: boolean = false;
-  showScrollToTopBtn: boolean = false;
-  scrollPosition: Number[];
   searchForm: FormGroup;
   searchInputValue: string;
   nextPageToken: string;
   playlists: [];
 
-  showScroll = fromEvent(document, 'scroll')
-    .pipe(
-      map(
-        () =>
-          (this.scrollPosition = [
-            this.viewport.getScrollPosition()[0],
-            this.viewport.getScrollPosition()[1],
-          ])
-      )
-    )
-    .subscribe((val) => {
-      console.log(val[1]);
-      if (val[1] > 1) {
-        this.showScrollToTopBtn = true;
-      } else {
-        this.showScrollToTopBtn = false;
-      }
-    });
-
   constructor(
     private httpService: HttpService,
-    private playlistService: PlaylistService,
-    private viewport: ViewportScroller
+    private playlistService: PlaylistService
   ) {}
 
   ngOnInit() {
@@ -73,10 +50,6 @@ export class SearchComponent implements OnInit, OnDestroy {
       );
       this.searchObsSubscribe();
     }
-  }
-
-  scrollToTop() {
-    this.viewport.scrollToPosition([0, 0]);
   }
 
   onAdd(id: number) {

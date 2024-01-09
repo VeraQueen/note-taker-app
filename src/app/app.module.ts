@@ -10,6 +10,7 @@ import { PlaylistsComponent } from './my-playlists/playlists/playlists.component
 import { PlaylistComponent } from './my-playlists/playlist/playlist.component';
 import { NotesComponent } from './my-playlists/notes/notes.component';
 import { SearchComponent } from './search/search.component';
+import { ScrollTopComponent } from './shared/scroll-top/scroll-top.component';
 import { NgIconsModule } from '@ng-icons/core';
 import {
   heroArrowLeft,
@@ -28,6 +29,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     PlaylistComponent,
     NotesComponent,
     SearchComponent,
+    ScrollTopComponent,
   ],
   imports: [
     BrowserModule,
