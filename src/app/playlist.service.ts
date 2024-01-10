@@ -9,18 +9,19 @@ import { Playlist } from './my-playlists/playlists/playlist.model';
 export class PlaylistService {
   private playlists: Playlist[] = [];
   private videos: {}[] = [];
-  private playlistIdAndTokenSubject = new BehaviorSubject<{
-    playlistId: string;
-    nextPageToken: string;
-  }>(null);
+  // private playlistIdAndTokenSubject = new BehaviorSubject<{
+  //   playlistId: string;
+  //   nextPageToken: string;
+  // }>(null);
+  idSubject = new BehaviorSubject<string>(null);
 
-  sendIdAndToken(data: { playlistId: string; nextPageToken: string }) {
-    this.playlistIdAndTokenSubject.next(data);
-  }
+  // sendIdAndToken(data: { playlistId: string; nextPageToken: string }) {
+  //   this.playlistIdAndTokenSubject.next(data);
+  // }
 
-  getIdAndToken() {
-    return this.playlistIdAndTokenSubject.asObservable().pipe(take(1));
-  }
+  // getIdAndToken() {
+  //   return this.playlistIdAndTokenSubject.asObservable().pipe(take(1));
+  // }
 
   constructor() {}
 
@@ -32,19 +33,19 @@ export class PlaylistService {
     this.playlists.push(newPlaylist);
   }
 
-  getVideos() {
-    return this.videos.slice();
-  }
+  // getVideos() {
+  //   return this.videos.slice();
+  // }
 
-  addVideos(videos: {}[]) {
-    if (this.videos.length > 0) {
-      this.videos.splice(0, this.videos.length);
-      videos.forEach((el) => {
-        this.videos.push(el);
-      });
-    }
-    if (this.videos.length === 0) {
-      videos.forEach((el) => this.videos.push(el));
-    }
-  }
+  // addVideos(videos: {}[]) {
+  //   if (this.videos.length > 0) {
+  //     this.videos.splice(0, this.videos.length);
+  //     videos.forEach((el) => {
+  //       this.videos.push(el);
+  //     });
+  //   }
+  //   if (this.videos.length === 0) {
+  //     videos.forEach((el) => this.videos.push(el));
+  //   }
+  // }
 }

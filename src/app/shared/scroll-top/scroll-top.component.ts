@@ -24,7 +24,6 @@ export class ScrollTopComponent {
       )
     )
     .subscribe((val) => {
-      console.log(val[1]);
       if (val[1] > 1) {
         this.showScrollToTopBtn = true;
       } else {

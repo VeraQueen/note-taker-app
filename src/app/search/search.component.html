@@ -20,7 +20,12 @@
       </button>
     </div>
   </form>
+</div>
 
+<div>
+  <div class="my-6" *ngIf="isLoading">
+    <app-css-loader></app-css-loader>
+  </div>
   <div
     class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4 p-2"
     infiniteScroll

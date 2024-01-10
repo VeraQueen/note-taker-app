@@ -20,6 +20,7 @@ import {
   heroArrowUp,
 } from '@ng-icons/heroicons/outline';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     NotesComponent,
     SearchComponent,
     ScrollTopComponent,
+    CssLoaderComponent,
   ],
   imports: [
     BrowserModule,

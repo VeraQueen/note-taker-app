@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { Subscription, map, switchMap, take } from 'rxjs';
 import { FetchVideosData, HttpService } from 'src/app/http.service';
 import { PlaylistService } from 'src/app/playlist.service';
 
@@ -25,13 +25,19 @@ export class PlaylistComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.filterVideos(this.playlistService.getVideos());
-    this.getIdAndTokenSub = this.playlistService
-      .getIdAndToken()
-      .subscribe((data: { playlistId: string; nextPageToken: string }) => {
-        this.playlistId = data?.playlistId;
-        this.nextPageToken = data?.nextPageToken;
-        if (this.nextPageToken === undefined) this.showButton = true;
+    this.playlistService.idSubject
+      .pipe(
+        take(1),
+        map((playlistId) => {
+          this.playlistId = playlistId;
+        }),
+        switchMap(() => this.httpService.getVideos(this.playlistId))
+      )
+      .subscribe((videosData) => {
+        console.log(videosData);
+        this.nextPageToken = videosData.nextPageToken;
+        this.showButtonCheck(this.nextPageToken);
+        this.filterVideos(videosData.items);
       });
   }
 
@@ -43,7 +49,7 @@ export class PlaylistComponent implements OnInit {
           this.nextPageToken = videos.nextPageToken
             ? videos.nextPageToken
             : undefined;
-          if (this.nextPageToken === undefined) this.showButton = true;
+          this.showButtonCheck(this.nextPageToken);
           this.filterVideos(videos.items);
         });
     }
@@ -51,6 +57,11 @@ export class PlaylistComponent implements OnInit {
 
   onBack() {
     this.router.navigate(['/playlists']);
+  }
+
+  private showButtonCheck(nextPageToken: string) {
+    console.log('check');
+    if (nextPageToken === undefined) this.showButton = true;
   }
 
   private filterVideos(videos: {}[]) {

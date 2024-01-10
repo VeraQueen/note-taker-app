@@ -16,7 +16,6 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   getVideosSub: Subscription;
   constructor(
     private playlistService: PlaylistService,
-    private httpService: HttpService,
     private router: Router
   ) {}
 
@@ -26,16 +25,8 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   onOpen(i: number) {
     const playlistId = this.playlists[i].id;
-    this.getVideosSub = this.httpService
-      .getVideos(playlistId)
-      .subscribe((videos: FetchVideosData) => {
-        this.playlistService.sendIdAndToken({
-          playlistId: playlistId,
-          nextPageToken: videos.nextPageToken,
-        });
-        this.playlistService.addVideos(videos.items);
-        this.router.navigate(['/playlist']);
-      });
+    this.playlistService.idSubject.next(playlistId);
+    this.router.navigate(['/playlist']);
   }
 
   ngOnDestroy() {
