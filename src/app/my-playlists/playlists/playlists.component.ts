@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Playlist } from './playlist.model';
 import { PlaylistService } from 'src/app/playlist.service';
-import { FetchVideosData, HttpService } from 'src/app/http.service';
 
 @Component({
   selector: 'app-playlists',

@@ -14,6 +14,7 @@ export class PlaylistComponent implements OnInit {
   getIdAndTokenSub: Subscription;
   getVideosSub: Subscription;
   showButton: boolean = false;
+  isLoading: boolean = false;
   playlistId: string;
   nextPageToken: string;
   videos: {}[];
@@ -29,15 +30,20 @@ export class PlaylistComponent implements OnInit {
       .pipe(
         take(1),
         map((playlistId) => {
-          this.playlistId = playlistId;
+          return playlistId;
         }),
-        switchMap(() => this.httpService.getVideos(this.playlistId))
+        switchMap((playlistId) => {
+          this.playlistId = playlistId;
+          this.isLoading = true;
+          return this.httpService.getVideos(playlistId);
+        })
       )
       .subscribe((videosData) => {
         console.log(videosData);
         this.nextPageToken = videosData.nextPageToken;
         this.showButtonCheck(this.nextPageToken);
         this.filterVideos(videosData.items);
+        this.isLoading = false;
       });
   }
 
@@ -60,7 +66,6 @@ export class PlaylistComponent implements OnInit {
   }
 
   private showButtonCheck(nextPageToken: string) {
-    console.log('check');
     if (nextPageToken === undefined) this.showButton = true;
   }
 
