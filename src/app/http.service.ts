@@ -1,5 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
 
 export interface FetchPlaylistsData {
   kind: string;
@@ -36,7 +41,9 @@ export class HttpService {
 
     const options = { params: urlParams };
 
-    return this.http.get<FetchPlaylistsData>(url, options);
+    return this.http
+      .get<FetchPlaylistsData>(url, options)
+      .pipe(catchError(this.handleError));
   }
 
   getPlaylist(playlistId: string) {
@@ -61,5 +68,22 @@ export class HttpService {
     const options = { params: urlParamns };
 
     return this.http.get<FetchVideosData>(url, options);
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    // console.log(errorRes);
+    // console.log(errorRes.name);
+    // console.log(errorRes.error);
+    // console.log(errorRes.error.error.errors[0].reason);
+    let errorMessage = 'An unknown error occurred.';
+    if (!errorRes.error || !errorRes.error.error) {
+      return throwError(() => new Error(errorMessage));
+    }
+    switch (errorRes.error.error.errors[0].reason) {
+      case 'quotaExceeded':
+        errorMessage =
+          'Youtube search quota exceeded. Play around with your existing playlists until tomorrow.';
+    }
+    return throwError(() => new Error(errorMessage));
   }
 }

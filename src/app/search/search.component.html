@@ -22,46 +22,57 @@
   </form>
 </div>
 
-<div>
-  <div class="my-12" *ngIf="isLoading">
+<div class="max-w-3xl mx-auto">
+  <div
+    class="my-12 p-2 border border-red-500 bg-amber-50 text-center"
+    *ngIf="error"
+  >
+    <p>{{ error }}</p>
+    <button
+      class="w-fit mx-auto flex-auto bg-red-500 hover:bg-red-700 text-md text-white font-semibold p-2 py-1 rounded-md focus:outline-none focus:outline-gray-700"
+    >
+      Okay
+    </button>
+  </div>
+  <div class="my-12" *ngIf="isLoading && !error">
     <app-css-loader></app-css-loader>
   </div>
+</div>
+<div
+  class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4 p-2"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()"
+  #scroll
+>
   <div
-    class="w-full max-w-7xl mx-auto grid grid-cols-4 gap-4 p-2"
-    infiniteScroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="50"
-    (scrolled)="onScroll()"
-    #scroll
+    class="flex flex-col items-center"
+    *ngFor="let playlist of playlists; let i = index"
   >
+    <img
+      class="aspect-video rounded-md border-gray-700 border border-solid"
+      [src]="playlist.snippet.thumbnails.medium.url"
+    />
     <div
-      class="flex flex-col items-center"
-      *ngFor="let playlist of playlists; let i = index"
+      class="bg-gradient-to-b from-gray-300 to-gray-100 rounded-md mt-1 py-2 flex flex-col gap-1 relative w-11/12"
     >
-      <img
-        class="aspect-video rounded-md border-gray-700 border border-solid"
-        [src]="playlist.snippet.thumbnails.medium.url"
-      />
-      <div
-        class="bg-gradient-to-b from-gray-300 to-gray-100 rounded-md mt-1 py-2 flex flex-col gap-1 relative w-11/12"
+      <p class="text-gray-900 font-semibold leading-tight pl-2 w-5/6">
+        {{ playlist.snippet.title }}
+      </p>
+      <p class="text-gray-900 text-sm font-medium pl-2 w-5/6">
+        {{ playlist.snippet.channelTitle }}
+      </p>
+      <button
+        type="button"
+        class="w-10 h-10 rounded-full flex items-center justify-center bg-red-600 hover:bg-red-700 absolute inset-y-1/2 -translate-x-1/2 -translate-y-1/2 left-full focus:outline-none focus:outline-gray-700"
+        (click)="onAdd(i)"
       >
-        <p class="text-gray-900 font-semibold leading-tight pl-2 w-5/6">
-          {{ playlist.snippet.title }}
-        </p>
-        <p class="text-gray-900 text-sm font-medium pl-2 w-5/6">
-          {{ playlist.snippet.channelTitle }}
-        </p>
-        <button
-          type="button"
-          class="w-10 h-10 rounded-full flex items-center justify-center bg-red-600 hover:bg-red-700 absolute inset-y-1/2 -translate-x-1/2 -translate-y-1/2 left-full focus:outline-none focus:outline-gray-700"
-          (click)="onAdd(i)"
-        >
-          <ng-icon
-            name="heroPlus"
-            class="text-white text-3xl text-bold"
-          ></ng-icon>
-        </button>
-      </div>
+        <ng-icon
+          name="heroPlus"
+          class="text-white text-3xl text-bold"
+        ></ng-icon>
+      </button>
     </div>
   </div>
   <div

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 import { FetchPlaylistsData, HttpService } from '../http.service';
 import { PlaylistService } from '../playlist.service';
@@ -18,6 +18,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchObs: Observable<FetchPlaylistsData>;
   isLoading = false;
   showMsg: boolean = false;
+  error: string = null;
   searchForm: FormGroup;
   searchInputValue: string;
   nextPageToken: string;
@@ -80,17 +81,23 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   private searchObsSubscribe() {
-    this.searchPlaylistsSub = this.searchObs.subscribe((playlists) => {
-      this.nextPageToken = playlists.nextPageToken
-        ? playlists.nextPageToken
-        : undefined;
-      if (this.nextPageToken === undefined) this.showMsg = true;
-      if (this.playlists === undefined) {
-        this.playlists = [...playlists.items];
-      } else {
-        this.playlists = [...this.playlists, ...playlists.items];
+    this.searchPlaylistsSub = this.searchObs.subscribe(
+      (playlists) => {
+        this.nextPageToken = playlists.nextPageToken
+          ? playlists.nextPageToken
+          : undefined;
+        if (this.nextPageToken === undefined) this.showMsg = true;
+        if (this.playlists === undefined) {
+          this.playlists = [...playlists.items];
+        } else {
+          this.playlists = [...this.playlists, ...playlists.items];
+        }
+        this.isLoading = false;
+      },
+      (error) => {
+        // console.log(error.message);
+        this.error = error.message;
       }
-      this.isLoading = false;
-    });
+    );
   }
 }
