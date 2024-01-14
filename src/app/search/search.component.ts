@@ -75,14 +75,18 @@ export class SearchComponent implements OnInit, OnDestroy {
       });
   }
 
+  onHandleError() {
+    this.error = null;
+  }
+
   ngOnDestroy(): void {
     if (this.searchPlaylistsSub) this.searchPlaylistsSub.unsubscribe();
     if (this.getAndAddPlaylistSub) this.getAndAddPlaylistSub.unsubscribe();
   }
 
   private searchObsSubscribe() {
-    this.searchPlaylistsSub = this.searchObs.subscribe(
-      (playlists) => {
+    this.searchPlaylistsSub = this.searchObs.subscribe({
+      next: (playlists) => {
         this.nextPageToken = playlists.nextPageToken
           ? playlists.nextPageToken
           : undefined;
@@ -94,10 +98,10 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
         this.isLoading = false;
       },
-      (error) => {
-        // console.log(error.message);
+      error: (error) => {
+        this.isLoading = false;
         this.error = error.message;
-      }
-    );
+      },
+    });
   }
 }

@@ -67,15 +67,17 @@ export class HttpService {
       .set('pageToken', pageToken);
     const options = { params: urlParamns };
 
-    return this.http.get<FetchVideosData>(url, options);
+    return this.http
+      .get<FetchVideosData>(url, options)
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(errorRes: HttpErrorResponse) {
     // console.log(errorRes);
     // console.log(errorRes.name);
     // console.log(errorRes.error);
-    // console.log(errorRes.error.error.errors[0].reason);
-    let errorMessage = 'An unknown error occurred.';
+    let errorMessage =
+      'An unknown error occurred. Please check your internet connection.';
     if (!errorRes.error || !errorRes.error.error) {
       return throwError(() => new Error(errorMessage));
     }
@@ -83,6 +85,10 @@ export class HttpService {
       case 'quotaExceeded':
         errorMessage =
           'Youtube search quota exceeded. Play around with your existing playlists until tomorrow.';
+        break;
+      case 'playlistNotFound':
+        errorMessage =
+          "The playlist cannot be found. Press 'Okay' to go back to your playlists and try again from there.";
     }
     return throwError(() => new Error(errorMessage));
   }

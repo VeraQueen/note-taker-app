@@ -15,6 +15,7 @@ export class PlaylistComponent implements OnInit {
   getVideosSub: Subscription;
   showButton: boolean = false;
   isLoading: boolean = false;
+  error: boolean = null;
   playlistId: string;
   nextPageToken: string;
   videos: {}[];
@@ -38,12 +39,18 @@ export class PlaylistComponent implements OnInit {
           return this.httpService.getVideos(playlistId);
         })
       )
-      .subscribe((videosData) => {
-        console.log(videosData);
-        this.nextPageToken = videosData.nextPageToken;
-        this.showButtonCheck(this.nextPageToken);
-        this.filterVideos(videosData.items);
-        this.isLoading = false;
+      .subscribe({
+        next: (videosData: FetchVideosData) => {
+          console.log(videosData);
+          this.nextPageToken = videosData.nextPageToken;
+          this.showButtonCheck(this.nextPageToken);
+          this.filterVideos(videosData.items);
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.error = error.message;
+        },
       });
   }
 
@@ -51,18 +58,29 @@ export class PlaylistComponent implements OnInit {
     if (this.nextPageToken !== undefined) {
       this.getVideosSub = this.httpService
         .getVideos(this.playlistId, this.nextPageToken)
-        .subscribe((videos: FetchVideosData) => {
-          this.nextPageToken = videos.nextPageToken
-            ? videos.nextPageToken
-            : undefined;
-          this.showButtonCheck(this.nextPageToken);
-          this.filterVideos(videos.items);
+        .subscribe({
+          next: (videos: FetchVideosData) => {
+            this.nextPageToken = videos.nextPageToken
+              ? videos.nextPageToken
+              : undefined;
+            this.showButtonCheck(this.nextPageToken);
+            this.filterVideos(videos.items);
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.error = error.message;
+          },
         });
     }
   }
 
   onBack() {
     this.router.navigate(['/playlists']);
+  }
+
+  onHandleError() {
+    this.error = null;
+    this.onBack();
   }
 
   private showButtonCheck(nextPageToken: string) {
