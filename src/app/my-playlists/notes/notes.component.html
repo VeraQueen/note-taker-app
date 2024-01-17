@@ -1,9 +1,35 @@
-<iframe
-  id="ytplayer"
-  type="text/html"
-  width="640"
-  height="360"
-  src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"
-  frameborder="0"
-></iframe>
-<div id="player"></div>
+<div class="max-w-6xl">
+  <div class="relative" style="padding-bottom: 56.25%">
+    <div class="absolute w-full h-full" id="videoPlayer"></div>
+  </div>
+</div>
+<div>
+  <div>
+    <button (click)="onTakeNote()">Take a note</button>
+  </div>
+  <div *ngIf="showForm">
+    <p>{{ timeStamp }}</p>
+    <form (ngSubmit)="onSaveNote(noteForm)" #noteForm="ngForm">
+      <input
+        type="text"
+        id="note"
+        aria-label="Video note"
+        ngModel
+        name="note"
+      />
+      <button
+        type="button"
+        (click)="onCancelNote(noteForm)"
+        class="w-1/4 mx-auto flex-auto bg-gray-600 hover:bg-gray-700 text-md text-white font-semibold py-2 rounded-md focus:outline-none focus:outline-gray-700"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="w-1/4 mx-auto flex-auto bg-gray-600 hover:bg-gray-700 text-md text-white font-semibold py-2 rounded-md focus:outline-none focus:outline-gray-700"
+      >
+        Save note
+      </button>
+    </form>
+  </div>
+</div>
