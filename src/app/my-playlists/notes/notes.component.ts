@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -7,10 +7,8 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./notes.component.css'],
 })
 export class NotesComponent implements OnInit {
-  YT: any;
   video: any;
   videoPlayer: any;
-  reframed: boolean = false;
   timeStamp: string = '0:00';
   showForm: boolean = false;
 
@@ -34,10 +32,11 @@ export class NotesComponent implements OnInit {
       playerVars: {
         playsinline: 1,
         rel: 0,
+        host: 'https://youtube.com',
+        origin: 'https://localhost:4200',
       },
       events: {
         onStateChange: this.onPlayerStateChange.bind(this),
-        onError: this.onPlayerError.bind(this),
         onReady: this.onPlayerReady.bind(this),
       },
     });
@@ -54,10 +53,6 @@ export class NotesComponent implements OnInit {
         this.calculateTimestamp();
         break;
     }
-  }
-
-  onPlayerError(event) {
-    console.log('error', event);
   }
 
   onTakeNote() {

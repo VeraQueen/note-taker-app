@@ -89,6 +89,7 @@ export class HttpService {
       case 'playlistNotFound':
         errorMessage =
           "The playlist cannot be found. Press 'Okay' to go back to your playlists and try again from there.";
+        break;
     }
     return throwError(() => new Error(errorMessage));
   }

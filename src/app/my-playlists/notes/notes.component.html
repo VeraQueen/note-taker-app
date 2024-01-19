@@ -3,6 +3,7 @@
     <div class="absolute w-full h-full" id="videoPlayer"></div>
   </div>
 </div>
+
 <div>
   <div>
     <button (click)="onTakeNote()">Take a note</button>
@@ -32,4 +33,21 @@
       </button>
     </form>
   </div>
+  <!-- <div class="max-w-3xl mx-auto">
+    <div
+      class="my-12 p-2 pt-1 border border-red-500 bg-gray-100 rounded-md text-center"
+      *ngIf="error"
+    >
+      <p class="mb-1 p-0">{{ error }}</p>
+      <button
+        class="w-fit mx-auto flex-auto bg-red-500 hover:bg-red-700 text-md text-white font-semibold p-2 py-1 rounded-md focus:outline-none focus:outline-gray-700"
+        (click)="onHandleError()"
+      >
+        Okay
+      </button>
+    </div>
+    <div class="my-12" *ngIf="isLoading && !error">
+      <app-css-loader></app-css-loader>
+    </div>
+  </div> -->
 </div>
