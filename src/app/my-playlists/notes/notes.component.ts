@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms';
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.css'],
 })
-export class NotesComponent implements OnInit {
+export class NotesComponent implements OnInit, OnDestroy {
   video: any;
   videoPlayer: any;
   timeStamp: string = '0:00';
@@ -15,10 +15,16 @@ export class NotesComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.video = 'M7lc1UVf-VE';
     this.init();
   }
 
   init() {
+    if (window['YT']) {
+      this.startVideo();
+      return;
+    }
+
     let tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     let firstScriptTag = document.getElementsByTagName('script')[0];
@@ -28,7 +34,7 @@ export class NotesComponent implements OnInit {
 
   startVideo() {
     this.videoPlayer = new window['YT'].Player('videoPlayer', {
-      videoId: 'M7lc1UVf-VE',
+      videoId: this.video,
       playerVars: {
         playsinline: 1,
         rel: 0,
@@ -74,6 +80,8 @@ export class NotesComponent implements OnInit {
     this.showForm = false;
     this.videoPlayer.playVideo();
   }
+
+  ngOnDestroy() {}
 
   private calculateTimestamp() {
     const minutes: number = +Math.floor(this.videoPlayer.getCurrentTime() / 60);

@@ -16,7 +16,7 @@
     <ng-icon name="heroPencilSquare" class="text-gray-900 text-2xl"></ng-icon>
   </button>
 
-  <div class="flex gap-1 justify-center content-center">
+  <div class="flex gap-1 justify-center content-center" *ngIf="showForm">
     <p class="w-fit h-fit px-2 rounded-md bg-gray-500 text-white">
       {{ timeStamp }}
     </p>
@@ -51,4 +51,3 @@
     </form>
   </div>
 </div>
-<!-- *ngIf="showForm" -->
