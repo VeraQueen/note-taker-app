@@ -31,7 +31,9 @@
         class="text-gray-900 bg-gray-200 py-2 p-2 mb-1 rounded-md focus:outline focus:outline-2 focus:outline-gray-700"
         aria-label="Video note"
         ngModel
+        #note="ngModel"
         name="note"
+        required
       ></textarea>
       <div class="self-end">
         <button
@@ -47,6 +49,12 @@
         >
           Save note
         </button>
+      </div>
+      <div
+        *ngIf="note.touched && saveNoteBtnClicked"
+        class="my-12 p-2 pt-1 border border-red-500 bg-red-100 rounded-md text-center"
+      >
+        You cannot save an empty note.
       </div>
     </form>
   </div>

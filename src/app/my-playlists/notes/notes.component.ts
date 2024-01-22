@@ -13,13 +13,15 @@ export class NotesComponent implements OnInit, OnDestroy {
   videoPlayer: any;
   timeStamp: string = '0:00';
   showForm: boolean = false;
+  saveNoteBtnClicked: boolean = false;
 
   constructor(private playlistService: PlaylistService) {}
 
   ngOnInit() {
-    this.playlistService.videoIdSubject.pipe(take(1)).subscribe((videoId) => {
-      this.video = videoId;
-    });
+    // this.playlistService.videoIdSubject.pipe(take(1)).subscribe((videoId) => {
+    //   this.video = videoId;
+    // });
+    this.video = 'M7lc1UVf-VE';
     this.init();
   }
 
@@ -58,6 +60,8 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   onPlayerStateChange(event) {
     switch (event.data) {
+      case window['YT'].PlayerState.PLAYING:
+        break;
       case window['YT'].PlayerState.PAUSED:
         console.log('paused');
         this.calculateTimestamp();
@@ -72,11 +76,18 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   onSaveNote(noteForm: NgForm) {
-    console.log(noteForm);
-    const timeStampSeconds = Math.floor(this.videoPlayer.getCurrentTime());
-    const note = noteForm.value.note;
-    console.log(timeStampSeconds, note);
-    noteForm.reset();
+    if (noteForm.value.note === '') {
+      this.saveNoteBtnClicked = true;
+      setTimeout(() => {
+        this.saveNoteBtnClicked = false;
+      }, 5000);
+    } else {
+      const timeStampSeconds = Math.floor(this.videoPlayer.getCurrentTime());
+      const note = noteForm.value.note;
+      console.log(timeStampSeconds, note);
+      this.showForm = false;
+      noteForm.reset();
+    }
   }
 
   onCancelNote(noteForm: NgForm) {
@@ -90,7 +101,11 @@ export class NotesComponent implements OnInit, OnDestroy {
   private calculateTimestamp() {
     const minutes: number = +Math.floor(this.videoPlayer.getCurrentTime() / 60);
     const seconds: number = +Math.floor(this.videoPlayer.getCurrentTime() % 60);
-    this.timeStamp = minutes + ':' + seconds;
+    if (seconds < 10) {
+      this.timeStamp = minutes + ':' + 0 + seconds;
+    } else {
+      this.timeStamp = minutes + ':' + seconds;
+    }
     console.log(this.timeStamp);
   }
 }
