@@ -18,6 +18,7 @@ export class PlaylistComponent implements OnInit {
   error: boolean = null;
   playlistId: string;
   nextPageToken: string;
+  videoIds: string[];
   videos: {}[];
 
   constructor(
@@ -27,7 +28,7 @@ export class PlaylistComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.playlistService.idSubject
+    this.playlistService.playlistIdSubject
       .pipe(
         take(1),
         map((playlistId) => {
@@ -83,20 +84,38 @@ export class PlaylistComponent implements OnInit {
     this.onBack();
   }
 
+  onPlayVideo(i: number) {
+    const videoId = this.videoIds[i];
+    this.playlistService.videoIdSubject.next(videoId);
+    this.router.navigate(['/notes']);
+  }
+
   private showButtonCheck(nextPageToken: string) {
     if (nextPageToken === undefined) this.showButton = true;
   }
 
   private filterVideos(videos: {}[]) {
     const filteredVideos: {}[] = [];
-    videos.forEach((el: Object) => {
+    const filteredVideoIds: string[] = [];
+    videos.forEach((el: object) => {
       if (
         el['status'].privacyStatus === 'public' ||
         el['status'].privacyStatus === 'unlisted'
       ) {
+        filteredVideoIds.push(el['snippet'].resourceId.videoId);
         filteredVideos.push(el);
       }
     });
+
+    if (
+      this.videoIds === undefined ||
+      !this.videoIds ||
+      this.videoIds.length === 0
+    ) {
+      this.videoIds = [...filteredVideoIds];
+    } else {
+      this.videoIds = [...this.videoIds, ...filteredVideoIds];
+    }
 
     if (this.videos === undefined || !this.videos || this.videos.length === 0) {
       this.videos = [...filteredVideos];

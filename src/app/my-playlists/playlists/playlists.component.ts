@@ -24,7 +24,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   onOpen(i: number) {
     const playlistId = this.playlists[i].id;
-    this.playlistService.idSubject.next(playlistId);
+    this.playlistService.playlistIdSubject.next(playlistId);
     this.router.navigate(['/playlist']);
   }
 

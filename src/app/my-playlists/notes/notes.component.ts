@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { take } from 'rxjs';
+import { PlaylistService } from 'src/app/playlist.service';
 
 @Component({
   selector: 'app-notes',
@@ -12,10 +14,12 @@ export class NotesComponent implements OnInit, OnDestroy {
   timeStamp: string = '0:00';
   showForm: boolean = false;
 
-  constructor() {}
+  constructor(private playlistService: PlaylistService) {}
 
   ngOnInit() {
-    this.video = 'M7lc1UVf-VE';
+    this.playlistService.videoIdSubject.pipe(take(1)).subscribe((videoId) => {
+      this.video = videoId;
+    });
     this.init();
   }
 

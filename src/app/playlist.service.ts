@@ -8,7 +8,8 @@ import { Playlist } from './my-playlists/playlists/playlist.model';
 })
 export class PlaylistService {
   private playlists: Playlist[] = [];
-  idSubject = new BehaviorSubject<string>(null);
+  playlistIdSubject = new BehaviorSubject<string>(null);
+  videoIdSubject = new BehaviorSubject<string>(null);
 
   constructor() {}
 
