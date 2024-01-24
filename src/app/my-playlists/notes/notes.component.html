@@ -22,6 +22,7 @@
     </p>
     <form
       class="flex flex-col w-full max-w-lg"
+      ngNativeValidate
       (ngSubmit)="onSaveNote(noteForm)"
       #noteForm="ngForm"
     >
@@ -34,27 +35,23 @@
         #note="ngModel"
         name="note"
         required
+        [ngClass]="{ 'border border-red-600': saveNoteBtnClicked }"
       ></textarea>
       <div class="self-end">
         <button
           type="button"
           (click)="onCancelNote(noteForm)"
-          class="w-fit h-fit px-2 py-1 mr-1 rounded-md bg-red-400 hover:bg-red-600 text-md text-white focus:outline focus:outline-2 focus:outline-gray-700"
+          class="w-fit h-fit px-2 py-1 mr-1 rounded-md disabled:bg-red-500 bg-red-600 text-md text-white focus:outline focus:outline-2 focus:outline-gray-700"
         >
           Cancel
         </button>
         <button
           type="submit"
-          class="w-fit h-fit px-2 py-1 rounded-md bg-gray-600 hover:bg-gray-700 text-md text-white focus:outline focus:outline-2 focus:outline-gray-700"
+          [disabled]="!noteForm.valid"
+          class="w-fit h-fit px-2 py-1 rounded-md disabled:bg-gray-500 bg-gray-700 text-md text-white focus:outline focus:outline-2 focus:outline-gray-700"
         >
           Save note
         </button>
-      </div>
-      <div
-        *ngIf="note.touched && saveNoteBtnClicked"
-        class="my-12 p-2 pt-1 border border-red-500 bg-red-100 rounded-md text-center"
-      >
-        You cannot save an empty note.
       </div>
     </form>
   </div>

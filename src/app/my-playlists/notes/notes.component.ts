@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { take } from 'rxjs';
 import { PlaylistService } from 'src/app/playlist.service';
@@ -63,8 +63,6 @@ export class NotesComponent implements OnInit, OnDestroy {
       case window['YT'].PlayerState.PLAYING:
         break;
       case window['YT'].PlayerState.PAUSED:
-        console.log('paused');
-        this.calculateTimestamp();
         break;
     }
   }
@@ -76,11 +74,9 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   onSaveNote(noteForm: NgForm) {
-    if (noteForm.value.note === '') {
+    if (noteForm.invalid) {
       this.saveNoteBtnClicked = true;
-      setTimeout(() => {
-        this.saveNoteBtnClicked = false;
-      }, 5000);
+      return;
     } else {
       const timeStampSeconds = Math.floor(this.videoPlayer.getCurrentTime());
       const note = noteForm.value.note;
