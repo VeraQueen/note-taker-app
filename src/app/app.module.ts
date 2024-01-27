@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { PlaylistsComponent } from './my-playlists/playlists/playlists.component';
 import { PlaylistComponent } from './my-playlists/playlist/playlist.component';
-import { NotesComponent } from './my-playlists/notes/notes.component';
+import { PlayerComponent } from './my-playlists/player/player.component';
 import { SearchComponent } from './search/search.component';
 import { ScrollTopComponent } from './shared/scroll-top/scroll-top.component';
 import { NgIconsModule } from '@ng-icons/core';
@@ -29,7 +29,7 @@ import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
     HeaderComponent,
     PlaylistsComponent,
     PlaylistComponent,
-    NotesComponent,
+    PlayerComponent,
     SearchComponent,
     ScrollTopComponent,
     CssLoaderComponent,

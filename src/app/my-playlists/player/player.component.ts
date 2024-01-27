@@ -1,26 +1,27 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { take } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { PlaylistService } from 'src/app/playlist.service';
 
 @Component({
-  selector: 'app-notes',
-  templateUrl: './notes.component.html',
-  styleUrls: ['./notes.component.css'],
+  selector: 'app-player',
+  templateUrl: './player.component.html',
+  styleUrls: ['./player.component.css'],
 })
-export class NotesComponent implements OnInit, OnDestroy {
+export class PlayerComponent implements OnInit, OnDestroy {
   video: any;
   videoPlayer: any;
-  timeStamp: string = '0:00';
+  timestamp: string;
+  timestampSeconds: number;
   showForm: boolean = false;
   saveNoteBtnClicked: boolean = false;
 
   constructor(private playlistService: PlaylistService) {}
 
   ngOnInit() {
-    // this.playlistService.videoIdSubject.pipe(take(1)).subscribe((videoId) => {
-    //   this.video = videoId;
-    // });
+    this.playlistService.videoIdSubject.pipe(take(1)).subscribe((videoId) => {
+      this.video = videoId;
+    });
     this.video = 'M7lc1UVf-VE';
     this.init();
   }
@@ -78,7 +79,7 @@ export class NotesComponent implements OnInit, OnDestroy {
       this.saveNoteBtnClicked = true;
       return;
     } else {
-      const timeStampSeconds = Math.floor(this.videoPlayer.getCurrentTime());
+      const timeStampSeconds = this.timestampSeconds;
       const note = noteForm.value.note;
       console.log(timeStampSeconds, note);
       this.showForm = false;
@@ -95,13 +96,14 @@ export class NotesComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   private calculateTimestamp() {
+    this.timestampSeconds = Math.floor(this.videoPlayer.getCurrentTime());
     const minutes: number = +Math.floor(this.videoPlayer.getCurrentTime() / 60);
     const seconds: number = +Math.floor(this.videoPlayer.getCurrentTime() % 60);
     if (seconds < 10) {
-      this.timeStamp = minutes + ':' + 0 + seconds;
+      this.timestamp = minutes + ':' + 0 + seconds;
     } else {
-      this.timeStamp = minutes + ':' + seconds;
+      this.timestamp = minutes + ':' + seconds;
     }
-    console.log(this.timeStamp);
+    console.log(this.timestamp);
   }
 }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchComponent } from './search/search.component';
 import { PlaylistComponent } from './my-playlists/playlist/playlist.component';
-import { NotesComponent } from './my-playlists/notes/notes.component';
+import { PlayerComponent } from './my-playlists/player/player.component';
 import { PlaylistsComponent } from './my-playlists/playlists/playlists.component';
 
 const routes: Routes = [
@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'notes',
-    component: NotesComponent,
+    component: PlayerComponent,
   },
   {
     path: 'search',
