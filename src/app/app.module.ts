@@ -10,6 +10,7 @@ import { PlaylistsComponent } from './my-playlists/playlists/playlists.component
 import { PlaylistComponent } from './my-playlists/playlist/playlist.component';
 import { PlayerComponent } from './my-playlists/player/player.component';
 import { SearchComponent } from './search/search.component';
+import { NotesComponent } from './my-playlists/player/notes/notes.component';
 import { ScrollTopComponent } from './shared/scroll-top/scroll-top.component';
 import { NgIconsModule } from '@ng-icons/core';
 import {
@@ -31,6 +32,7 @@ import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
     PlaylistComponent,
     PlayerComponent,
     SearchComponent,
+    NotesComponent,
     ScrollTopComponent,
     CssLoaderComponent,
   ],

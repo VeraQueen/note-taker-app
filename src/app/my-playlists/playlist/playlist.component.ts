@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { Subscription, map, switchMap, take } from 'rxjs';
 import { FetchVideosData, HttpService } from 'src/app/http.service';
+import { NoteService } from 'src/app/notes.service';
 import { PlaylistService } from 'src/app/playlist.service';
 
 @Component({
@@ -24,6 +25,7 @@ export class PlaylistComponent implements OnInit {
   constructor(
     private playlistService: PlaylistService,
     private httpService: HttpService,
+    private noteService: NoteService,
     private router: Router
   ) {}
 
@@ -87,6 +89,7 @@ export class PlaylistComponent implements OnInit {
   onPlayVideo(i: number) {
     const videoId = this.videoIds[i];
     this.playlistService.videoIdSubject.next(videoId);
+    this.noteService.setNewPlaylistNotes(this.playlistId);
     this.router.navigate(['/notes']);
   }
 

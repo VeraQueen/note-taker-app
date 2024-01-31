@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { take } from 'rxjs/operators';
+import { NoteService } from 'src/app/notes.service';
 import { PlaylistService } from 'src/app/playlist.service';
+import { Note } from './note.model';
 
 @Component({
   selector: 'app-player',
@@ -15,14 +17,17 @@ export class PlayerComponent implements OnInit, OnDestroy {
   timestampSeconds: number;
   showForm: boolean = false;
   saveNoteBtnClicked: boolean = false;
+  @ViewChild('noteForm', { static: false }) noteForm: NgForm;
 
-  constructor(private playlistService: PlaylistService) {}
+  constructor(
+    private playlistService: PlaylistService,
+    private noteService: NoteService
+  ) {}
 
   ngOnInit() {
     this.playlistService.videoIdSubject.pipe(take(1)).subscribe((videoId) => {
       this.video = videoId;
     });
-    this.video = 'M7lc1UVf-VE';
     this.init();
   }
 
@@ -69,9 +74,14 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   onTakeNote() {
-    this.calculateTimestamp();
-    this.videoPlayer.pauseVideo();
-    this.showForm = true;
+    if (this.showForm && this.noteForm.invalid) {
+      this.videoPlayer.playVideo();
+      this.showForm = false;
+    } else {
+      this.calculateTimestamp();
+      this.videoPlayer.pauseVideo();
+      this.showForm = true;
+    }
   }
 
   onSaveNote(noteForm: NgForm) {
@@ -79,9 +89,14 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.saveNoteBtnClicked = true;
       return;
     } else {
-      const timeStampSeconds = this.timestampSeconds;
+      const timestampSeconds = this.timestampSeconds;
       const note = noteForm.value.note;
-      console.log(timeStampSeconds, note);
+      const newNote: Note = {
+        note,
+        timestampSeconds,
+      };
+      this.noteService.sendNotes(this.video, newNote);
+      console.log(newNote);
       this.showForm = false;
       noteForm.reset();
     }
@@ -93,7 +108,9 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.videoPlayer.playVideo();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.noteService.saveAndEmpty();
+  }
 
   private calculateTimestamp() {
     this.timestampSeconds = Math.floor(this.videoPlayer.getCurrentTime());
