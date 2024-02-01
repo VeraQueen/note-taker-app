@@ -89,10 +89,12 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.saveNoteBtnClicked = true;
       return;
     } else {
+      const timestamp = this.timestamp;
       const timestampSeconds = this.timestampSeconds;
       const note = noteForm.value.note;
       const newNote: Note = {
         note,
+        timestamp,
         timestampSeconds,
       };
       this.noteService.sendNotes(this.video, newNote);
@@ -121,6 +123,5 @@ export class PlayerComponent implements OnInit, OnDestroy {
     } else {
       this.timestamp = minutes + ':' + seconds;
     }
-    console.log(this.timestamp);
   }
 }

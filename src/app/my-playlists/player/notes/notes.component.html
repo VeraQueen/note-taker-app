@@ -1,1 +1,17 @@
-<p>works</p>
+<div class="max-w-6xl mx-auto p-2" *ngIf="notes">
+  <div *ngFor="let note of notes">
+    <div class="flex gap-3 pb-2 w-full max-w-md mx-auto">
+      <p
+        class="w-fit h-fit px-2 rounded-md bg-gray-500 text-white hover:bg-gray-700 focus:outline focus:outline-2 focus:outline-gray-700"
+        (click)="onPlayHere()"
+      >
+        {{ note.timestamp }}
+      </p>
+      <p
+        class="w-full max-w-md h-fit p-2 pl-3 rounded-md text-gray-900 border border-gray-300"
+      >
+        {{ note.note }}
+      </p>
+    </div>
+  </div>
+</div>
