@@ -4,39 +4,29 @@ import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class NoteService {
-  private noteSub = new Subject<Note>();
-  notesAdded = new Subject<Note>();
+  notesAdded = new Subject<Note[]>();
+  timeLinksChanged = new Subject<number[]>();
 
-  private notesStorage = new Map();
-  private videoNotes = new Map();
   private notes: Note[] = [];
+  private timestampLinks: number[] = [];
 
   getNotes() {
     return this.notes.slice();
   }
 
-  sendNotes(videoId: string, note: Note) {
-    this.noteSub.next(note);
-    this.notes.push(note);
-    this.notesAdded.next(this.notes.slice(-1)[0]);
-    console.log(this.notes);
-    this.videoNotes.set(videoId, this.notes);
-    this.notesStorage.forEach((value, key) => {
-      console.log(key);
-      console.log(value);
-    });
+  getLinks() {
+    return this.timestampLinks.slice();
   }
 
-  setNewPlaylistNotes(playlistId: string) {
-    this.notesStorage.set(playlistId, this.videoNotes);
-    this.notesStorage.forEach((value, key) => {
-      console.log(key);
-      console.log(value);
-    });
+  saveNotes(videoId: string, note: Note) {
+    this.notes.push(note);
+    this.timestampLinks.push(note.timestampSeconds);
+    this.timeLinksChanged.next(this.timestampLinks.slice());
+    this.notesAdded.next(this.notes.slice());
   }
 
   saveAndEmpty() {
     this.notes.splice(0, this.notes.length);
-    this.videoNotes.clear();
+    this.timestampLinks.splice(0, this.timestampLinks.length);
   }
 }

@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NoteService } from 'src/app/notes.service';
 import { Note } from '../note.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.css'],
 })
-export class NotesComponent implements OnInit {
+export class NotesComponent implements OnInit, OnDestroy {
+  private noteSub: Subscription;
+  private linksSub: Subscription;
   notes: Note[];
   timestampsLinks: number[] = [];
 
@@ -16,33 +18,27 @@ export class NotesComponent implements OnInit {
 
   ngOnInit() {
     this.notes = this.noteService.getNotes();
-    this.notes.forEach((el) => {
-      this.timestampsLinks.push(el.timestampSeconds);
-    });
+    this.timestampsLinks = this.noteService.getLinks();
 
-    this.noteService.notesAdded.subscribe((note) => {
-      const newNotes = [];
-      newNotes.push(note);
-      if (this.notes === undefined || !this.notes || this.notes.length === 0) {
-        this.notes = [...newNotes];
-      } else {
-        this.notes = [...this.notes, ...newNotes];
-      }
-
-      const newLinks = [];
-      newLinks.push(note.timestampSeconds);
-      if (
-        this.timestampsLinks === undefined ||
-        !this.timestampsLinks ||
-        this.timestampsLinks.length === 0
-      ) {
-        this.timestampsLinks = [...newLinks];
-      } else {
-        this.timestampsLinks = [...this.timestampsLinks, ...newLinks];
-      }
-      console.log(this.notes, this.timestampsLinks);
+    this.noteSub = this.noteService.notesAdded.subscribe((notes) => {
+      this.notes = notes;
+      console.log(this.notes);
     });
+    this.linksSub = this.noteService.timeLinksChanged.subscribe(
+      (timestampsLinks) => {
+        this.timestampsLinks = timestampsLinks;
+        console.log(this.timestampsLinks);
+      }
+    );
   }
 
-  onPlayHere() {}
+  onPlayHere(i: number) {
+    console.log(i, this.timestampsLinks[i]);
+  }
+
+  ngOnDestroy() {
+    this.noteService.saveAndEmpty();
+    if (this.noteSub) this.noteSub.unsubscribe();
+    if (this.linksSub) this.linksSub.unsubscribe();
+  }
 }

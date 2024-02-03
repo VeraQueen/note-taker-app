@@ -97,8 +97,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
         timestamp,
         timestampSeconds,
       };
-      this.noteService.sendNotes(this.video, newNote);
-      console.log(newNote);
+      this.noteService.saveNotes(this.video, newNote);
       this.showForm = false;
       noteForm.reset();
     }
