@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { NoteService } from 'src/app/notes.service';
 import { Note } from '../note.model';
 import { Subscription } from 'rxjs';
@@ -22,18 +28,16 @@ export class NotesComponent implements OnInit, OnDestroy {
 
     this.noteSub = this.noteService.notesAdded.subscribe((notes) => {
       this.notes = notes;
-      console.log(this.notes);
     });
     this.linksSub = this.noteService.timeLinksChanged.subscribe(
       (timestampsLinks) => {
         this.timestampsLinks = timestampsLinks;
-        console.log(this.timestampsLinks);
       }
     );
   }
 
   onPlayHere(i: number) {
-    console.log(i, this.timestampsLinks[i]);
+    this.noteService.playHere(this.timestampsLinks[i]);
   }
 
   ngOnDestroy() {

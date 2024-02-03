@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 export class NoteService {
   notesAdded = new Subject<Note[]>();
   timeLinksChanged = new Subject<number[]>();
+  sendTimeLink = new Subject<number>();
 
   private notes: Note[] = [];
   private timestampLinks: number[] = [];
@@ -23,6 +24,10 @@ export class NoteService {
     this.timestampLinks.push(note.timestampSeconds);
     this.timeLinksChanged.next(this.timestampLinks.slice());
     this.notesAdded.next(this.notes.slice());
+  }
+
+  playHere(timeLink: number) {
+    this.sendTimeLink.next(timeLink);
   }
 
   saveAndEmpty() {

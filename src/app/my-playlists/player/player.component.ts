@@ -62,6 +62,10 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   onPlayerReady(event) {
     event.target.playVideo();
+
+    this.noteService.sendTimeLink.subscribe((timeLink) => {
+      this.videoPlayer.seekTo(timeLink);
+    });
   }
 
   onPlayerStateChange(event) {
