@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class NoteService {
-  notesAdded = new Subject<Note[]>();
+  notesChanged = new Subject<Note[]>();
   timeLinksChanged = new Subject<number[]>();
   sendTimeLink = new Subject<number>();
 
@@ -23,11 +23,18 @@ export class NoteService {
     this.notes.push(note);
     this.timestampLinks.push(note.timestampSeconds);
     this.timeLinksChanged.next(this.timestampLinks.slice());
-    this.notesAdded.next(this.notes.slice());
+    this.notesChanged.next(this.notes.slice());
   }
 
   playHere(timeLink: number) {
     this.sendTimeLink.next(timeLink);
+  }
+
+  deleteNote(i: number) {
+    this.notes.splice(i, 1);
+    this.timestampLinks.splice(i, 1);
+    this.timeLinksChanged.next(this.timestampLinks.slice());
+    this.notesChanged.next(this.notes.slice());
   }
 
   saveAndEmpty() {

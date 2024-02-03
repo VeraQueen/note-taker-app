@@ -26,7 +26,7 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.notes = this.noteService.getNotes();
     this.timestampsLinks = this.noteService.getLinks();
 
-    this.noteSub = this.noteService.notesAdded.subscribe((notes) => {
+    this.noteSub = this.noteService.notesChanged.subscribe((notes) => {
       this.notes = notes;
     });
     this.linksSub = this.noteService.timeLinksChanged.subscribe(
@@ -38,6 +38,10 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   onPlayHere(i: number) {
     this.noteService.playHere(this.timestampsLinks[i]);
+  }
+
+  onDelete(i: number) {
+    this.noteService.deleteNote(i);
   }
 
   ngOnDestroy() {

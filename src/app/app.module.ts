@@ -20,6 +20,7 @@ import {
   heroPlus,
   heroArrowUp,
   heroPencilSquare,
+  heroXMark,
 } from '@ng-icons/heroicons/outline';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
@@ -49,6 +50,7 @@ import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
       heroArrowLeft,
       heroArrowUp,
       heroPencilSquare,
+      heroXMark,
     }),
     InfiniteScrollModule,
   ],
