@@ -28,6 +28,8 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/playlist']);
   }
 
+  onDelete(i) {}
+
   ngOnDestroy() {
     if (this.getVideosSub) this.getVideosSub.unsubscribe();
   }
