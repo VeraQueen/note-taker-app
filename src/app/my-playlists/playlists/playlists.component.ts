@@ -20,6 +20,9 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.playlists = this.playlistService.getPlaylists();
+    this.playlistService.playlistsChanged.subscribe((playlists) => {
+      this.playlists = playlists;
+    });
   }
 
   onOpen(i: number) {
@@ -28,7 +31,9 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/playlist']);
   }
 
-  onDelete(i) {}
+  onDelete(i: number) {
+    this.playlistService.deletePlaylist(i);
+  }
 
   ngOnDestroy() {
     if (this.getVideosSub) this.getVideosSub.unsubscribe();
