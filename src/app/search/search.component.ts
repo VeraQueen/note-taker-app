@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { FetchPlaylistsData, HttpService } from '../http.service';
 import { PlaylistService } from '../playlist.service';
@@ -16,13 +16,13 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchPlaylistsSub: Subscription;
   getAndAddPlaylistSub: Subscription;
   searchObs: Observable<FetchPlaylistsData>;
-  isLoading = false;
+  isLoading: boolean = false;
   showMsg: boolean = false;
   error: string = null;
   searchForm: FormGroup;
   searchInputValue: string;
   nextPageToken: string;
-  playlists: [];
+  playlists: object[];
 
   constructor(
     private httpService: HttpService,
@@ -55,6 +55,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   onAdd(id: number) {
+    this.playlists[id]['added'] = true;
     const playlistId = this.playlists[id]['id']['playlistId'];
     this.getAndAddPlaylistSub = this.httpService
       .getPlaylist(playlistId)
@@ -97,6 +98,14 @@ export class SearchComponent implements OnInit, OnDestroy {
           this.playlists = [...this.playlists, ...playlists.items];
         }
         this.isLoading = false;
+        console.log(this.playlists);
+        this.playlists.forEach((el: any) => {
+          this.playlistService.getPlaylistIds().forEach((myPlEl) => {
+            if (el['id']['playlistId'] === myPlEl) {
+              el['existing'] = true;
+            }
+          });
+        });
       },
       error: (error) => {
         this.isLoading = false;

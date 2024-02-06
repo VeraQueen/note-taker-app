@@ -21,9 +21,11 @@ import {
   heroArrowUp,
   heroPencilSquare,
   heroXMark,
+  heroCheck,
 } from '@ng-icons/heroicons/outline';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
+import { AddedPlaylistDirective } from './shared/directives/added-playlist.directive';
 
 @NgModule({
   declarations: [
@@ -51,8 +53,10 @@ import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
       heroArrowUp,
       heroPencilSquare,
       heroXMark,
+      heroCheck,
     }),
     InfiniteScrollModule,
+    AddedPlaylistDirective,
   ],
   providers: [],
   bootstrap: [AppComponent],
