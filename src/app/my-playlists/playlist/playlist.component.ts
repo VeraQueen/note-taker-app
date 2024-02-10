@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Subscription, map, switchMap, take } from 'rxjs';
-import { FetchVideosData, HttpService } from 'src/app/http.service';
+import {
+  FetchVideosData,
+  HttpYouTubeService,
+} from 'src/app/http-youtube.service';
 import { PlaylistService } from 'src/app/playlist.service';
 
 @Component({
@@ -23,7 +26,7 @@ export class PlaylistComponent implements OnInit {
 
   constructor(
     private playlistService: PlaylistService,
-    private httpService: HttpService,
+    private httpService: HttpYouTubeService,
     private router: Router
   ) {}
 

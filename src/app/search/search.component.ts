@@ -3,9 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Observable } from 'rxjs';
 
-import { FetchPlaylistsData, HttpService } from '../http.service';
+import {
+  FetchPlaylistsData,
+  HttpYouTubeService,
+} from '../http-youtube.service';
 import { PlaylistService } from '../playlist.service';
 import { Playlist } from '../my-playlists/playlists/playlist.model';
+import { NoteService } from '../notes.service';
 
 @Component({
   selector: 'app-search',
@@ -25,8 +29,9 @@ export class SearchComponent implements OnInit, OnDestroy {
   playlists: object[];
 
   constructor(
-    private httpService: HttpService,
-    private playlistService: PlaylistService
+    private httpService: HttpYouTubeService,
+    private playlistService: PlaylistService,
+    private notesService: NoteService
   ) {}
 
   ngOnInit() {

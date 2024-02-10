@@ -4,6 +4,7 @@ import { take } from 'rxjs/operators';
 import { NoteService } from 'src/app/notes.service';
 import { PlaylistService } from 'src/app/playlist.service';
 import { Note } from './note.model';
+import { HttpFirebaseService } from 'src/app/http-firebase.service';
 
 @Component({
   selector: 'app-player',
@@ -21,7 +22,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   constructor(
     private playlistService: PlaylistService,
-    private noteService: NoteService
+    private noteService: NoteService,
+    private firebaseService: HttpFirebaseService
   ) {}
 
   ngOnInit() {
@@ -101,7 +103,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
         timestamp,
         timestampSeconds,
       };
-      this.noteService.saveNotes(this.video, newNote);
+      this.noteService.addNotes(this.video, newNote);
+      this.firebaseService.saveNotes({ videoId: this.video, note });
       this.showForm = false;
       noteForm.reset();
     }

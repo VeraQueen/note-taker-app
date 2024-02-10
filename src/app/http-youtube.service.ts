@@ -26,7 +26,7 @@ export interface FetchVideosData {
 }
 
 @Injectable({ providedIn: 'root' })
-export class HttpService {
+export class HttpYouTubeService {
   constructor(private http: HttpClient) {}
 
   fetchPlaylists(searchInputValue: string, pageToken: string = '') {

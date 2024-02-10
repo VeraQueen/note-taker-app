@@ -35,14 +35,11 @@ export class PlaylistService {
   addPlaylist(newPlaylist: Playlist) {
     this.playlists.push(newPlaylist);
     this.myPlaylistsIds.push(newPlaylist.id);
-    console.log(this.playlists, this.myPlaylistsIds);
   }
 
   deletePlaylist(i: number) {
     this.playlists.splice(i, 1);
     this.myPlaylistsIds.splice(i, 1);
     this.playlistsChanged.next(this.playlists.slice());
-    console.log(this.playlists);
-    console.log(this.myPlaylistsIds);
   }
 }

@@ -19,15 +19,15 @@ export class NoteService {
     return this.timestampLinks.slice();
   }
 
-  saveNotes(videoId: string, note: Note) {
+  playHere(timeLink: number) {
+    this.sendTimeLink.next(timeLink);
+  }
+
+  addNotes(videoId: string, note: Note) {
     this.notes.push(note);
     this.timestampLinks.push(note.timestampSeconds);
     this.timeLinksChanged.next(this.timestampLinks.slice());
     this.notesChanged.next(this.notes.slice());
-  }
-
-  playHere(timeLink: number) {
-    this.sendTimeLink.next(timeLink);
   }
 
   deleteNote(i: number) {

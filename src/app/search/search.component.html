@@ -67,8 +67,10 @@
       <button
         type="button"
         appAddedPlaylist
-        [ngClass]="{ 'bg-green-600 hover:bg-green-700': playlist.existing }"
-        class="w-10 h-10 rounded-full bg-red-600 hover:bg-red-700 flex items-center justify-center absolute inset-y-1/2 -translate-x-1/2 -translate-y-1/2 left-full focus:outline focus:outline-2 focus:outline-gray-700"
+        [ngClass]="{
+          'playlist-existing': playlist.existing
+        }"
+        class="playlist-add w-10 h-10 rounded-full flex items-center justify-center absolute inset-y-1/2 -translate-x-1/2 -translate-y-1/2 left-full focus:outline focus:outline-2 focus:outline-gray-700"
         (click)="onAdd(i)"
       >
         <ng-icon
