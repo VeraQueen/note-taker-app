@@ -64,10 +64,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.playlistService.addPlaylistId(playlistId);
   }
 
-  onHandleError() {
-    this.error = null;
-  }
-
   ngOnDestroy(): void {
     if (this.searchPlaylistsSub) this.searchPlaylistsSub.unsubscribe();
   }

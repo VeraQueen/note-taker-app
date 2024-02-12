@@ -28,6 +28,7 @@ import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
 import { AddedPlaylistDirective } from './shared/directives/added-playlist.directive';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { ErrorComponent } from './shared/error/error.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,6 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     SearchComponent,
     NotesComponent,
     ScrollTopComponent,
-    CssLoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +59,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     }),
     InfiniteScrollModule,
     AddedPlaylistDirective,
+    ErrorComponent,
+    CssLoaderComponent,
     provideFirebaseApp(() =>
       initializeApp({
         projectId: 'note-taker-app-400810',

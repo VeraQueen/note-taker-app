@@ -73,9 +73,6 @@ export class HttpYouTubeService {
   }
 
   private handleError(errorRes: HttpErrorResponse) {
-    // console.log(errorRes);
-    // console.log(errorRes.name);
-    // console.log(errorRes.error);
     let errorMessage =
       'An unknown error occurred. Please check your internet connection.';
     if (!errorRes.error || !errorRes.error.error) {
