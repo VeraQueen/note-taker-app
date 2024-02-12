@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Playlist } from './playlist.model';
 import { PlaylistService } from 'src/app/playlist.service';
+import { HttpFirebaseService } from 'src/app/http-firebase.service';
+import { HttpYouTubeService } from 'src/app/http-youtube.service';
 
 @Component({
   selector: 'app-playlists',
@@ -12,16 +14,35 @@ import { PlaylistService } from 'src/app/playlist.service';
 })
 export class PlaylistsComponent implements OnInit, OnDestroy {
   playlists: Playlist[] = [];
-  getVideosSub: Subscription;
+  getPlaylistsSub: Subscription;
   constructor(
     private playlistService: PlaylistService,
-    private router: Router
+    private router: Router,
+    private firebaseService: HttpFirebaseService,
+    private httpService: HttpYouTubeService
   ) {}
 
   ngOnInit() {
-    this.playlists = this.playlistService.getPlaylists();
-    this.playlistService.playlistsChanged.subscribe((playlists) => {
-      this.playlists = playlists;
+    this.firebaseService.getPLaylists().then((playlists) => {
+      playlists.forEach((playlist) => {
+        this.getPlaylistsSub = this.httpService
+          .getPlaylist(playlist.playlistId)
+          .subscribe((data) => {
+            const plName = data['items'][0].snippet.localized.title;
+            const plAuthor = data['items'][0].snippet.channelTitle;
+            const plNumVideos = data['items'][0].contentDetails.itemCount;
+            const plImgPath = data['items'][0].snippet.thumbnails.medium.url;
+            const plId = data['items'][0].id;
+            const newPlaylist = new Playlist(
+              plName,
+              plAuthor,
+              plNumVideos,
+              plImgPath,
+              plId
+            );
+            this.playlists.push(newPlaylist);
+          });
+      });
     });
   }
 
@@ -31,11 +52,11 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/playlist']);
   }
 
-  onDelete(i: number) {
-    this.playlistService.deletePlaylist(i);
-  }
+  // onDelete(i: number) {
+  //   this.playlistService.deletePlaylist(i);
+  // }
 
   ngOnDestroy() {
-    if (this.getVideosSub) this.getVideosSub.unsubscribe();
+    if (this.getPlaylistsSub) this.getPlaylistsSub.unsubscribe();
   }
 }

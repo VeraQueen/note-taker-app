@@ -8,8 +8,7 @@ import {
   HttpYouTubeService,
 } from '../http-youtube.service';
 import { PlaylistService } from '../playlist.service';
-import { Playlist } from '../my-playlists/playlists/playlist.model';
-import { NoteService } from '../notes.service';
+import { HttpFirebaseService } from '../http-firebase.service';
 
 @Component({
   selector: 'app-search',
@@ -18,7 +17,6 @@ import { NoteService } from '../notes.service';
 })
 export class SearchComponent implements OnInit, OnDestroy {
   searchPlaylistsSub: Subscription;
-  getAndAddPlaylistSub: Subscription;
   searchObs: Observable<FetchPlaylistsData>;
   isLoading: boolean = false;
   showMsg: boolean = false;
@@ -31,7 +29,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   constructor(
     private httpService: HttpYouTubeService,
     private playlistService: PlaylistService,
-    private notesService: NoteService
+    private firebaseService: HttpFirebaseService
   ) {}
 
   ngOnInit() {
@@ -62,23 +60,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   onAdd(id: number) {
     this.playlists[id]['added'] = true;
     const playlistId = this.playlists[id]['id']['playlistId'];
-    this.getAndAddPlaylistSub = this.httpService
-      .getPlaylist(playlistId)
-      .subscribe((data) => {
-        const plName = data['items'][0].snippet.localized.title;
-        const plAuthor = data['items'][0].snippet.channelTitle;
-        const plNumVideos = data['items'][0].contentDetails.itemCount;
-        const plImgPath = data['items'][0].snippet.thumbnails.medium.url;
-        const plId = data['items'][0].id;
-        const newPlaylist = new Playlist(
-          plName,
-          plAuthor,
-          plNumVideos,
-          plImgPath,
-          plId
-        );
-        this.playlistService.addPlaylist(newPlaylist);
-      });
+    this.firebaseService.savePlaylist(playlistId);
+    this.playlistService.addPlaylistId(playlistId);
   }
 
   onHandleError() {
@@ -87,7 +70,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.searchPlaylistsSub) this.searchPlaylistsSub.unsubscribe();
-    if (this.getAndAddPlaylistSub) this.getAndAddPlaylistSub.unsubscribe();
   }
 
   private searchObsSubscribe() {

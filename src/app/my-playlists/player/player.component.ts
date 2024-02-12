@@ -104,7 +104,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
         timestampSeconds,
       };
       this.noteService.addNotes(this.video, newNote);
-      this.firebaseService.saveNotes({ videoId: this.video, note });
+      // this.firebaseService.saveNotes(newNote);
       this.showForm = false;
       noteForm.reset();
     }

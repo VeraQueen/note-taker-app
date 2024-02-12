@@ -26,6 +26,8 @@ import {
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
 import { AddedPlaylistDirective } from './shared/directives/added-playlist.directive';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,18 @@ import { AddedPlaylistDirective } from './shared/directives/added-playlist.direc
     }),
     InfiniteScrollModule,
     AddedPlaylistDirective,
+    provideFirebaseApp(() =>
+      initializeApp({
+        projectId: 'note-taker-app-400810',
+        appId: '1:407343500901:web:ae91cfa94bdda4a392408c',
+        storageBucket: 'note-taker-app-400810.appspot.com',
+        apiKey: 'AIzaSyAIVAP0e87vEsCzRtxq2zh1HdbzUWpkNuk',
+        authDomain: 'note-taker-app-400810.firebaseapp.com',
+        messagingSenderId: '407343500901',
+        measurementId: 'G-CGG06S1SC5',
+      })
+    ),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent],
