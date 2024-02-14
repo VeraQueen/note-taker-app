@@ -23,7 +23,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.firebaseService.getPLaylists().then((playlists) => {
+    this.firebaseService.getPlaylists().subscribe((playlists) => {
       playlists.forEach((playlist) => {
         this.getPlaylistsSub = this.httpService
           .getPlaylist(playlist.playlistId)

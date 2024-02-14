@@ -9,6 +9,7 @@ import {
   getDocs,
   query,
   setDoc,
+  collectionData,
 } from '@angular/fire/firestore';
 import { Observable, map, of } from 'rxjs';
 
@@ -29,13 +30,8 @@ export class HttpFirebaseService {
     setDoc(docRef, { playlistId: playlistId });
   }
 
-  async getPLaylists() {
-    let playlists = [];
-    (await getDocs(query(collection(this.firestore, 'playlists')))).docs.map(
-      (data) => {
-        playlists.push(data.data());
-      }
-    );
-    return playlists;
+  getPlaylists() {
+    const colRef = collection(this.firestore, 'playlists');
+    return collectionData(colRef);
   }
 }
