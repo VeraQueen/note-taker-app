@@ -64,6 +64,7 @@ export class PlaylistComponent implements OnInit {
         .getVideos(this.playlistId, this.nextPageToken)
         .subscribe({
           next: (videos: FetchVideosData) => {
+            console.log(videos);
             this.nextPageToken = videos.nextPageToken
               ? videos.nextPageToken
               : undefined;

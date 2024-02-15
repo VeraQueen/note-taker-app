@@ -13,7 +13,7 @@ import { HttpYouTubeService } from 'src/app/http-youtube.service';
   styleUrls: ['./playlists.component.css'],
 })
 export class PlaylistsComponent implements OnInit, OnDestroy {
-  playlists: Playlist[] = [];
+  playlists: Playlist[];
   getPlaylistsSub: Subscription;
   constructor(
     private playlistService: PlaylistService,
@@ -24,6 +24,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.firebaseService.getPlaylists().subscribe((playlists) => {
+      this.playlists = [];
       playlists.forEach((playlist) => {
         this.getPlaylistsSub = this.httpService
           .getPlaylist(playlist.playlistId)
@@ -52,9 +53,9 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/playlist']);
   }
 
-  // onDelete(i: number) {
-  //   this.playlistService.deletePlaylist(i);
-  // }
+  onDelete(playlistId: string) {
+    this.firebaseService.deletePlaylist(playlistId);
+  }
 
   ngOnDestroy() {
     if (this.getPlaylistsSub) this.getPlaylistsSub.unsubscribe();

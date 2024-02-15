@@ -10,6 +10,7 @@ import {
   query,
   setDoc,
   collectionData,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { Observable, map, of } from 'rxjs';
 
@@ -33,5 +34,10 @@ export class HttpFirebaseService {
   getPlaylists() {
     const colRef = collection(this.firestore, 'playlists');
     return collectionData(colRef);
+  }
+
+  async deletePlaylist(playlistId: string) {
+    const docRef = doc(this.firestore, 'playlists', playlistId);
+    await deleteDoc(docRef);
   }
 }
