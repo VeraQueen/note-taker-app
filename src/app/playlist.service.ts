@@ -12,7 +12,7 @@ export class PlaylistService {
 
   constructor() {}
 
-  getPlaylistIds() {
+  getPlaylistsIds() {
     return this.myPlaylistsIds.slice();
   }
 
@@ -20,7 +20,11 @@ export class PlaylistService {
     this.myPlaylistsIds.push(playlistId);
   }
 
-  // deletePlaylist(i: number) {
-  //   this.myPlaylistsIds.splice(i, 1);
-  // }
+  deletePlaylist(playlistId: string) {
+    this.myPlaylistsIds.forEach((el) => {
+      if (el === playlistId) {
+        this.myPlaylistsIds.splice(el, 1);
+      }
+    });
+  }
 }

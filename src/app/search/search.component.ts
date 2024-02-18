@@ -81,9 +81,8 @@ export class SearchComponent implements OnInit, OnDestroy {
           this.playlists = [...this.playlists, ...playlists.items];
         }
         this.isLoading = false;
-        console.log(this.playlists);
         this.playlists.forEach((el: any) => {
-          this.playlistService.getPlaylistIds().forEach((myPlEl) => {
+          this.playlistService.getPlaylistsIds().forEach((myPlEl) => {
             if (el['id']['playlistId'] === myPlEl) {
               el['existing'] = true;
             }

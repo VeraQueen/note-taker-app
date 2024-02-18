@@ -12,7 +12,8 @@ import { HttpFirebaseService } from 'src/app/http-firebase.service';
   styleUrls: ['./player.component.css'],
 })
 export class PlayerComponent implements OnInit, OnDestroy {
-  video: any;
+  playlistId: string;
+  video: string;
   videoPlayer: any;
   timestamp: string;
   timestampSeconds: number;
@@ -30,6 +31,11 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.playlistService.videoIdSubject.pipe(take(1)).subscribe((videoId) => {
       this.video = videoId;
     });
+    this.playlistService.playlistIdSubject
+      .pipe(take(1))
+      .subscribe((playlisId) => {
+        this.playlistId = playlisId;
+      });
     this.init();
   }
 
@@ -104,7 +110,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
         timestampSeconds,
       };
       this.noteService.addNotes(this.video, newNote);
-      // this.firebaseService.saveNotes(newNote);
+      this.firebaseService.saveNote(this.playlistId, this.video, newNote);
       this.showForm = false;
       noteForm.reset();
     }

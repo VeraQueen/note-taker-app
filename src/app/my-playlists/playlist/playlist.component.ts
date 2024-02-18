@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Subscription, map, switchMap, take } from 'rxjs';
+import { HttpFirebaseService } from 'src/app/http-firebase.service';
 import {
   FetchVideosData,
   HttpYouTubeService,
@@ -27,7 +28,8 @@ export class PlaylistComponent implements OnInit {
   constructor(
     private playlistService: PlaylistService,
     private httpService: HttpYouTubeService,
-    private router: Router
+    private router: Router,
+    private firebaseService: HttpFirebaseService
   ) {}
 
   ngOnInit() {
@@ -45,7 +47,6 @@ export class PlaylistComponent implements OnInit {
       )
       .subscribe({
         next: (videosData: FetchVideosData) => {
-          console.log(videosData);
           this.nextPageToken = videosData.nextPageToken;
           this.showButtonCheck(this.nextPageToken);
           this.filterVideos(videosData.items);
@@ -64,7 +65,6 @@ export class PlaylistComponent implements OnInit {
         .getVideos(this.playlistId, this.nextPageToken)
         .subscribe({
           next: (videos: FetchVideosData) => {
-            console.log(videos);
             this.nextPageToken = videos.nextPageToken
               ? videos.nextPageToken
               : undefined;
@@ -91,6 +91,7 @@ export class PlaylistComponent implements OnInit {
   onPlayVideo(i: number) {
     const videoId = this.videoIds[i];
     this.playlistService.videoIdSubject.next(videoId);
+    this.firebaseService.addVideoNotesCol(this.playlistId, videoId);
     this.router.navigate(['/notes']);
   }
 

@@ -5,26 +5,14 @@ import {
   addDoc,
   collection,
   doc,
-  getDoc,
-  getDocs,
-  query,
   setDoc,
   collectionData,
   deleteDoc,
 } from '@angular/fire/firestore';
-import { Observable, map, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class HttpFirebaseService {
   constructor(private firestore: Firestore) {}
-  // async saveNotes(note: Note) {
-  //   console.log(note);
-  //   await addDoc(collection(this.firestore, 'notes'), {
-  //     note: note.note,
-  //     timestamp: note.timestamp,
-  //     timestampSeconds: note.timestampSeconds,
-  //   });
-  // }
 
   savePlaylist(playlistId: string) {
     const docRef = doc(this.firestore, 'playlists', playlistId);
@@ -36,8 +24,30 @@ export class HttpFirebaseService {
     return collectionData(colRef);
   }
 
-  async deletePlaylist(playlistId: string) {
+  deletePlaylist(playlistId: string) {
     const docRef = doc(this.firestore, 'playlists', playlistId);
-    await deleteDoc(docRef);
+    deleteDoc(docRef);
+  }
+
+  addVideoNotesCol(playlistId: string, videoId: string) {
+    const videoNotesCollections = doc(
+      this.firestore,
+      `playlists/${playlistId}/${videoId}/`,
+      'nullNote'
+    );
+    setDoc(videoNotesCollections, { null: null });
+  }
+
+  saveNote(playlistId: string, videoId: string, note: Note) {
+    console.log(note);
+    const colRef = collection(
+      this.firestore,
+      `playlists/${playlistId}/${videoId}`
+    );
+    addDoc(colRef, {
+      note: note.note,
+      timestamp: note.timestamp,
+      timestampSeconds: note.timestampSeconds,
+    });
   }
 }
