@@ -8,7 +8,10 @@ import {
   setDoc,
   collectionData,
   deleteDoc,
+  getDoc,
+  getDocs,
 } from '@angular/fire/firestore';
+import { of, take } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class HttpFirebaseService {
@@ -39,7 +42,6 @@ export class HttpFirebaseService {
   }
 
   saveNote(playlistId: string, videoId: string, note: Note) {
-    console.log(note);
     const colRef = collection(
       this.firestore,
       `playlists/${playlistId}/${videoId}`
@@ -49,5 +51,13 @@ export class HttpFirebaseService {
       timestamp: note.timestamp,
       timestampSeconds: note.timestampSeconds,
     });
+  }
+
+  getVideoNotes(playlistId: string, videoId: string) {
+    const colRef = collection(
+      this.firestore,
+      `playlists/${playlistId}/${videoId}`
+    );
+    return collectionData(colRef);
   }
 }

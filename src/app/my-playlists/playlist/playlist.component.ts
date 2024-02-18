@@ -90,7 +90,9 @@ export class PlaylistComponent implements OnInit {
 
   onPlayVideo(i: number) {
     const videoId = this.videoIds[i];
+    console.log(this.playlistId, videoId);
     this.playlistService.videoIdSubject.next(videoId);
+    this.playlistService.playlistIdSubject.next(this.playlistId);
     this.firebaseService.addVideoNotesCol(this.playlistId, videoId);
     this.router.navigate(['/notes']);
   }
