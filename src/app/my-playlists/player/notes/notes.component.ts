@@ -55,15 +55,12 @@ export class NotesComponent implements OnInit, OnDestroy {
             return;
           } else {
             this.notes.push(noteEl);
+            this.sortAsc(this.notes);
           }
         });
       });
 
-    // this.notes = this.noteService.getNotes();
     // this.timestampsLinks = this.noteService.getLinks();
-    // this.noteSub = this.noteService.notesChanged.subscribe((notes) => {
-    //   this.notes = notes;
-    // });
     // this.linksSub = this.noteService.timeLinksChanged.subscribe(
     //   (timestampsLinks) => {
     //     this.timestampsLinks = timestampsLinks;
@@ -71,16 +68,32 @@ export class NotesComponent implements OnInit, OnDestroy {
     // );
   }
 
-  onPlayHere(i: number) {
-    this.noteService.playHere(this.timestampsLinks[i]);
+  onSortAsc() {
+    this.sortAsc(this.notes);
   }
 
-  onDelete(i: number) {
-    this.noteService.deleteNote(i);
+  onSortDesc() {
+    this.sortDesc(this.notes);
+  }
+
+  // onPlayHere(i: number) {
+  //   this.noteService.playHere(this.timestampsLinks[i]);
+  // }
+
+  // onDelete(i: number) {
+  //   this.noteService.deleteNote(i);
+  // }
+
+  private sortDesc(notes: Note[]) {
+    this.notes = notes.sort((a, b) => a.timestampSeconds - b.timestampSeconds);
+  }
+
+  private sortAsc(notes: Note[]) {
+    this.notes = notes.sort((a, b) => b.timestampSeconds - a.timestampSeconds);
   }
 
   ngOnDestroy() {
-    this.noteService.saveAndEmpty();
+    // this.noteService.saveAndEmpty();
     if (this.noteSub) this.noteSub.unsubscribe();
     if (this.linksSub) this.linksSub.unsubscribe();
   }

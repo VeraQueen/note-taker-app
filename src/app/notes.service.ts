@@ -4,16 +4,10 @@ import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class NoteService {
-  notesChanged = new Subject<Note[]>();
   timeLinksChanged = new Subject<number[]>();
   sendTimeLink = new Subject<number>();
 
-  private notes: Note[] = [];
   private timestampLinks: number[] = [];
-
-  getNotes() {
-    return this.notes.slice();
-  }
 
   getLinks() {
     return this.timestampLinks.slice();
@@ -23,22 +17,18 @@ export class NoteService {
     this.sendTimeLink.next(timeLink);
   }
 
-  addNotes(videoId: string, note: Note) {
-    this.notes.push(note);
-    this.timestampLinks.push(note.timestampSeconds);
-    this.timeLinksChanged.next(this.timestampLinks.slice());
-    this.notesChanged.next(this.notes.slice());
-  }
+  // addNotes(videoId: string, note: Note) {
+  //   this.timestampLinks.push(note.timestampSeconds);
+  //   this.timeLinksChanged.next(this.timestampLinks.slice());
+  // }
 
-  deleteNote(i: number) {
-    this.notes.splice(i, 1);
-    this.timestampLinks.splice(i, 1);
-    this.timeLinksChanged.next(this.timestampLinks.slice());
-    this.notesChanged.next(this.notes.slice());
-  }
+  // deleteNote(i: number) {
+  //   this.timestampLinks.splice(i, 1);
+  //   this.timeLinksChanged.next(this.timestampLinks.slice());
+  // }
 
-  saveAndEmpty() {
-    this.notes.splice(0, this.notes.length);
-    this.timestampLinks.splice(0, this.timestampLinks.length);
-  }
+  // saveAndEmpty() {
+  //   this.notes.splice(0, this.notes.length);
+  //   this.timestampLinks.splice(0, this.timestampLinks.length);
+  // }
 }

@@ -109,7 +109,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
         timestamp,
         timestampSeconds,
       };
-      this.noteService.addNotes(this.video, newNote);
       this.firebaseService.saveNote(this.playlistId, this.video, newNote);
       this.showForm = false;
       noteForm.reset();
@@ -123,7 +122,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.noteService.saveAndEmpty();
+    // this.noteService.saveAndEmpty();
   }
 
   private calculateTimestamp() {
