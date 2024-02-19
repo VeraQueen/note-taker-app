@@ -8,10 +8,7 @@ import {
   setDoc,
   collectionData,
   deleteDoc,
-  getDoc,
-  getDocs,
 } from '@angular/fire/firestore';
-import { of, take } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class HttpFirebaseService {

@@ -1,13 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NoteService } from 'src/app/notes.service';
 import { Note } from '../note.model';
-import { Subscription, take } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { HttpFirebaseService } from 'src/app/http-firebase.service';
 import { PlaylistService } from 'src/app/playlist.service';
 
@@ -17,8 +11,9 @@ import { PlaylistService } from 'src/app/playlist.service';
   styleUrls: ['./notes.component.css'],
 })
 export class NotesComponent implements OnInit, OnDestroy {
-  private noteSub: Subscription;
-  private linksSub: Subscription;
+  private playlistIdSub: Subscription;
+  private videoIdSub: Subscription;
+  private notesSub: Subscription;
   notes: Note[] = [];
   timestampsLinks: number[] = [];
   videoId: string;
@@ -31,16 +26,21 @@ export class NotesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.playlistService.playlistIdSubject.subscribe((playlistId) => {
-      this.playlistId = playlistId;
-    });
-    this.playlistService.videoIdSubject.subscribe((videoId) => {
-      this.videoId = videoId;
-    });
-    this.firebaseService
+    this.playlistIdSub = this.playlistService.playlistIdSubject.subscribe(
+      (playlistId) => {
+        this.playlistId = playlistId;
+      }
+    );
+    this.videoIdSub = this.playlistService.videoIdSubject.subscribe(
+      (videoId) => {
+        this.videoId = videoId;
+      }
+    );
+    this.notesSub = this.firebaseService
       .getVideoNotes(this.playlistId, this.videoId)
       .subscribe((allNotes) => {
         this.notes = [];
+        this.timestampsLinks = [];
         allNotes.forEach((note) => {
           const noteEl: Note = {
             note: note.note,
@@ -55,46 +55,55 @@ export class NotesComponent implements OnInit, OnDestroy {
             return;
           } else {
             this.notes.push(noteEl);
-            this.sortAsc(this.notes);
+            this.timestampsLinks.push(noteEl.timestampSeconds);
+            this.sortAsc(this.notes, this.timestampsLinks);
           }
         });
       });
-
-    // this.timestampsLinks = this.noteService.getLinks();
-    // this.linksSub = this.noteService.timeLinksChanged.subscribe(
-    //   (timestampsLinks) => {
-    //     this.timestampsLinks = timestampsLinks;
-    //   }
-    // );
   }
 
   onSortAsc() {
-    this.sortAsc(this.notes);
+    this.sortAsc(this.notes, this.timestampsLinks);
   }
 
   onSortDesc() {
-    this.sortDesc(this.notes);
+    this.sortDesc(this.notes, this.timestampsLinks);
   }
 
-  // onPlayHere(i: number) {
-  //   this.noteService.playHere(this.timestampsLinks[i]);
-  // }
+  onPlayHere(i: number) {
+    this.noteService.playHere(this.timestampsLinks[i]);
+  }
 
   // onDelete(i: number) {
   //   this.noteService.deleteNote(i);
   // }
 
-  private sortDesc(notes: Note[]) {
-    this.notes = notes.sort((a, b) => a.timestampSeconds - b.timestampSeconds);
+  private sortDesc(notes?: Note[], timestampSeconds?: number[]) {
+    if (notes) {
+      this.notes = notes.sort(
+        (a, b) => a.timestampSeconds - b.timestampSeconds
+      );
+    }
+    if (timestampSeconds) {
+      this.timestampsLinks = timestampSeconds.sort((a, b) => a - b);
+    }
   }
 
-  private sortAsc(notes: Note[]) {
-    this.notes = notes.sort((a, b) => b.timestampSeconds - a.timestampSeconds);
+  private sortAsc(notes?: Note[], timestampSeconds?: number[]) {
+    if (notes) {
+      this.notes = notes.sort(
+        (a, b) => b.timestampSeconds - a.timestampSeconds
+      );
+    }
+    if (timestampSeconds) {
+      this.timestampsLinks = timestampSeconds.sort((a, b) => b - a);
+    }
   }
 
   ngOnDestroy() {
     // this.noteService.saveAndEmpty();
-    if (this.noteSub) this.noteSub.unsubscribe();
-    if (this.linksSub) this.linksSub.unsubscribe();
+    if (this.playlistIdSub) this.playlistIdSub.unsubscribe();
+    if (this.videoIdSub) this.videoIdSub.unsubscribe();
+    if (this.notesSub) this.notesSub.unsubscribe();
   }
 }
