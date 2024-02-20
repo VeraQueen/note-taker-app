@@ -7,6 +7,8 @@ import {
   setDoc,
   collectionData,
   deleteDoc,
+  arrayUnion,
+  updateDoc,
 } from '@angular/fire/firestore';
 
 @Injectable({ providedIn: 'root' })
@@ -35,6 +37,11 @@ export class HttpFirebaseService {
       'nullNote'
     );
     setDoc(videoNotesCollections, { null: null });
+  }
+
+  addWatchedVideoIds(playlistId: string, videoId: string) {
+    const docRef = doc(this.firestore, 'playlists', playlistId);
+    updateDoc(docRef, { watchedVideoIds: arrayUnion(videoId) });
   }
 
   saveNote(playlistId: string, videoId: string, note: Note) {

@@ -12,6 +12,9 @@ import { HttpFirebaseService } from 'src/app/http-firebase.service';
   styleUrls: ['./player.component.css'],
 })
 export class PlayerComponent implements OnInit, OnDestroy {
+  i;
+  currentTime: number;
+  duration: number;
   playlistId: string;
   video: string;
   videoPlayer: any;
@@ -70,7 +73,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   onPlayerReady(event) {
     event.target.playVideo();
-
     this.noteService.sendTimeLink.subscribe((timeLink) => {
       this.videoPlayer.seekTo(timeLink);
     });
@@ -79,8 +81,22 @@ export class PlayerComponent implements OnInit, OnDestroy {
   onPlayerStateChange(event) {
     switch (event.data) {
       case window['YT'].PlayerState.PLAYING:
+        this.i = setInterval(() => {
+          this.currentTime = this.videoPlayer.getCurrentTime();
+          this.duration = this.videoPlayer.getDuration();
+          let watched = (this.currentTime / this.duration) * 100;
+          watched = Math.round(watched);
+          if (watched >= 80) {
+            this.firebaseService.addWatchedVideoIds(
+              this.playlistId,
+              this.video
+            );
+            clearInterval(this.i);
+          }
+        }, 5000);
         break;
       case window['YT'].PlayerState.PAUSED:
+        clearInterval(this.i);
         break;
     }
   }
@@ -121,9 +137,9 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.videoPlayer.playVideo();
   }
 
-  ngOnDestroy() {
-    // this.noteService.saveAndEmpty();
-  }
+  ngOnDestroy() {}
+
+  checkPlayer() {}
 
   private calculateTimestamp() {
     this.timestampSeconds = Math.floor(this.videoPlayer.getCurrentTime());
