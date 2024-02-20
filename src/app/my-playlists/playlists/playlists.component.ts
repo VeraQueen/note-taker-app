@@ -55,7 +55,6 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   onDelete(playlistId: string) {
     this.firebaseService.deletePlaylist(playlistId);
-    this.playlistService.deletePlaylist(playlistId);
   }
 
   ngOnDestroy() {

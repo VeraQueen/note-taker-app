@@ -68,7 +68,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   onPlayHere(i: number) {
-    this.noteService.playHere(this.notes[i].timestampSeconds);
+    this.noteService.sendTimeLink.next(this.notes[i].timestampSeconds);
   }
 
   onDelete(i: number) {

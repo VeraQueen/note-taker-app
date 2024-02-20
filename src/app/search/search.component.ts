@@ -7,7 +7,6 @@ import {
   FetchPlaylistsData,
   HttpYouTubeService,
 } from '../http-youtube.service';
-import { PlaylistService } from '../playlist.service';
 import { HttpFirebaseService } from '../http-firebase.service';
 
 @Component({
@@ -25,16 +24,21 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchInputValue: string;
   nextPageToken: string;
   playlists: object[];
+  playlistIds: string[] = [];
 
   constructor(
     private httpService: HttpYouTubeService,
-    private playlistService: PlaylistService,
     private firebaseService: HttpFirebaseService
   ) {}
 
   ngOnInit() {
     this.searchForm = new FormGroup({
       searchInput: new FormControl(null, Validators.required),
+    });
+    this.firebaseService.getPlaylists().subscribe((data) => {
+      data.forEach((playlist) => {
+        this.playlistIds.push(playlist.playlistId);
+      });
     });
   }
 
@@ -61,7 +65,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.playlists[id]['added'] = true;
     const playlistId = this.playlists[id]['id']['playlistId'];
     this.firebaseService.savePlaylist(playlistId);
-    this.playlistService.addPlaylistId(playlistId);
   }
 
   ngOnDestroy(): void {
@@ -82,7 +85,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
         this.isLoading = false;
         this.playlists.forEach((el: any) => {
-          this.playlistService.getPlaylistsIds().forEach((myPlEl) => {
+          this.playlistIds.forEach((myPlEl) => {
             if (el['id']['playlistId'] === myPlEl) {
               el['existing'] = true;
             }
