@@ -15,7 +15,6 @@ export class NotesComponent implements OnInit, OnDestroy {
   private videoIdSub: Subscription;
   private notesSub: Subscription;
   notes: Note[] = [];
-  timestampsLinks: number[] = [];
   videoId: string;
   playlistId: string;
 
@@ -40,7 +39,6 @@ export class NotesComponent implements OnInit, OnDestroy {
       .getVideoNotes(this.playlistId, this.videoId)
       .subscribe((allNotes) => {
         this.notes = [];
-        this.timestampsLinks = [];
         allNotes.forEach((note) => {
           const noteEl: Note = {
             note: note.note,
@@ -55,48 +53,45 @@ export class NotesComponent implements OnInit, OnDestroy {
             return;
           } else {
             this.notes.push(noteEl);
-            this.timestampsLinks.push(noteEl.timestampSeconds);
-            this.sortAsc(this.notes, this.timestampsLinks);
+            this.sortAsc(this.notes);
           }
         });
       });
   }
 
   onSortAsc() {
-    this.sortAsc(this.notes, this.timestampsLinks);
+    this.sortAsc(this.notes);
   }
 
   onSortDesc() {
-    this.sortDesc(this.notes, this.timestampsLinks);
+    this.sortDesc(this.notes);
   }
 
   onPlayHere(i: number) {
-    this.noteService.playHere(this.timestampsLinks[i]);
+    this.noteService.playHere(this.notes[i].timestampSeconds);
   }
 
-  // onDelete(i: number) {
-  //   this.noteService.deleteNote(i);
-  // }
+  onDelete(i: number) {
+    this.firebaseService.deleteNote(
+      this.playlistId,
+      this.videoId,
+      this.notes[i]
+    );
+  }
 
-  private sortDesc(notes?: Note[], timestampSeconds?: number[]) {
-    if (notes) {
+  private sortDesc(notes?: Note[]) {
+    if (notes.length > 1) {
       this.notes = notes.sort(
         (a, b) => a.timestampSeconds - b.timestampSeconds
       );
     }
-    if (timestampSeconds) {
-      this.timestampsLinks = timestampSeconds.sort((a, b) => a - b);
-    }
   }
 
-  private sortAsc(notes?: Note[], timestampSeconds?: number[]) {
-    if (notes) {
+  private sortAsc(notes?: Note[]) {
+    if (notes.length > 1) {
       this.notes = notes.sort(
         (a, b) => b.timestampSeconds - a.timestampSeconds
       );
-    }
-    if (timestampSeconds) {
-      this.timestampsLinks = timestampSeconds.sort((a, b) => b - a);
     }
   }
 

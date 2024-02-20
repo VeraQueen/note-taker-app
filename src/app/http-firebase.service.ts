@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Note } from './my-playlists/player/note.model';
 import {
   Firestore,
-  addDoc,
   collection,
   doc,
   setDoc,
@@ -39,11 +38,12 @@ export class HttpFirebaseService {
   }
 
   saveNote(playlistId: string, videoId: string, note: Note) {
-    const colRef = collection(
+    const colRef = doc(
       this.firestore,
-      `playlists/${playlistId}/${videoId}`
+      `playlists/${playlistId}/${videoId}`,
+      `${note.note}`
     );
-    addDoc(colRef, {
+    setDoc(colRef, {
       note: note.note,
       timestamp: note.timestamp,
       timestampSeconds: note.timestampSeconds,
@@ -56,5 +56,13 @@ export class HttpFirebaseService {
       `playlists/${playlistId}/${videoId}`
     );
     return collectionData(colRef);
+  }
+
+  deleteNote(playlistId: string, videoId: string, note: Note) {
+    const docRef = doc(
+      this.firestore,
+      `playlists/${playlistId}/${videoId}/${note.note}`
+    );
+    deleteDoc(docRef);
   }
 }
