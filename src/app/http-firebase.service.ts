@@ -9,6 +9,8 @@ import {
   deleteDoc,
   arrayUnion,
   updateDoc,
+  getDoc,
+  arrayRemove,
 } from '@angular/fire/firestore';
 
 @Injectable({ providedIn: 'root' })
@@ -42,6 +44,16 @@ export class HttpFirebaseService {
   addWatchedVideoIds(playlistId: string, videoId: string) {
     const docRef = doc(this.firestore, 'playlists', playlistId);
     updateDoc(docRef, { watchedVideoIds: arrayUnion(videoId) });
+  }
+
+  getWatchedVideoIds(playlistId: string) {
+    const docRef = doc(this.firestore, 'playlists', playlistId);
+    return getDoc(docRef);
+  }
+
+  removeFromWatched(videoId: string, playlistId: string) {
+    const docRef = doc(this.firestore, 'playlists', playlistId);
+    updateDoc(docRef, { watchedVideoIds: arrayRemove(videoId) });
   }
 
   saveNote(playlistId: string, videoId: string, note: Note) {

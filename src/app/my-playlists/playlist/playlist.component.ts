@@ -22,6 +22,7 @@ export class PlaylistComponent implements OnInit {
   error: boolean = null;
   playlistId: string;
   nextPageToken: string;
+  watchedVideoIds: string[];
   videoIds: string[];
   videos: {}[];
 
@@ -50,6 +51,7 @@ export class PlaylistComponent implements OnInit {
           this.nextPageToken = videosData.nextPageToken;
           this.showButtonCheck(this.nextPageToken);
           this.filterVideos(videosData.items);
+          this.checkWatched();
           this.isLoading = false;
         },
         error: (error) => {
@@ -57,6 +59,7 @@ export class PlaylistComponent implements OnInit {
           this.error = error.message;
         },
       });
+    this.getWatchedVideos();
   }
 
   onScroll() {
@@ -70,6 +73,7 @@ export class PlaylistComponent implements OnInit {
               : undefined;
             this.showButtonCheck(this.nextPageToken);
             this.filterVideos(videos.items);
+            this.checkWatched();
           },
           error: (error) => {
             this.isLoading = false;
@@ -95,6 +99,15 @@ export class PlaylistComponent implements OnInit {
     this.playlistService.playlistIdSubject.next(this.playlistId);
     this.firebaseService.addVideoNotesCol(this.playlistId, videoId);
     this.router.navigate(['/notes']);
+  }
+
+  onRemoveFromWatched(i: number) {
+    this.firebaseService.removeFromWatched(
+      this.videos[i]['snippet'].resourceId.videoId,
+      this.playlistId
+    );
+    this.getWatchedVideos();
+    this.checkWatched();
   }
 
   private showButtonCheck(nextPageToken: string) {
@@ -129,6 +142,25 @@ export class PlaylistComponent implements OnInit {
     } else {
       this.videos = [...this.videos, ...filteredVideos];
     }
+  }
+
+  private getWatchedVideos() {
+    this.firebaseService.getWatchedVideoIds(this.playlistId).then((data) => {
+      this.watchedVideoIds = data.data().watchedVideoIds;
+      if (this.watchedVideoIds === undefined) this.watchedVideoIds = [];
+    });
+  }
+
+  private checkWatched() {
+    this.watchedVideoIds.forEach((el) => {
+      this.videos.forEach((video) => {
+        if (el === video['snippet'].resourceId.videoId) {
+          video['watched'] = true;
+        } else {
+          video['watched'] = false;
+        }
+      });
+    });
   }
 
   ngOnDestroy() {

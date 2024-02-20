@@ -23,16 +23,33 @@
       <p class="text-gray-900 text-sm font-semibold pl-2 w-5/6">
         {{ video.snippet?.channelTitle }}
       </p>
-      <button
-        type="button"
-        class="w-10 h-10 rounded-full flex items-center justify-center bg-red-600 hover:bg-red-700 absolute inset-y-1/2 -translate-x-1/2 -translate-y-1/2 left-full focus:outline focus:outline-2 focus:outline-gray-700"
-        (click)="onPlayVideo(i)"
+      <div
+        class="absolute top-1/2 left-full -translate-x-1/2 -translate-y-1/2 flex flex-col justify-items-center items-center gap-1"
       >
-        <ng-icon
-          name="heroPlay"
-          class="text-white text-3xl text-bold"
-        ></ng-icon>
-      </button>
+        <button
+          type="button"
+          [disabled]="!video.watched"
+          [ngClass]="{ watched: video.watched }"
+          appRemoveWatchedVideo
+          class="w-7 h-7 rounded-full flex items-center justify-center bg-gray-500 focus:outline focus:outline-2 focus:outline-gray-700"
+          (click)="onRemoveFromWatched(i)"
+        >
+          <ng-icon
+            name="heroCheck"
+            class="text-white text-xl text-bold"
+          ></ng-icon>
+        </button>
+        <button
+          type="button"
+          class="w-10 h-10 rounded-full flex items-center justify-center bg-red-600 hover:bg-red-700 focus:outline focus:outline-2 focus:outline-gray-700"
+          (click)="onPlayVideo(i)"
+        >
+          <ng-icon
+            name="heroPlay"
+            class="text-white text-3xl text-bold"
+          ></ng-icon>
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -30,6 +30,7 @@ import { AddedPlaylistDirective } from './shared/directives/added-playlist.direc
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ErrorComponent } from './shared/error/error.component';
+import { RemoveWatchedVideoDirective } from './shared/directives/removeWatchedVideo.directive';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { ErrorComponent } from './shared/error/error.component';
     }),
     InfiniteScrollModule,
     AddedPlaylistDirective,
+    RemoveWatchedVideoDirective,
     ErrorComponent,
     CssLoaderComponent,
     provideFirebaseApp(() =>
