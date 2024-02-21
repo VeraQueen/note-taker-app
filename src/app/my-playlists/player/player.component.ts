@@ -20,6 +20,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   videoPlayer: any;
   timestamp: string;
   timestampSeconds: number;
+  showButton: boolean = true;
   showForm: boolean = false;
   saveNoteBtnClicked: boolean = false;
   @ViewChild('noteForm', { static: false }) noteForm: NgForm;

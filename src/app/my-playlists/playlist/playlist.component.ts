@@ -43,7 +43,7 @@ export class PlaylistComponent implements OnInit {
         switchMap((playlistId) => {
           this.playlistId = playlistId;
           this.isLoading = true;
-          this.getWatchedVideos();
+          if (this.playlistId) this.getWatchedVideos();
           return this.httpService.getVideos(playlistId);
         })
       )
@@ -81,15 +81,6 @@ export class PlaylistComponent implements OnInit {
           },
         });
     }
-  }
-
-  onBack() {
-    this.router.navigate(['/playlists']);
-  }
-
-  onHandleError() {
-    this.error = null;
-    this.onBack();
   }
 
   onPlayVideo(i: number) {
@@ -145,7 +136,6 @@ export class PlaylistComponent implements OnInit {
   }
 
   private getWatchedVideos() {
-    console.log(this.playlistId);
     this.firebaseService.getWatchedVideoIds(this.playlistId).then((data) => {
       this.watchedVideoIds = data.data()?.watchedVideoIds ?? [];
     });

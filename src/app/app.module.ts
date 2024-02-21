@@ -31,6 +31,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ErrorComponent } from './shared/error/error.component';
 import { RemoveWatchedVideoDirective } from './shared/directives/removeWatchedVideo.directive';
+import { BackBtnComponent } from './shared/back-btn/back-btn.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { RemoveWatchedVideoDirective } from './shared/directives/removeWatchedVi
     InfiniteScrollModule,
     AddedPlaylistDirective,
     RemoveWatchedVideoDirective,
+    BackBtnComponent,
     ErrorComponent,
     CssLoaderComponent,
     provideFirebaseApp(() =>
