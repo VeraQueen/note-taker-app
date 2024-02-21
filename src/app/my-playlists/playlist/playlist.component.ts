@@ -43,6 +43,7 @@ export class PlaylistComponent implements OnInit {
         switchMap((playlistId) => {
           this.playlistId = playlistId;
           this.isLoading = true;
+          this.getWatchedVideos();
           return this.httpService.getVideos(playlistId);
         })
       )
@@ -59,7 +60,6 @@ export class PlaylistComponent implements OnInit {
           this.error = error.message;
         },
       });
-    this.getWatchedVideos();
   }
 
   onScroll() {
@@ -145,21 +145,34 @@ export class PlaylistComponent implements OnInit {
   }
 
   private getWatchedVideos() {
+    console.log(this.playlistId);
     this.firebaseService.getWatchedVideoIds(this.playlistId).then((data) => {
-      this.watchedVideoIds = data.data().watchedVideoIds;
-      if (this.watchedVideoIds === undefined) this.watchedVideoIds = [];
+      this.watchedVideoIds = data.data()?.watchedVideoIds ?? [];
     });
   }
 
   private checkWatched() {
-    this.watchedVideoIds.forEach((el) => {
-      this.videos.forEach((video) => {
-        if (el === video['snippet'].resourceId.videoId) {
-          video['watched'] = true;
-        } else {
-          video['watched'] = false;
-        }
+    console.log(this.watchedVideoIds);
+    if (this.watchedVideoIds === undefined) {
+      this.getWatchedVideos();
+      this.reloadCurrentRoute();
+    } else {
+      this.watchedVideoIds.forEach((el) => {
+        this.videos.forEach((video) => {
+          if (el === video['snippet'].resourceId.videoId) {
+            video['watched'] = true;
+          } else {
+            video['watched'] = false;
+          }
+        });
       });
+    }
+  }
+
+  private reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
     });
   }
 
