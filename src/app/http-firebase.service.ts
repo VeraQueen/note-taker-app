@@ -28,8 +28,47 @@ export class HttpFirebaseService {
   }
 
   deletePlaylist(playlistId: string) {
-    const docRef = doc(this.firestore, 'playlists', playlistId);
-    deleteDoc(docRef);
+    const playlistRef = doc(this.firestore, 'playlists', playlistId);
+    let subcollections = [];
+    let notes = [];
+
+    getDoc(playlistRef)
+      .then((data) => {
+        subcollections = data.data().subcollections;
+        if (!subcollections) return;
+        if (subcollections) {
+          subcollections.forEach((subEl) => {
+            const colRef = collection(
+              this.firestore,
+              `playlists/${playlistId}/${subEl}/`
+            );
+            collectionData(colRef).subscribe((data) => {
+              notes = data;
+              notes.forEach((el) => {
+                let notesEl = el;
+                if (!notesEl.note) {
+                  const docRef = doc(
+                    this.firestore,
+                    `playlists/${playlistId}/${subEl}/`,
+                    'nullNote'
+                  );
+                  deleteDoc(docRef);
+                } else {
+                  const docRef = doc(
+                    this.firestore,
+                    `playlists/${playlistId}/${subEl}/`,
+                    notesEl.note
+                  );
+                  deleteDoc(docRef);
+                }
+              });
+            });
+          });
+        }
+      })
+      .then(() => {
+        deleteDoc(playlistRef);
+      });
   }
 
   addVideoNotesCol(playlistId: string, videoId: string) {
@@ -39,6 +78,11 @@ export class HttpFirebaseService {
       'nullNote'
     );
     setDoc(videoNotesCollections, { null: null });
+
+    const docRef = doc(this.firestore, 'playlists', playlistId);
+    updateDoc(docRef, {
+      subcollections: arrayUnion(videoId),
+    });
   }
 
   addWatchedVideoIds(playlistId: string, videoId: string) {

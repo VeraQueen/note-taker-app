@@ -13,8 +13,11 @@ import { HttpYouTubeService } from 'src/app/http-youtube.service';
   styleUrls: ['./playlists.component.css'],
 })
 export class PlaylistsComponent implements OnInit, OnDestroy {
-  playlists: Playlist[];
   getPlaylistsSub: Subscription;
+  getFirestorePlaylistsSub: Subscription;
+  isLoading: boolean = false;
+  playlists: Playlist[];
+
   constructor(
     private playlistService: PlaylistService,
     private router: Router,
@@ -23,28 +26,33 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.firebaseService.getPlaylists().subscribe((playlists) => {
-      this.playlists = [];
-      playlists.forEach((playlist) => {
-        this.getPlaylistsSub = this.httpService
-          .getPlaylist(playlist.playlistId)
-          .subscribe((data) => {
-            const plName = data['items'][0].snippet.localized.title;
-            const plAuthor = data['items'][0].snippet.channelTitle;
-            const plNumVideos = data['items'][0].contentDetails.itemCount;
-            const plImgPath = data['items'][0].snippet.thumbnails.medium.url;
-            const plId = data['items'][0].id;
-            const newPlaylist = new Playlist(
-              plName,
-              plAuthor,
-              plNumVideos,
-              plImgPath,
-              plId
-            );
-            this.playlists.push(newPlaylist);
-          });
+    this.isLoading = true;
+    this.getFirestorePlaylistsSub = this.firebaseService
+      .getPlaylists()
+      .subscribe((playlists) => {
+        console.log('called');
+        this.playlists = [];
+        playlists.forEach((playlist) => {
+          this.getPlaylistsSub = this.httpService
+            .getPlaylist(playlist.playlistId)
+            .subscribe((data) => {
+              const plName = data['items'][0].snippet.localized.title;
+              const plAuthor = data['items'][0].snippet.channelTitle;
+              const plNumVideos = data['items'][0].contentDetails.itemCount;
+              const plImgPath = data['items'][0].snippet.thumbnails.medium.url;
+              const plId = data['items'][0].id;
+              const newPlaylist = new Playlist(
+                plName,
+                plAuthor,
+                plNumVideos,
+                plImgPath,
+                plId
+              );
+              this.playlists.push(newPlaylist);
+            });
+        });
+        this.isLoading = false;
       });
-    });
   }
 
   onOpen(i: number) {
@@ -59,5 +67,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.getPlaylistsSub) this.getPlaylistsSub.unsubscribe();
+    if (this.getFirestorePlaylistsSub)
+      this.getFirestorePlaylistsSub.unsubscribe();
   }
 }
