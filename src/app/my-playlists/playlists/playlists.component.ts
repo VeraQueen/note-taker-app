@@ -30,7 +30,6 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     this.getFirestorePlaylistsSub = this.firebaseService
       .getPlaylists()
       .subscribe((playlists) => {
-        console.log('called');
         this.playlists = [];
         playlists.forEach((playlist) => {
           this.getPlaylistsSub = this.httpService
