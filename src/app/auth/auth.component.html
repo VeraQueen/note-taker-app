@@ -1,0 +1,36 @@
+<div class="mx-auto max-w-7xl m-4">
+  <form class="mx-auto w-full max-w-md flex flex-col gap-2">
+    <label class="text-gray-900 text-sm" for="username"> Email </label>
+    <input
+      class="text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700"
+      type="email"
+      placeholder="john@john.com"
+      aria-label="user email"
+      id="username"
+    />
+    <label class="text-gray-900 text-sm" for="password"> Password </label>
+    <input
+      class="text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700"
+      type="password"
+      placeholder="password"
+      aria-label="user password"
+      id="password"
+    />
+    <div class="place-content-center flex gap-2">
+      <button
+        type="submit"
+        class="w-fit h-fit bg-gray-500 hover:bg-gray-700 text-md text-white py-1 px-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700"
+      >
+        {{ isLoginMode ? "Login" : "Sign Up" }}
+      </button>
+      <span class="text-inherit">|</span>
+      <button
+        type="button"
+        class="w-fit bg-gray-500 hover:bg-gray-700 text-md text-white py-1 px-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700"
+        (click)="onSwitchMode()"
+      >
+        Switch to {{ isLoginMode ? "Sign Up" : "Login" }}
+      </button>
+    </div>
+  </form>
+</div>
