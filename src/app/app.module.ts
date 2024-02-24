@@ -32,6 +32,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ErrorComponent } from './shared/error/error.component';
 import { RemoveWatchedVideoDirective } from './shared/directives/removeWatchedVideo.directive';
 import { BackBtnComponent } from './shared/back-btn/back-btn.component';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { BackBtnComponent } from './shared/back-btn/back-btn.component';
       })
     ),
     provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
   ],
   providers: [],
   bootstrap: [AppComponent],

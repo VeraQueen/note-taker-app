@@ -5,7 +5,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [FormsModule, NgClass],
+  imports: [FormsModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })
@@ -22,5 +22,6 @@ export class AuthComponent implements OnInit {
 
   onSubmit(authForm: NgForm) {
     console.log(authForm.value);
+    authForm.reset();
   }
 }
