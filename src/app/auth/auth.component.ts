@@ -1,16 +1,26 @@
-import { Component } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, NgClass],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit {
   isLoginMode: boolean = true;
+
+  constructor() {}
+
+  ngOnInit() {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
+  }
+
+  onSubmit(authForm: NgForm) {
+    console.log(authForm.value);
   }
 }

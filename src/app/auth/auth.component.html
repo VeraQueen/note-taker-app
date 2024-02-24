@@ -1,29 +1,45 @@
 <div class="mx-auto max-w-7xl m-4">
-  <form class="mx-auto w-full max-w-md flex flex-col gap-2">
-    <label class="text-gray-900 text-sm" for="username"> Email </label>
+  <form
+    class="mx-auto w-full max-w-md flex flex-col gap-2"
+    (ngSubmit)="onSubmit(authForm)"
+    #authForm="ngForm"
+    ngNativeValidate
+  >
+    <label class="text-gray-900 text-sm" for="usermail"> Email </label>
     <input
-      class="text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700"
+      class="text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700 border invalid:border-red-600 invalid:focus:outline-red-600"
       type="email"
       placeholder="john@john.com"
       aria-label="user email"
-      id="username"
+      id="usermail"
+      ngModel
+      name="email"
+      required
+      email
+      #email="ngModel"
     />
     <label class="text-gray-900 text-sm" for="password"> Password </label>
     <input
-      class="text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700"
+      class="text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700 border invalid:border-red-600 invalid:focus:outline-red-600"
       type="password"
       placeholder="password"
       aria-label="user password"
       id="password"
+      ngModel
+      name="password"
+      required
+      minlength="6"
+      #password="ngModel"
     />
-    <div class="place-content-center flex gap-2">
+    <div class="place-content-center flex gap-2 justify-center items-center">
       <button
         type="submit"
-        class="w-fit h-fit bg-gray-500 hover:bg-gray-700 text-md text-white py-1 px-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700"
+        class="w-fit bg-gray-500 hover:bg-gray-700 text-md text-white py-1 px-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700 disabled:bg-gray-400"
+        [disabled]="authForm.invalid"
       >
         {{ isLoginMode ? "Login" : "Sign Up" }}
       </button>
-      <span class="text-inherit">|</span>
+      <span>&ndash;</span>
       <button
         type="button"
         class="w-fit bg-gray-500 hover:bg-gray-700 text-md text-white py-1 px-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700"
