@@ -32,6 +32,16 @@ export class AuthComponent implements OnInit {
     const password = authForm.value.password;
     this.isLoading = true;
     if (this.isLoginMode) {
+      this.authService
+        .signIn(email, password)
+        .then((userCredentials) => {
+          console.log(userCredentials.user);
+          this.isLoading = false;
+        })
+        .catch((error) => {
+          this.error = error.message;
+          this.isLoading = false;
+        });
     } else {
       this.authService
         .signUp(email, password)
@@ -40,8 +50,6 @@ export class AuthComponent implements OnInit {
           this.isLoading = false;
         })
         .catch((error) => {
-          console.log(error.message);
-          console.log(error.code);
           this.error = error.message;
           this.isLoading = false;
         });
