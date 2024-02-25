@@ -12,6 +12,10 @@ import { PlayerComponent } from './my-playlists/player/player.component';
 import { SearchComponent } from './search/search.component';
 import { NotesComponent } from './my-playlists/player/notes/notes.component';
 import { ScrollTopComponent } from './shared/scroll-top/scroll-top.component';
+import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
+import { ErrorComponent } from './shared/error/error.component';
+import { AuthComponent } from './auth/auth.component';
+import { BackBtnComponent } from './shared/back-btn/back-btn.component';
 import { NgIconsModule } from '@ng-icons/core';
 import {
   heroArrowLeft,
@@ -25,14 +29,14 @@ import {
   heroArrowDown,
 } from '@ng-icons/heroicons/outline';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
+
 import { AddedPlaylistDirective } from './shared/directives/added-playlist.directive';
+import { RemoveWatchedVideoDirective } from './shared/directives/removeWatchedVideo.directive';
+
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { ErrorComponent } from './shared/error/error.component';
-import { RemoveWatchedVideoDirective } from './shared/directives/removeWatchedVideo.directive';
-import { BackBtnComponent } from './shared/back-btn/back-btn.component';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -68,17 +72,8 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
     BackBtnComponent,
     ErrorComponent,
     CssLoaderComponent,
-    provideFirebaseApp(() =>
-      initializeApp({
-        projectId: 'note-taker-app-400810',
-        appId: '1:407343500901:web:ae91cfa94bdda4a392408c',
-        storageBucket: 'note-taker-app-400810.appspot.com',
-        apiKey: 'AIzaSyAIVAP0e87vEsCzRtxq2zh1HdbzUWpkNuk',
-        authDomain: 'note-taker-app-400810.firebaseapp.com',
-        messagingSenderId: '407343500901',
-        measurementId: 'G-CGG06S1SC5',
-      })
-    ),
+    AuthComponent,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
   ],

@@ -7,7 +7,10 @@
   >
     <label class="text-gray-900 text-sm" for="usermail"> Email </label>
     <input
-      class="text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700 border invalid:border-red-600 invalid:focus:outline-red-600"
+      [ngClass]="{
+        'invalid:border-red-600 invalid:focus:outline-red-600': email.touched
+      }"
+      class="text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700 border"
       type="email"
       placeholder="john@john.com"
       aria-label="user email"
@@ -20,6 +23,9 @@
     />
     <label class="text-gray-900 text-sm" for="password"> Password </label>
     <input
+      [ngClass]="{
+        'invalid:border-red-600 invalid:focus:outline-red-600': password.touched
+      }"
       class="text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700 border invalid:border-red-600 invalid:focus:outline-red-600"
       type="password"
       placeholder="password"
@@ -49,4 +55,5 @@
       </button>
     </div>
   </form>
+  <app-error [isLoading]="isLoading" [error]="error"></app-error>
 </div>

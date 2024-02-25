@@ -17,7 +17,7 @@ export class ErrorComponent {
 
   onHandleError() {
     this.currentPage = this.router.url;
-    if (this.currentPage === '/search') {
+    if (this.currentPage === '/search' || this.currentPage === '/auth') {
       this.error = null;
     } else if (this.currentPage === '/playlist') {
       this.error = null;
