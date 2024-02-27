@@ -3,6 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { ErrorComponent } from '../shared/error/error.component';
 import { NgClass } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -16,9 +17,11 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error: string = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.getCurrentUser();
+  }
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -34,9 +37,10 @@ export class AuthComponent implements OnInit {
     if (this.isLoginMode) {
       this.authService
         .signIn(email, password)
-        .then((userCredentials) => {
-          console.log(userCredentials.user);
+        .then(() => {
+          this.authService.getCurrentUser();
           this.isLoading = false;
+          this.router.navigate(['/playlists']);
         })
         .catch((error) => {
           this.error = error.message;
@@ -45,9 +49,10 @@ export class AuthComponent implements OnInit {
     } else {
       this.authService
         .signUp(email, password)
-        .then((userCredentials) => {
-          console.log(userCredentials.user);
+        .then(() => {
+          this.authService.getCurrentUser();
           this.isLoading = false;
+          this.router.navigate(['/playlists']);
         })
         .catch((error) => {
           this.error = error.message;
