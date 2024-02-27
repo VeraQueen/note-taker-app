@@ -1,13 +1,13 @@
 <nav class="bg-gray-900">
   <div class="mx-auto max-w-7xl px-6">
-    <div class="flex h-16 gap-4 items-center">
-      <img
-        class="h-8 w-auto"
-        src="../assets/logos/note-logo-light.svg"
-        alt="Note taker app"
-      />
-      <span class="h-full w-1 bg-red-600"></span>
+    <div class="flex h-16 gap-4 items-center justify-between">
       <div class="flex gap-4">
+        <img
+          class="h-8 w-auto"
+          src="../assets/logos/note-logo-light.svg"
+          alt="Note taker app"
+        />
+        <span class="h-inherit w-1 bg-red-600"></span>
         <a
           routerLink="/playlists"
           routerLinkActive="bg-gray-700"
@@ -25,6 +25,12 @@
           routerLinkActive="bg-gray-700"
           class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
           >Authentication</a
+        >
+      </div>
+      <div>
+        <a
+          class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
+          >Logout</a
         >
       </div>
     </div>
