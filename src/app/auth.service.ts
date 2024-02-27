@@ -5,12 +5,17 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from '@angular/fire/auth';
+import { User } from './auth/user.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  userSubject = new Subject<User>();
+
   constructor(private auth: Auth) {}
+
   signUp(email: string, password: string) {
     return createUserWithEmailAndPassword(this.auth, email, password);
   }
@@ -22,8 +27,11 @@ export class AuthService {
   getCurrentUser() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        const uid = user.uid;
-        console.log(uid);
+        const newUser: User = {
+          email: user.email,
+          id: user.uid,
+        };
+        this.userSubject.next(newUser);
       } else {
         console.log('The user is signed out.');
       }
