@@ -18,6 +18,7 @@
         <a
           routerLink="/search"
           routerLinkActive="bg-gray-700"
+          *ngIf="isAuthenticated"
           class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
           >Search</a
         >
@@ -26,12 +27,14 @@
           routerLinkActive="bg-gray-700"
           *ngIf="!isAuthenticated"
           class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
-          >Authentication</a
-        >
+          >Sign in | Login
+        </a>
       </div>
       <div>
         <a
+          *ngIf="isAuthenticated"
           class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
+          (click)="onLogout()"
           >Logout</a
         >
       </div>
