@@ -15,6 +15,7 @@ import { User } from 'src/app/auth/user.model';
   styleUrls: ['./playlists.component.css'],
 })
 export class PlaylistsComponent implements OnInit, OnDestroy {
+  userSub: Subscription;
   getPlaylistsSub: Subscription;
   getFirestorePlaylistsSub: Subscription;
   isLoading: boolean = false;
@@ -30,9 +31,11 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.authService.userSubject.pipe(take(1)).subscribe((user) => {
-      this.user = user;
-    });
+    this.userSub = this.authService.userSubject
+      .pipe(take(1))
+      .subscribe((user) => {
+        this.user = user;
+      });
     this.isLoading = true;
     this.getFirestorePlaylistsSub = this.firebaseService
       .getPlaylists(this.user)
@@ -75,5 +78,6 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     if (this.getPlaylistsSub) this.getPlaylistsSub.unsubscribe();
     if (this.getFirestorePlaylistsSub)
       this.getFirestorePlaylistsSub.unsubscribe();
+    if (this.userSub) this.userSub.unsubscribe();
   }
 }

@@ -16,6 +16,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   private playlistIdSub: Subscription;
   private videoIdSub: Subscription;
   private notesSub: Subscription;
+  private userSub: Subscription;
   notes: Note[] = [];
   videoId: string;
   playlistId: string;
@@ -29,7 +30,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.authService.userSubject.subscribe((user) => {
+    this.userSub = this.authService.userSubject.subscribe((user) => {
       this.user = user;
     });
     this.playlistIdSub = this.playlistService.playlistIdSubject.subscribe(
@@ -108,5 +109,6 @@ export class NotesComponent implements OnInit, OnDestroy {
     if (this.playlistIdSub) this.playlistIdSub.unsubscribe();
     if (this.videoIdSub) this.videoIdSub.unsubscribe();
     if (this.notesSub) this.notesSub.unsubscribe();
+    if (this.userSub) this.userSub.unsubscribe();
   }
 }

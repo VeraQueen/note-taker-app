@@ -17,6 +17,7 @@ import { PlaylistService } from 'src/app/playlist.service';
   styleUrls: ['./playlist.component.css'],
 })
 export class PlaylistComponent implements OnInit {
+  userSub: Subscription;
   getIdAndTokenSub: Subscription;
   getVideosSub: Subscription;
   showButton: boolean = false;
@@ -38,7 +39,7 @@ export class PlaylistComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.userSubject.subscribe((user) => {
+    this.userSub = this.authService.userSubject.subscribe((user) => {
       this.user = user;
     });
     this.playlistService.playlistIdSubject
@@ -177,5 +178,6 @@ export class PlaylistComponent implements OnInit {
   ngOnDestroy() {
     if (this.getIdAndTokenSub) this.getIdAndTokenSub.unsubscribe();
     if (this.getVideosSub) this.getVideosSub.unsubscribe();
+    if (this.userSub) this.userSub.unsubscribe();
   }
 }

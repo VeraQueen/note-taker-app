@@ -18,6 +18,7 @@ import { AuthService } from '../auth.service';
 })
 export class SearchComponent implements OnInit, OnDestroy {
   searchPlaylistsSub: Subscription;
+  userSub: Subscription;
   searchObs: Observable<FetchPlaylistsData>;
   isLoading: boolean = false;
   showMsg: boolean = false;
@@ -39,7 +40,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.searchForm = new FormGroup({
       searchInput: new FormControl(null, Validators.required),
     });
-    this.authService.userSubject.subscribe((user) => {
+    this.userSub = this.authService.userSubject.subscribe((user) => {
       this.user = user;
     });
     this.firebaseService.getPlaylists(this.user).subscribe((data) => {
@@ -76,6 +77,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.searchPlaylistsSub) this.searchPlaylistsSub.unsubscribe();
+    if (this.userSub) this.userSub.unsubscribe();
   }
 
   private searchObsSubscribe() {

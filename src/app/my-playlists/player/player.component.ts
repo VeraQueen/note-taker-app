@@ -7,6 +7,7 @@ import { Note } from './note.model';
 import { HttpFirebaseService } from 'src/app/http-firebase.service';
 import { AuthService } from 'src/app/auth.service';
 import { User } from 'src/app/auth/user.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-player',
@@ -14,6 +15,7 @@ import { User } from 'src/app/auth/user.model';
   styleUrls: ['./player.component.css'],
 })
 export class PlayerComponent implements OnInit, OnDestroy {
+  userSub: Subscription;
   i;
   currentTime: number;
   duration: number;
@@ -36,7 +38,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.authService.userSubject.subscribe((user) => {
+    this.userSub = this.authService.userSubject.subscribe((user) => {
       this.user = user;
     });
     this.playlistService.videoIdSubject.pipe(take(1)).subscribe((videoId) => {
@@ -151,7 +153,9 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.videoPlayer.playVideo();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    if (this.userSub) this.userSub.unsubscribe();
+  }
 
   checkPlayer() {}
 
