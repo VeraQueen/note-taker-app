@@ -6,13 +6,13 @@ import {
   signInWithEmailAndPassword,
 } from '@angular/fire/auth';
 import { User } from './auth/user.model';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  userSubject = new Subject<User>();
+  userSubject = new BehaviorSubject<User>(null);
 
   constructor(private auth: Auth) {}
 

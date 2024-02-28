@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { Playlist } from './playlist.model';
 import { PlaylistService } from 'src/app/playlist.service';
 import { HttpFirebaseService } from 'src/app/http-firebase.service';
 import { HttpYouTubeService } from 'src/app/http-youtube.service';
+import { AuthService } from 'src/app/auth.service';
+import { User } from 'src/app/auth/user.model';
 
 @Component({
   selector: 'app-playlists',
@@ -17,18 +19,23 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   getFirestorePlaylistsSub: Subscription;
   isLoading: boolean = false;
   playlists: Playlist[];
+  user: User;
 
   constructor(
     private playlistService: PlaylistService,
     private router: Router,
     private firebaseService: HttpFirebaseService,
-    private httpService: HttpYouTubeService
+    private httpService: HttpYouTubeService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
+    this.authService.userSubject.pipe(take(1)).subscribe((user) => {
+      this.user = user;
+    });
     this.isLoading = true;
     this.getFirestorePlaylistsSub = this.firebaseService
-      .getPlaylists()
+      .getPlaylists(this.user)
       .subscribe((playlists) => {
         this.playlists = [];
         playlists.forEach((playlist) => {
@@ -61,7 +68,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   }
 
   onDelete(playlistId: string) {
-    this.firebaseService.deletePlaylist(playlistId);
+    this.firebaseService.deletePlaylist(playlistId, this.user);
   }
 
   ngOnDestroy() {

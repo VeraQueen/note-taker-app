@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Subscription, map, switchMap, take } from 'rxjs';
+import { AuthService } from 'src/app/auth.service';
+import { User } from 'src/app/auth/user.model';
 import { HttpFirebaseService } from 'src/app/http-firebase.service';
 import {
   FetchVideosData,
@@ -25,15 +27,20 @@ export class PlaylistComponent implements OnInit {
   watchedVideoIds: string[];
   videoIds: string[];
   videos: {}[];
+  user: User;
 
   constructor(
     private playlistService: PlaylistService,
     private httpService: HttpYouTubeService,
     private router: Router,
-    private firebaseService: HttpFirebaseService
+    private firebaseService: HttpFirebaseService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
+    this.authService.userSubject.subscribe((user) => {
+      this.user = user;
+    });
     this.playlistService.playlistIdSubject
       .pipe(
         take(1),
@@ -87,14 +94,15 @@ export class PlaylistComponent implements OnInit {
     const videoId = this.videoIds[i];
     this.playlistService.videoIdSubject.next(videoId);
     this.playlistService.playlistIdSubject.next(this.playlistId);
-    this.firebaseService.addVideoNotesCol(this.playlistId, videoId);
+    this.firebaseService.addVideoNotesCol(this.playlistId, videoId, this.user);
     this.router.navigate(['/notes']);
   }
 
   onRemoveFromWatched(i: number) {
     this.firebaseService.removeFromWatched(
       this.videos[i]['snippet'].resourceId.videoId,
-      this.playlistId
+      this.playlistId,
+      this.user
     );
     this.getWatchedVideos();
     this.checkWatched();
@@ -135,9 +143,11 @@ export class PlaylistComponent implements OnInit {
   }
 
   private getWatchedVideos() {
-    this.firebaseService.getWatchedVideoIds(this.playlistId).then((data) => {
-      this.watchedVideoIds = data.data()?.watchedVideoIds ?? [];
-    });
+    this.firebaseService
+      .getWatchedVideoIds(this.playlistId, this.user)
+      .then((data) => {
+        this.watchedVideoIds = data.data()?.watchedVideoIds ?? [];
+      });
   }
 
   private checkWatched() {

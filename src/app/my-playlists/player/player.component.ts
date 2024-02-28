@@ -5,6 +5,8 @@ import { NoteService } from 'src/app/notes.service';
 import { PlaylistService } from 'src/app/playlist.service';
 import { Note } from './note.model';
 import { HttpFirebaseService } from 'src/app/http-firebase.service';
+import { AuthService } from 'src/app/auth.service';
+import { User } from 'src/app/auth/user.model';
 
 @Component({
   selector: 'app-player',
@@ -23,15 +25,20 @@ export class PlayerComponent implements OnInit, OnDestroy {
   showButton: boolean = true;
   showForm: boolean = false;
   saveNoteBtnClicked: boolean = false;
+  user: User;
   @ViewChild('noteForm', { static: false }) noteForm: NgForm;
 
   constructor(
     private playlistService: PlaylistService,
     private noteService: NoteService,
-    private firebaseService: HttpFirebaseService
+    private firebaseService: HttpFirebaseService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
+    this.authService.userSubject.subscribe((user) => {
+      this.user = user;
+    });
     this.playlistService.videoIdSubject.pipe(take(1)).subscribe((videoId) => {
       this.video = videoId;
     });
@@ -90,7 +97,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
           if (watched >= 80) {
             this.firebaseService.addWatchedVideoIds(
               this.playlistId,
-              this.video
+              this.video,
+              this.user
             );
             clearInterval(this.i);
           }
@@ -126,7 +134,12 @@ export class PlayerComponent implements OnInit, OnDestroy {
         timestamp,
         timestampSeconds,
       };
-      this.firebaseService.saveNote(this.playlistId, this.video, newNote);
+      this.firebaseService.saveNote(
+        this.playlistId,
+        this.video,
+        newNote,
+        this.user
+      );
       this.showForm = false;
       noteForm.reset();
     }

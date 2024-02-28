@@ -12,23 +12,24 @@ import {
   getDoc,
   arrayRemove,
 } from '@angular/fire/firestore';
+import { User } from './auth/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class HttpFirebaseService {
   constructor(private firestore: Firestore) {}
 
-  savePlaylist(playlistId: string) {
-    const docRef = doc(this.firestore, 'playlists', playlistId);
+  savePlaylist(playlistId: string, user: User) {
+    const docRef = doc(this.firestore, user.id, playlistId);
     setDoc(docRef, { playlistId: playlistId });
   }
 
-  getPlaylists() {
-    const colRef = collection(this.firestore, 'playlists');
+  getPlaylists(user: User) {
+    const colRef = collection(this.firestore, user.id);
     return collectionData(colRef);
   }
 
-  deletePlaylist(playlistId: string) {
-    const playlistRef = doc(this.firestore, 'playlists', playlistId);
+  deletePlaylist(playlistId: string, user: User) {
+    const playlistRef = doc(this.firestore, user.id, playlistId);
     let subcollections = [];
     let notes = [];
 
@@ -40,7 +41,7 @@ export class HttpFirebaseService {
           subcollections.forEach((subEl) => {
             const colRef = collection(
               this.firestore,
-              `playlists/${playlistId}/${subEl}/`
+              `${user.id}/${playlistId}/${subEl}/`
             );
             collectionData(colRef).subscribe((data) => {
               notes = data;
@@ -49,14 +50,14 @@ export class HttpFirebaseService {
                 if (!notesEl.note) {
                   const docRef = doc(
                     this.firestore,
-                    `playlists/${playlistId}/${subEl}/`,
+                    `${user.id}/${playlistId}/${subEl}/`,
                     'nullNote'
                   );
                   deleteDoc(docRef);
                 } else {
                   const docRef = doc(
                     this.firestore,
-                    `playlists/${playlistId}/${subEl}/`,
+                    `${user.id}/${playlistId}/${subEl}/`,
                     notesEl.note
                   );
                   deleteDoc(docRef);
@@ -71,39 +72,39 @@ export class HttpFirebaseService {
       });
   }
 
-  addVideoNotesCol(playlistId: string, videoId: string) {
+  addVideoNotesCol(playlistId: string, videoId: string, user: User) {
     const videoNotesCollections = doc(
       this.firestore,
-      `playlists/${playlistId}/${videoId}/`,
+      `${user.id}/${playlistId}/${videoId}/`,
       'nullNote'
     );
     setDoc(videoNotesCollections, { null: null });
 
-    const docRef = doc(this.firestore, 'playlists', playlistId);
+    const docRef = doc(this.firestore, user.id, playlistId);
     updateDoc(docRef, {
       subcollections: arrayUnion(videoId),
     });
   }
 
-  addWatchedVideoIds(playlistId: string, videoId: string) {
-    const docRef = doc(this.firestore, 'playlists', playlistId);
+  addWatchedVideoIds(playlistId: string, videoId: string, user: User) {
+    const docRef = doc(this.firestore, user.id, playlistId);
     updateDoc(docRef, { watchedVideoIds: arrayUnion(videoId) });
   }
 
-  getWatchedVideoIds(playlistId: string) {
-    const docRef = doc(this.firestore, 'playlists', playlistId);
+  getWatchedVideoIds(playlistId: string, user: User) {
+    const docRef = doc(this.firestore, user.id, playlistId);
     return getDoc(docRef);
   }
 
-  removeFromWatched(videoId: string, playlistId: string) {
-    const docRef = doc(this.firestore, 'playlists', playlistId);
+  removeFromWatched(videoId: string, playlistId: string, user: User) {
+    const docRef = doc(this.firestore, user.id, playlistId);
     updateDoc(docRef, { watchedVideoIds: arrayRemove(videoId) });
   }
 
-  saveNote(playlistId: string, videoId: string, note: Note) {
+  saveNote(playlistId: string, videoId: string, note: Note, user: User) {
     const colRef = doc(
       this.firestore,
-      `playlists/${playlistId}/${videoId}`,
+      `${user.id}/${playlistId}/${videoId}`,
       `${note.note}`
     );
     setDoc(colRef, {
@@ -113,18 +114,18 @@ export class HttpFirebaseService {
     });
   }
 
-  getVideoNotes(playlistId: string, videoId: string) {
+  getVideoNotes(playlistId: string, videoId: string, user: User) {
     const colRef = collection(
       this.firestore,
-      `playlists/${playlistId}/${videoId}`
+      `${user.id}/${playlistId}/${videoId}`
     );
     return collectionData(colRef);
   }
 
-  deleteNote(playlistId: string, videoId: string, note: Note) {
+  deleteNote(playlistId: string, videoId: string, note: Note, user: User) {
     const docRef = doc(
       this.firestore,
-      `playlists/${playlistId}/${videoId}/${note.note}`
+      `${user.id}/${playlistId}/${videoId}/${note.note}`
     );
     deleteDoc(docRef);
   }

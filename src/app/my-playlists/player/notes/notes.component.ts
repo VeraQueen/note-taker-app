@@ -4,6 +4,8 @@ import { Note } from '../note.model';
 import { Subscription } from 'rxjs';
 import { HttpFirebaseService } from 'src/app/http-firebase.service';
 import { PlaylistService } from 'src/app/playlist.service';
+import { AuthService } from 'src/app/auth.service';
+import { User } from 'src/app/auth/user.model';
 
 @Component({
   selector: 'app-notes',
@@ -17,14 +19,19 @@ export class NotesComponent implements OnInit, OnDestroy {
   notes: Note[] = [];
   videoId: string;
   playlistId: string;
+  user: User;
 
   constructor(
     private noteService: NoteService,
     private playlistService: PlaylistService,
-    private firebaseService: HttpFirebaseService
+    private firebaseService: HttpFirebaseService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
+    this.authService.userSubject.subscribe((user) => {
+      this.user = user;
+    });
     this.playlistIdSub = this.playlistService.playlistIdSubject.subscribe(
       (playlistId) => {
         this.playlistId = playlistId;
@@ -36,7 +43,7 @@ export class NotesComponent implements OnInit, OnDestroy {
       }
     );
     this.notesSub = this.firebaseService
-      .getVideoNotes(this.playlistId, this.videoId)
+      .getVideoNotes(this.playlistId, this.videoId, this.user)
       .subscribe((allNotes) => {
         this.notes = [];
         allNotes.forEach((note) => {
@@ -75,7 +82,8 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.firebaseService.deleteNote(
       this.playlistId,
       this.videoId,
-      this.notes[i]
+      this.notes[i],
+      this.user
     );
   }
 

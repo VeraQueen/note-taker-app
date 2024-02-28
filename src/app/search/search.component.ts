@@ -8,6 +8,8 @@ import {
   HttpYouTubeService,
 } from '../http-youtube.service';
 import { HttpFirebaseService } from '../http-firebase.service';
+import { User } from '../auth/user.model';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-search',
@@ -25,17 +27,22 @@ export class SearchComponent implements OnInit, OnDestroy {
   nextPageToken: string;
   playlists: object[];
   playlistIds: string[] = [];
+  user: User;
 
   constructor(
     private httpService: HttpYouTubeService,
-    private firebaseService: HttpFirebaseService
+    private firebaseService: HttpFirebaseService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.searchForm = new FormGroup({
       searchInput: new FormControl(null, Validators.required),
     });
-    this.firebaseService.getPlaylists().subscribe((data) => {
+    this.authService.userSubject.subscribe((user) => {
+      this.user = user;
+    });
+    this.firebaseService.getPlaylists(this.user).subscribe((data) => {
       data.forEach((playlist) => {
         this.playlistIds.push(playlist.playlistId);
       });
@@ -64,7 +71,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   onAdd(id: number) {
     this.playlists[id]['added'] = true;
     const playlistId = this.playlists[id]['id']['playlistId'];
-    this.firebaseService.savePlaylist(playlistId);
+    this.firebaseService.savePlaylist(playlistId, this.user);
   }
 
   ngOnDestroy(): void {
