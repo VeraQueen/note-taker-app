@@ -16,7 +16,6 @@ export class NotesComponent implements OnInit, OnDestroy {
   private playlistIdSub: Subscription;
   private videoIdSub: Subscription;
   private notesSub: Subscription;
-  private userSub: Subscription;
   notes: Note[] = [];
   videoId: string;
   playlistId: string;
@@ -30,41 +29,41 @@ export class NotesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.userSub = this.authService.userSubject.subscribe((user) => {
+    this.authService.getCurrentUser().then((user: User) => {
       this.user = user;
-    });
-    this.playlistIdSub = this.playlistService.playlistIdSubject.subscribe(
-      (playlistId) => {
-        this.playlistId = playlistId;
-      }
-    );
-    this.videoIdSub = this.playlistService.videoIdSubject.subscribe(
-      (videoId) => {
-        this.videoId = videoId;
-      }
-    );
-    this.notesSub = this.firebaseService
-      .getVideoNotes(this.playlistId, this.videoId, this.user)
-      .subscribe((allNotes) => {
-        this.notes = [];
-        allNotes.forEach((note) => {
-          const noteEl: Note = {
-            note: note.note,
-            timestamp: note.timestamp,
-            timestampSeconds: note.timestampSeconds,
-          };
-          if (
-            note.note === undefined &&
-            note.timestamp === undefined &&
-            note.timestampSeconds === undefined
-          ) {
-            return;
-          } else {
-            this.notes.push(noteEl);
-            this.sortAsc(this.notes);
-          }
+      this.playlistIdSub = this.playlistService.playlistIdSubject.subscribe(
+        (playlistId) => {
+          this.playlistId = playlistId;
+        }
+      );
+      this.videoIdSub = this.playlistService.videoIdSubject.subscribe(
+        (videoId) => {
+          this.videoId = videoId;
+        }
+      );
+      this.notesSub = this.firebaseService
+        .getVideoNotes(this.playlistId, this.videoId, this.user)
+        .subscribe((allNotes) => {
+          this.notes = [];
+          allNotes.forEach((note) => {
+            const noteEl: Note = {
+              note: note.note,
+              timestamp: note.timestamp,
+              timestampSeconds: note.timestampSeconds,
+            };
+            if (
+              note.note === undefined &&
+              note.timestamp === undefined &&
+              note.timestampSeconds === undefined
+            ) {
+              return;
+            } else {
+              this.notes.push(noteEl);
+              this.sortAsc(this.notes);
+            }
+          });
         });
-      });
+    });
   }
 
   onSortAsc() {
@@ -105,10 +104,8 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.noteService.saveAndEmpty();
     if (this.playlistIdSub) this.playlistIdSub.unsubscribe();
     if (this.videoIdSub) this.videoIdSub.unsubscribe();
     if (this.notesSub) this.notesSub.unsubscribe();
-    if (this.userSub) this.userSub.unsubscribe();
   }
 }

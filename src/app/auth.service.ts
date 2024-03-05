@@ -7,15 +7,12 @@ import {
   signOut,
 } from '@angular/fire/auth';
 import { User } from './auth/user.model';
-import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  userSubject = new BehaviorSubject<User>(null);
-
   constructor(private auth: Auth, private router: Router) {}
 
   signUp(email: string, password: string) {
@@ -28,21 +25,24 @@ export class AuthService {
 
   signOut() {
     signOut(this.auth);
-    this.userSubject.next(null);
     this.router.navigate(['/auth']);
   }
 
   getCurrentUser() {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        const newUser: User = {
-          email: user.email,
-          id: user.uid,
-        };
-        this.userSubject.next(newUser);
-      } else {
-        console.log('The user is signed out.');
-      }
+    return new Promise((resolve, reject) => {
+      onAuthStateChanged(this.auth, (user) => {
+        if (user) {
+          const newUser: User = {
+            email: user.email,
+            id: user.uid,
+          };
+          console.log('User is logged in.');
+          resolve(newUser);
+        } else {
+          console.log('The user is signed out.');
+          reject('You are signed out. Sign in again to start noting down!');
+        }
+      });
     });
   }
 }

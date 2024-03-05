@@ -31,37 +31,35 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.userSub = this.authService.userSubject
-      .pipe(take(1))
-      .subscribe((user) => {
-        this.user = user;
-      });
     this.isLoading = true;
-    this.getFirestorePlaylistsSub = this.firebaseService
-      .getPlaylists(this.user)
-      .subscribe((playlists) => {
-        this.playlists = [];
-        playlists.forEach((playlist) => {
-          this.getPlaylistsSub = this.httpService
-            .getPlaylist(playlist.playlistId)
-            .subscribe((data) => {
-              const plName = data['items'][0].snippet.localized.title;
-              const plAuthor = data['items'][0].snippet.channelTitle;
-              const plNumVideos = data['items'][0].contentDetails.itemCount;
-              const plImgPath = data['items'][0].snippet.thumbnails.medium.url;
-              const plId = data['items'][0].id;
-              const newPlaylist = new Playlist(
-                plName,
-                plAuthor,
-                plNumVideos,
-                plImgPath,
-                plId
-              );
-              this.playlists.push(newPlaylist);
-            });
+    this.authService.getCurrentUser().then((user: User) => {
+      this.getFirestorePlaylistsSub = this.firebaseService
+        .getPlaylists(user)
+        .subscribe((playlists) => {
+          this.playlists = [];
+          playlists.forEach((playlist) => {
+            this.getPlaylistsSub = this.httpService
+              .getPlaylist(playlist.playlistId)
+              .subscribe((data) => {
+                const plName = data['items'][0].snippet.localized.title;
+                const plAuthor = data['items'][0].snippet.channelTitle;
+                const plNumVideos = data['items'][0].contentDetails.itemCount;
+                const plImgPath =
+                  data['items'][0].snippet.thumbnails.medium.url;
+                const plId = data['items'][0].id;
+                const newPlaylist = new Playlist(
+                  plName,
+                  plAuthor,
+                  plNumVideos,
+                  plImgPath,
+                  plId
+                );
+                this.playlists.push(newPlaylist);
+              });
+          });
+          this.isLoading = false;
         });
-        this.isLoading = false;
-      });
+    });
   }
 
   onOpen(i: number) {

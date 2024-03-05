@@ -17,9 +17,8 @@ import { PlaylistService } from 'src/app/playlist.service';
   styleUrls: ['./playlist.component.css'],
 })
 export class PlaylistComponent implements OnInit {
-  userSub: Subscription;
-  getIdAndTokenSub: Subscription;
-  getVideosSub: Subscription;
+  private getIdAndTokenSub: Subscription;
+  private getVideosSub: Subscription;
   showButton: boolean = false;
   isLoading: boolean = false;
   error: boolean = null;
@@ -39,35 +38,35 @@ export class PlaylistComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userSub = this.authService.userSubject.subscribe((user) => {
+    this.authService.getCurrentUser().then((user: User) => {
       this.user = user;
+      this.getVideosSub = this.playlistService.playlistIdSubject
+        .pipe(
+          take(1),
+          map((playlistId) => {
+            return playlistId;
+          }),
+          switchMap((playlistId) => {
+            this.playlistId = playlistId;
+            this.isLoading = true;
+            if (this.playlistId) this.getWatchedVideos();
+            return this.httpService.getVideos(playlistId);
+          })
+        )
+        .subscribe({
+          next: (videosData: FetchVideosData) => {
+            this.nextPageToken = videosData.nextPageToken;
+            this.showButtonCheck(this.nextPageToken);
+            this.filterVideos(videosData.items);
+            this.checkWatched();
+            this.isLoading = false;
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.error = error.message;
+          },
+        });
     });
-    this.playlistService.playlistIdSubject
-      .pipe(
-        take(1),
-        map((playlistId) => {
-          return playlistId;
-        }),
-        switchMap((playlistId) => {
-          this.playlistId = playlistId;
-          this.isLoading = true;
-          if (this.playlistId) this.getWatchedVideos();
-          return this.httpService.getVideos(playlistId);
-        })
-      )
-      .subscribe({
-        next: (videosData: FetchVideosData) => {
-          this.nextPageToken = videosData.nextPageToken;
-          this.showButtonCheck(this.nextPageToken);
-          this.filterVideos(videosData.items);
-          this.checkWatched();
-          this.isLoading = false;
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.error = error.message;
-        },
-      });
   }
 
   onScroll() {
@@ -178,6 +177,5 @@ export class PlaylistComponent implements OnInit {
   ngOnDestroy() {
     if (this.getIdAndTokenSub) this.getIdAndTokenSub.unsubscribe();
     if (this.getVideosSub) this.getVideosSub.unsubscribe();
-    if (this.userSub) this.userSub.unsubscribe();
   }
 }

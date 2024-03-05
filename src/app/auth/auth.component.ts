@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.authService.getCurrentUser();
+    // this.authService.getCurrentUser();
   }
 
   onSwitchMode() {

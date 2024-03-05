@@ -1,7 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Observable } from 'rxjs';
+import {
+  Observable,
+  async,
+  concatMap,
+  exhaustAll,
+  exhaustMap,
+  mergeMap,
+  of,
+  take,
+} from 'rxjs';
 
 import {
   FetchPlaylistsData,
@@ -17,8 +26,8 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
-  searchPlaylistsSub: Subscription;
-  userSub: Subscription;
+  private searchPlaylistsSub: Subscription;
+  private getPlaylistsFireSub: Subscription;
   searchObs: Observable<FetchPlaylistsData>;
   isLoading: boolean = false;
   showMsg: boolean = false;
@@ -28,7 +37,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   nextPageToken: string;
   playlists: object[];
   playlistIds: string[] = [];
-  user: User;
+  user: string;
 
   constructor(
     private httpService: HttpYouTubeService,
@@ -40,13 +49,16 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.searchForm = new FormGroup({
       searchInput: new FormControl(null, Validators.required),
     });
-    this.userSub = this.authService.userSubject.subscribe((user) => {
-      this.user = user;
-    });
-    this.firebaseService.getPlaylists(this.user).subscribe((data) => {
-      data.forEach((playlist) => {
-        this.playlistIds.push(playlist.playlistId);
-      });
+    this.authService.getCurrentUser().then((user: User) => {
+      this.getPlaylistsFireSub = this.firebaseService
+        .getPlaylists(user)
+        .subscribe((data) => {
+          {
+            data.forEach((playlist) => {
+              this.playlistIds.push(playlist.playlistId);
+            });
+          }
+        });
     });
   }
 
@@ -72,12 +84,12 @@ export class SearchComponent implements OnInit, OnDestroy {
   onAdd(id: number) {
     this.playlists[id]['added'] = true;
     const playlistId = this.playlists[id]['id']['playlistId'];
-    this.firebaseService.savePlaylist(playlistId, this.user);
+    // this.firebaseService.savePlaylist(playlistId, this.user);
   }
 
   ngOnDestroy(): void {
     if (this.searchPlaylistsSub) this.searchPlaylistsSub.unsubscribe();
-    if (this.userSub) this.userSub.unsubscribe();
+    if (this.getPlaylistsFireSub) this.getPlaylistsFireSub.unsubscribe();
   }
 
   private searchObsSubscribe() {

@@ -15,7 +15,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./player.component.css'],
 })
 export class PlayerComponent implements OnInit, OnDestroy {
-  userSub: Subscription;
+  private playlistIdSub: Subscription;
+  private videoIdSub: Subscription;
   i;
   currentTime: number;
   duration: number;
@@ -38,13 +39,15 @@ export class PlayerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.userSub = this.authService.userSubject.subscribe((user) => {
+    this.authService.getCurrentUser().then((user: User) => {
       this.user = user;
     });
-    this.playlistService.videoIdSubject.pipe(take(1)).subscribe((videoId) => {
-      this.video = videoId;
-    });
-    this.playlistService.playlistIdSubject
+    this.playlistIdSub = this.playlistService.videoIdSubject
+      .pipe(take(1))
+      .subscribe((videoId) => {
+        this.video = videoId;
+      });
+    this.videoIdSub = this.playlistService.playlistIdSubject
       .pipe(take(1))
       .subscribe((playlisId) => {
         this.playlistId = playlisId;
@@ -154,7 +157,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.userSub) this.userSub.unsubscribe();
+    if (this.playlistIdSub) this.playlistIdSub.unsubscribe();
+    if (this.videoIdSub) this.videoIdSub.unsubscribe();
   }
 
   checkPlayer() {}
