@@ -8,11 +8,13 @@ import {
 } from '@angular/fire/auth';
 import { User } from './auth/user.model';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  userSubject = new BehaviorSubject<User>(null);
   constructor(private auth: Auth, private router: Router) {}
 
   signUp(email: string, password: string) {
@@ -25,6 +27,7 @@ export class AuthService {
 
   signOut() {
     signOut(this.auth);
+    this.userSubject.next(null);
     this.router.navigate(['/auth']);
   }
 
@@ -36,6 +39,7 @@ export class AuthService {
             email: user.email,
             id: user.uid,
           };
+          this.userSubject.next(newUser);
           console.log('User is logged in.');
           resolve(newUser);
         } else {
