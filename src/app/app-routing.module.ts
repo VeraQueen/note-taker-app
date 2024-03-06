@@ -5,6 +5,7 @@ import { PlaylistComponent } from './my-playlists/playlist/playlist.component';
 import { PlayerComponent } from './my-playlists/player/player.component';
 import { PlaylistsComponent } from './my-playlists/playlists/playlists.component';
 import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './auth/auth-guard';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
   {
     path: 'playlists',
     component: PlaylistsComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'playlist',
@@ -27,6 +29,7 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'auth',
