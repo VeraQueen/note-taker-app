@@ -31,12 +31,13 @@
         </a>
       </div>
       <div>
-        <a
+        <button
           *ngIf="isAuthenticated"
           class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
           (click)="onLogout()"
-          >Logout</a
         >
+          Logout
+        </button>
       </div>
     </div>
   </div>
