@@ -33,6 +33,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
     this.authService.getCurrentUser().then((user: User) => {
+      this.user = user;
       this.getFirestorePlaylistsSub = this.firebaseService
         .getPlaylists(user)
         .subscribe((playlists) => {
@@ -69,7 +70,12 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   }
 
   onDelete(playlistId: string) {
-    this.firebaseService.deletePlaylist(playlistId, this.user);
+    const confirm = window.confirm(
+      'Are you sure? All the data for this playlist will be lost.'
+    );
+    if (confirm) {
+      this.firebaseService.deletePlaylist(playlistId, this.user);
+    }
   }
 
   ngOnDestroy() {
