@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 export class PlayerComponent implements OnInit, OnDestroy {
   private playlistIdSub: Subscription;
   private videoIdSub: Subscription;
+  error: string;
   i;
   currentTime: number;
   duration: number;
@@ -44,8 +45,13 @@ export class PlayerComponent implements OnInit, OnDestroy {
     });
     this.playlistIdSub = this.playlistService.videoIdSubject
       .pipe(take(1))
-      .subscribe((videoId) => {
-        this.video = videoId;
+      .subscribe((videoId: string) => {
+        if (videoId === null) {
+          this.error =
+            'The player needs the ID of a video. Go back to your playlists and open the video from the selected playlist.';
+        } else {
+          this.video = videoId;
+        }
       });
     this.videoIdSub = this.playlistService.playlistIdSubject
       .pipe(take(1))

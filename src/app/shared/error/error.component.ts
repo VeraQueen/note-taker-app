@@ -19,7 +19,10 @@ export class ErrorComponent {
     this.currentPage = this.router.url;
     if (this.currentPage === '/search' || this.currentPage === '/auth') {
       this.error = null;
-    } else if (this.currentPage === '/playlist') {
+    } else if (
+      this.currentPage === '/playlist' ||
+      this.currentPage === '/notes'
+    ) {
       this.error = null;
       this.router.navigate(['/playlists']);
     }

@@ -1,4 +1,5 @@
-<div class="max-w-6xl mx-auto pt-2 px-2">
+<app-error [error]="error"></app-error>
+<div class="max-w-6xl mx-auto pt-2 px-2" *ngIf="!error">
   <div class="relative" style="padding-bottom: 56.25%">
     <div
       class="absolute w-full h-full focus:outline focus:outline-2 focus:outline-gray-700"
@@ -7,7 +8,7 @@
   </div>
 </div>
 
-<div class="max-w-6xl mx-auto pt-2 px-2">
+<div class="max-w-6xl mx-auto pt-2 px-2" *ngIf="!error">
   <button
     class="w-full max-w-md mx-auto p-2 mb-4 rounded-md text-gray-900 bg-gray-200 flex justify-between items-center focus:outline focus:outline-2 focus:outline-gray-700"
     (click)="onTakeNote()"
