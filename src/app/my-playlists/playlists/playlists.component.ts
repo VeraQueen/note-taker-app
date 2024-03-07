@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Subscription, take } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Playlist } from './playlist.model';
 import { PlaylistService } from 'src/app/playlist.service';
 import { HttpFirebaseService } from 'src/app/http-firebase.service';
