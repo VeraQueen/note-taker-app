@@ -1,0 +1,19 @@
+<p mat-dialog-title>Are you sure?</p>
+<mat-dialog-content
+  >All of your notes will be lost and you cannot retrieve them
+  again.</mat-dialog-content
+>
+<mat-dialog-actions align="center">
+  <button
+    [mat-dialog-close]="true"
+    class="w-fit h-fit px-2 py-1 mr-1 rounded-md bg-red-600 text-md text-white focus:outline focus:outline-2 focus:outline-gray-700"
+  >
+    Delete
+  </button>
+  <button
+    [mat-dialog-close]="false"
+    class="w-fit h-fit px-2 py-1 rounded-md bg-gray-700 text-md text-white focus:outline focus:outline-2 focus:outline-gray-700"
+  >
+    Cancel
+  </button>
+</mat-dialog-actions>

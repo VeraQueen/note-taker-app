@@ -8,6 +8,8 @@ import { HttpFirebaseService } from 'src/app/http-firebase.service';
 import { HttpYouTubeService } from 'src/app/http-youtube.service';
 import { AuthService } from 'src/app/auth.service';
 import { User } from 'src/app/auth/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-playlists',
@@ -27,7 +29,8 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     private router: Router,
     private firebaseService: HttpFirebaseService,
     private httpService: HttpYouTubeService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -70,12 +73,13 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   }
 
   onDelete(playlistId: string) {
-    const confirm = window.confirm(
-      'Are you sure? All the data for this playlist will be lost.'
-    );
-    if (confirm) {
-      this.firebaseService.deletePlaylist(playlistId, this.user);
-    }
+    let dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe((res) => {
+      console.log(res);
+      if (res) {
+        this.firebaseService.deletePlaylist(playlistId, this.user);
+      }
+    });
   }
 
   ngOnDestroy() {

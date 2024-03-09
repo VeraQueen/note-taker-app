@@ -38,6 +38,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogComponent } from './shared/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -68,19 +70,19 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
       heroArrowDown,
     }),
     InfiniteScrollModule,
+    MatDialogModule,
     AddedPlaylistDirective,
     RemoveWatchedVideoDirective,
     BackBtnComponent,
     ErrorComponent,
     CssLoaderComponent,
     AuthComponent,
+    DialogComponent,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
   ],
-  providers: [
-    provideAnimationsAsync('noop')
-  ],
+  providers: [provideAnimationsAsync('noop')],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

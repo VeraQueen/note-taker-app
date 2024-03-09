@@ -1,16 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
-import {
-  Observable,
-  async,
-  concatMap,
-  exhaustAll,
-  exhaustMap,
-  mergeMap,
-  of,
-  take,
-} from 'rxjs';
+import { Observable } from 'rxjs';
 
 import {
   FetchPlaylistsData,
@@ -37,7 +28,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   nextPageToken: string;
   playlists: object[];
   playlistIds: string[] = [];
-  user: string;
+  user: User;
 
   constructor(
     private httpService: HttpYouTubeService,
@@ -50,6 +41,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       searchInput: new FormControl(null, Validators.required),
     });
     this.authService.getCurrentUser().then((user: User) => {
+      this.user = user;
       this.getPlaylistsFireSub = this.firebaseService
         .getPlaylists(user)
         .subscribe((data) => {
@@ -84,7 +76,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   onAdd(id: number) {
     this.playlists[id]['added'] = true;
     const playlistId = this.playlists[id]['id']['playlistId'];
-    // this.firebaseService.savePlaylist(playlistId, this.user);
+    this.firebaseService.savePlaylist(playlistId, this.user);
   }
 
   ngOnDestroy(): void {
