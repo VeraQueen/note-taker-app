@@ -69,6 +69,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   onOpen(i: number) {
     const playlistId = this.playlists[i].id;
     this.playlistService.playlistIdSubject.next(playlistId);
+    sessionStorage.setItem('playlistId', JSON.stringify(playlistId));
     this.router.navigate(['/playlist']);
   }
 

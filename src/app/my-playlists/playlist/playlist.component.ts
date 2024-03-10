@@ -43,14 +43,20 @@ export class PlaylistComponent implements OnInit {
       this.getVideosSub = this.playlistService.playlistIdSubject
         .pipe(
           take(1),
-          map((playlistId) => {
-            return playlistId;
-          }),
           switchMap((playlistId) => {
-            this.playlistId = playlistId;
             this.isLoading = true;
-            if (this.playlistId) this.getWatchedVideos();
-            return this.httpService.getVideos(playlistId);
+            const sessionStoragePLaylistId: string = JSON.parse(
+              sessionStorage.getItem('playlistId')
+            );
+            if (playlistId) {
+              this.playlistId = playlistId;
+              this.getWatchedVideos();
+              return this.httpService.getVideos(playlistId);
+            } else if (!playlistId && sessionStoragePLaylistId !== null) {
+              this.playlistId = sessionStoragePLaylistId;
+              this.getWatchedVideos();
+              return this.httpService.getVideos(sessionStoragePLaylistId);
+            }
           })
         )
         .subscribe({
@@ -95,6 +101,7 @@ export class PlaylistComponent implements OnInit {
     this.playlistService.videoIdSubject.next(videoId);
     this.playlistService.playlistIdSubject.next(this.playlistId);
     this.firebaseService.addVideoNotesCol(this.playlistId, videoId, this.user);
+    sessionStorage.setItem('videoId', JSON.stringify(videoId));
     this.router.navigate(['/notes']);
   }
 

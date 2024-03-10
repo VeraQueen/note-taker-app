@@ -43,20 +43,37 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.authService.getCurrentUser().then((user: User) => {
       this.user = user;
     });
-    this.playlistIdSub = this.playlistService.videoIdSubject
+    this.videoIdSub = this.playlistService.videoIdSubject
       .pipe(take(1))
       .subscribe((videoId: string) => {
-        if (videoId === null) {
-          this.error =
-            'The player needs the ID of a video. Go back to your playlists and open the video from the selected playlist.';
-        } else {
+        const sessionStorageVideoId: string = JSON.parse(
+          sessionStorage.getItem('videoId')
+        );
+        if (videoId) {
           this.video = videoId;
+          console.log(this.video);
+        } else if (!videoId && sessionStorageVideoId !== null) {
+          this.video = sessionStorageVideoId;
+          console.log(this.video);
+        } else {
+          this.error = 'An unknown error occurred.';
         }
       });
-    this.videoIdSub = this.playlistService.playlistIdSubject
+    this.playlistIdSub = this.playlistService.playlistIdSubject
       .pipe(take(1))
-      .subscribe((playlisId) => {
-        this.playlistId = playlisId;
+      .subscribe((playlistId) => {
+        const sessionStoragePlaylistId: string = JSON.parse(
+          sessionStorage.getItem('playlistId')
+        );
+        if (playlistId) {
+          this.playlistId = playlistId;
+          console.log(this.playlistId);
+        } else if (!playlistId && sessionStoragePlaylistId !== null) {
+          this.playlistId = sessionStoragePlaylistId;
+          console.log(this.playlistId);
+        } else {
+          this.error = 'An unknown error occurred.';
+        }
       });
     this.init();
   }
@@ -166,8 +183,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     if (this.playlistIdSub) this.playlistIdSub.unsubscribe();
     if (this.videoIdSub) this.videoIdSub.unsubscribe();
   }
-
-  checkPlayer() {}
 
   private calculateTimestamp() {
     this.timestampSeconds = Math.floor(this.videoPlayer.getCurrentTime());

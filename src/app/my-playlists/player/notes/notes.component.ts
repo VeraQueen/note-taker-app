@@ -33,12 +33,30 @@ export class NotesComponent implements OnInit, OnDestroy {
       this.user = user;
       this.playlistIdSub = this.playlistService.playlistIdSubject.subscribe(
         (playlistId) => {
-          this.playlistId = playlistId;
+          const sessionStoragePlaylistId: string = JSON.parse(
+            sessionStorage.getItem('playlistId')
+          );
+          if (playlistId) {
+            this.playlistId = playlistId;
+            console.log(this.playlistId);
+          } else if (!playlistId && sessionStoragePlaylistId !== null) {
+            this.playlistId = sessionStoragePlaylistId;
+            console.log(this.playlistId);
+          }
         }
       );
       this.videoIdSub = this.playlistService.videoIdSubject.subscribe(
         (videoId) => {
-          this.videoId = videoId;
+          const sessionStorageVideoId: string = JSON.parse(
+            sessionStorage.getItem('videoId')
+          );
+          if (videoId) {
+            this.videoId = videoId;
+            console.log(this.videoId);
+          } else if (!videoId && sessionStorageVideoId !== null) {
+            this.videoId = sessionStorageVideoId;
+            console.log(this.videoId);
+          }
         }
       );
       this.notesSub = this.firebaseService
