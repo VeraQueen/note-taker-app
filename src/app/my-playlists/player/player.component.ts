@@ -51,10 +51,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
         );
         if (videoId) {
           this.video = videoId;
-          console.log(this.video);
         } else if (!videoId && sessionStorageVideoId !== null) {
           this.video = sessionStorageVideoId;
-          console.log(this.video);
         } else {
           this.error = 'An unknown error occurred.';
         }
@@ -67,10 +65,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
         );
         if (playlistId) {
           this.playlistId = playlistId;
-          console.log(this.playlistId);
         } else if (!playlistId && sessionStoragePlaylistId !== null) {
           this.playlistId = sessionStoragePlaylistId;
-          console.log(this.playlistId);
         } else {
           this.error = 'An unknown error occurred.';
         }

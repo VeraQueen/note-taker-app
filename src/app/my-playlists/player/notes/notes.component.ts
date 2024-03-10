@@ -38,10 +38,8 @@ export class NotesComponent implements OnInit, OnDestroy {
           );
           if (playlistId) {
             this.playlistId = playlistId;
-            console.log(this.playlistId);
           } else if (!playlistId && sessionStoragePlaylistId !== null) {
             this.playlistId = sessionStoragePlaylistId;
-            console.log(this.playlistId);
           }
         }
       );
@@ -52,10 +50,8 @@ export class NotesComponent implements OnInit, OnDestroy {
           );
           if (videoId) {
             this.videoId = videoId;
-            console.log(this.videoId);
           } else if (!videoId && sessionStorageVideoId !== null) {
             this.videoId = sessionStorageVideoId;
-            console.log(this.videoId);
           }
         }
       );

@@ -28,6 +28,7 @@ export class AuthService {
   signOut() {
     signOut(this.auth);
     this.userSubject.next(null);
+    sessionStorage.clear();
     this.router.navigate(['/auth']);
   }
 
