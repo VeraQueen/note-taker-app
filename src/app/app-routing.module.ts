@@ -21,10 +21,12 @@ const routes: Routes = [
   {
     path: 'playlist',
     component: PlaylistComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'notes',
     component: PlayerComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'search',
