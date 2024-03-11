@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   firebase: {
     projectId: 'note-taker-app-400810',
     appId: '1:407343500901:web:ae91cfa94bdda4a392408c',
