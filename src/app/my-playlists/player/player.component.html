@@ -10,11 +10,17 @@
 
 <div class="max-w-6xl mx-auto pt-2 px-2" *ngIf="!error">
   <button
+    type="button"
+    aria-label="Take a note"
     class="w-full max-w-md mx-auto p-2 mb-4 rounded-md text-gray-900 bg-gray-200 flex justify-between items-center focus:outline focus:outline-2 focus:outline-gray-700"
     (click)="onTakeNote()"
   >
     Take a note
-    <ng-icon name="heroPencilSquare" class="text-gray-900 text-2xl"></ng-icon>
+    <ng-icon
+      name="heroPencilSquare"
+      aria-hidden="true"
+      class="text-gray-900 text-2xl"
+    ></ng-icon>
   </button>
 
   <div class="flex gap-1 justify-center content-center" *ngIf="showForm">

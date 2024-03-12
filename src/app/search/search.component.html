@@ -14,6 +14,7 @@
       />
       <button
         type="submit"
+        aria-label="Search available playlists"
         class="w-1/4 mx-auto flex-auto bg-gray-600 hover:bg-gray-700 text-md text-white font-semibold py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700"
       >
         Search
@@ -49,6 +50,7 @@
       </p>
       <button
         type="button"
+        aria-label="Add playlist"
         appAddedPlaylist
         [ngClass]="{
           'playlist-existing': playlist.existing

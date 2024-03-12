@@ -24,6 +24,7 @@
     <div class="flex gap-3 pb-2 w-full max-w-md mx-auto">
       <button
         type="button"
+        aria-label="Play from this timestamp"
         class="w-fit h-fit px-2 rounded-md bg-gray-500 text-white hover:bg-gray-700 focus:outline focus:outline-2 focus:outline-gray-700"
         (click)="onPlayHere(i)"
       >
@@ -34,8 +35,12 @@
       >
         {{ note.note }}
       </p>
-      <button (click)="onDelete(i)">
-        <ng-icon name="heroXMark" class="text-gray-900 text-2xl"></ng-icon>
+      <button (click)="onDelete(i)" aria-label="Delete a note">
+        <ng-icon
+          name="heroXMark"
+          aria-hidden="true"
+          class="text-gray-900 text-2xl"
+        ></ng-icon>
       </button>
     </div>
   </div>

@@ -28,6 +28,7 @@
       >
         <button
           type="button"
+          aria-label="Remove from watched videos"
           [disabled]="!video.watched"
           [ngClass]="{ watched: video.watched }"
           appRemoveWatchedVideo
@@ -36,16 +37,19 @@
         >
           <ng-icon
             name="heroCheck"
+            aria-hidden="true"
             class="text-white text-xl text-bold"
           ></ng-icon>
         </button>
         <button
           type="button"
+          aria-label="Play video"
           class="w-10 h-10 rounded-full flex items-center justify-center bg-red-600 hover:bg-red-700 focus:outline focus:outline-2 focus:outline-gray-700"
           (click)="onPlayVideo(i)"
         >
           <ng-icon
             name="heroPlay"
+            aria-hidden="true"
             class="text-white text-3xl text-bold"
           ></ng-icon>
         </button>
