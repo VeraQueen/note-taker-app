@@ -6,17 +6,19 @@
     <p>Sort by timestamp:</p>
     <button
       type="button"
+      aria-label="View latest notes by timestamp"
       class="w-7 h-7 rounded-full flex items-center justify-center bg-gray-200 hover:bg-gray-300 focus:outline focus:outline-2 focus:outline-gray-700"
       (click)="onSortAsc()"
     >
-      <ng-icon name="heroArrowUp"></ng-icon>
+      <ng-icon aria-hidden="true" name="heroArrowUp"></ng-icon>
     </button>
     <button
       type="button"
+      aria-label="View oldest notes by timestamp"
       class="w-7 h-7 rounded-full flex items-center justify-center bg-gray-200 hover:bg-gray-300 focus:outline focus:outline-2 focus:outline-gray-700"
       (click)="onSortDesc()"
     >
-      <ng-icon name="heroArrowDown"></ng-icon>
+      <ng-icon aria-hidden="true" name="heroArrowDown"></ng-icon>
     </button>
   </div>
   <button></button>
