@@ -1,0 +1,18 @@
+{
+  "name": "Note Taker - take notes digitally",
+  "short_name": "Note Taker",
+  "display": "standalone",
+  "description": "Digital notebook for videos. Does it all: save a playlist, save the note for a video, play the video from that point, delete the note or delete the whole playlist. You are the boss.",
+  "icons": [
+    {
+      "src": "assets/favicons/logo-fav-and-sm",
+      "type": "image/svg",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/favicons/logo-fav-and-sm",
+      "type": "image/svg",
+      "sizes": "512x512"
+    }
+  ]
+}
