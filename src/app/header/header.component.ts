@@ -9,6 +9,7 @@ import { User } from '../auth/user.model';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
+  isOpen = false;
 
   constructor(private authService: AuthService) {}
 
@@ -21,6 +22,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onLogout() {
     this.authService.signOut();
     this.isAuthenticated = false;
+  }
+
+  openMobileMenu() {
+    this.isOpen = !this.isOpen;
   }
 
   ngOnDestroy() {}

@@ -39,6 +39,43 @@
           Logout
         </button>
       </div>
+      <div (click)="openMobileMenu()">
+        <button class="flex justify-center">
+          <ng-icon
+            name="heroBars2"
+            class="text-gray-300 hover:text-white text-3xl"
+            *ngIf="!isOpen"
+          ></ng-icon>
+          <ng-icon
+            name="heroXMark"
+            class="text-gray-300 hover:text-white text-3xl"
+            *ngIf="isOpen"
+          ></ng-icon>
+        </button>
+      </div>
+    </div>
+    <div class="flex flex-col items-stretch gap-1 pb-2" *ngIf="isOpen">
+      <a
+        routerLink="/playlists"
+        routerLinkActive="bg-gray-700"
+        *ngIf="isAuthenticated"
+        class="text-gray-300 text-center hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
+        >My playlists</a
+      >
+      <a
+        routerLink="/search"
+        routerLinkActive="bg-gray-700"
+        *ngIf="isAuthenticated"
+        class="text-gray-300 text-center hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
+        >Search</a
+      >
+      <button
+        *ngIf="isAuthenticated"
+        class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
+        (click)="onLogout()"
+      >
+        Logout
+      </button>
     </div>
   </div>
 </nav>

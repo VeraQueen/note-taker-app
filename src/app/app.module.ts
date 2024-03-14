@@ -27,6 +27,7 @@ import {
   heroXMark,
   heroCheck,
   heroArrowDown,
+  heroBars2,
 } from '@ng-icons/heroicons/outline';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
@@ -69,6 +70,7 @@ import { FooterComponent } from './footer/footer.component';
       heroXMark,
       heroCheck,
       heroArrowDown,
+      heroBars2,
     }),
     InfiniteScrollModule,
     MatDialogModule,
