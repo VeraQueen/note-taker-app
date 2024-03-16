@@ -8,29 +8,31 @@
           alt="Note taker app"
         />
         <span class="h-inherit w-1 bg-red-600"></span>
-        <a
-          routerLink="/playlists"
-          routerLinkActive="bg-gray-700"
-          *ngIf="isAuthenticated"
-          class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
-          >My playlists</a
-        >
-        <a
-          routerLink="/search"
-          routerLinkActive="bg-gray-700"
-          *ngIf="isAuthenticated"
-          class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
-          >Search</a
-        >
-        <a
-          routerLink="/auth"
-          routerLinkActive="bg-gray-700"
-          *ngIf="!isAuthenticated"
-          class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
-          >Sign in | Login
-        </a>
+        <div class="hidden sm:block">
+          <a
+            routerLink="/playlists"
+            routerLinkActive="bg-gray-700"
+            *ngIf="isAuthenticated"
+            class="inline-block text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
+            >My playlists</a
+          >
+          <a
+            routerLink="/search"
+            routerLinkActive="bg-gray-700"
+            *ngIf="isAuthenticated"
+            class="inline-block text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
+            >Search</a
+          >
+          <!-- <a
+            routerLink="/auth"
+            routerLinkActive="bg-gray-700"
+            *ngIf="!isAuthenticated"
+            class="inline-block text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
+            >Sign in | Login
+          </a> -->
+        </div>
       </div>
-      <div>
+      <div class="hidden sm:block">
         <button
           *ngIf="isAuthenticated"
           class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
@@ -39,7 +41,7 @@
           Logout
         </button>
       </div>
-      <div (click)="openMobileMenu()" class="sm:hidden">
+      <div (click)="openMobileMenu()" class="sm:hidden" *ngIf="isAuthenticated">
         <button class="flex justify-center">
           <ng-icon
             name="heroBars2"
@@ -69,13 +71,13 @@
         class="text-gray-300 text-center hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
         >Search</a
       >
-      <a
+      <!-- <a
         routerLink="/auth"
         routerLinkActive="bg-gray-700"
         *ngIf="!isAuthenticated"
         class="text-gray-300 text-center hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
         >Sign in | Login
-      </a>
+      </a> -->
       <button
         *ngIf="isAuthenticated"
         class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
