@@ -6,12 +6,17 @@ import { PlayerComponent } from './my-playlists/player/player.component';
 import { PlaylistsComponent } from './my-playlists/playlists/playlists.component';
 import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './auth/auth-guard';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/playlists',
+    redirectTo: '/home',
     pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
   },
   {
     path: 'playlists',
