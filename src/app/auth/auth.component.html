@@ -43,7 +43,7 @@
         class="w-fit bg-gray-500 hover:bg-gray-700 text-md text-white py-1 px-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700 disabled:bg-gray-400"
         [disabled]="authForm.invalid"
       >
-        {{ isLoginMode ? "Login" : "Sign Up" }}
+        {{ isSignInMode ? "Sign In" : "Register" }}
       </button>
       <span>&ndash;</span>
       <button
@@ -51,7 +51,7 @@
         class="w-fit bg-gray-500 hover:bg-gray-700 text-md text-white py-1 px-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700"
         (click)="onSwitchMode()"
       >
-        Switch to {{ isLoginMode ? "Sign Up" : "Login" }}
+        Switch to {{ isSignInMode ? "Register" : "Sign In" }}
       </button>
     </div>
   </form>

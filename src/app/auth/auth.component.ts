@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrl: './auth.component.css',
 })
 export class AuthComponent implements OnInit {
-  isLoginMode: boolean = true;
+  isSignInMode: boolean = true;
   isLoading = false;
   error: string = null;
 
@@ -22,7 +22,7 @@ export class AuthComponent implements OnInit {
   ngOnInit() {}
 
   onSwitchMode() {
-    this.isLoginMode = !this.isLoginMode;
+    this.isSignInMode = !this.isSignInMode;
   }
 
   onSubmit(authForm: NgForm) {
@@ -32,7 +32,7 @@ export class AuthComponent implements OnInit {
     const email = authForm.value.email;
     const password = authForm.value.password;
     this.isLoading = true;
-    if (this.isLoginMode) {
+    if (this.isSignInMode) {
       this.authService
         .signIn(email, password)
         .then(() => {
