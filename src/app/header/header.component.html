@@ -2,11 +2,13 @@
   <div class="mx-auto max-w-7xl px-6">
     <div class="flex h-16 gap-4 items-center justify-between">
       <div class="flex gap-4">
-        <img
-          class="h-6 sm:h-8 w-auto"
-          src="../assets/logos/note-logo-light.svg"
-          alt="Note taker app"
-        />
+        <a routerLink="/home">
+          <img
+            class="h-6 sm:h-8 w-auto"
+            src="../assets/logos/note-logo-light.svg"
+            alt="Note taker app"
+          />
+        </a>
         <span class="h-inherit w-1 bg-red-600"></span>
         <div class="hidden sm:block">
           <a
@@ -23,16 +25,16 @@
             class="inline-block text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
             >Search</a
           >
-          <!-- <a
-            routerLink="/auth"
-            routerLinkActive="bg-gray-700"
-            *ngIf="!isAuthenticated"
-            class="inline-block mr-2 text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
-            >Sign in | Login
-          </a> -->
         </div>
       </div>
       <div class="hidden sm:block">
+        <a
+          routerLink="/auth"
+          routerLinkActive="bg-gray-700"
+          *ngIf="!isAuthenticated"
+          class="inline-block mr-2 text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
+          >Sign in | Login
+        </a>
         <button
           *ngIf="isAuthenticated"
           class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
@@ -41,7 +43,7 @@
           Logout
         </button>
       </div>
-      <div (click)="openMobileMenu()" class="sm:hidden" *ngIf="isAuthenticated">
+      <div (click)="openMobileMenu()" class="sm:hidden">
         <button class="flex justify-center">
           <ng-icon
             name="heroBars2"
@@ -71,13 +73,13 @@
         class="text-gray-300 text-center hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
         >Search</a
       >
-      <!-- <a
+      <a
         routerLink="/auth"
         routerLinkActive="bg-gray-700"
         *ngIf="!isAuthenticated"
         class="text-gray-300 text-center hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
         >Sign in | Login
-      </a> -->
+      </a>
       <button
         *ngIf="isAuthenticated"
         class="text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
