@@ -1,27 +1,68 @@
-<div>
-  <div
-    class="w-10 h-10 rounded-full bg-red-700 flex justify-center items-center"
-  >
-    <ng-icon name="heroCheck" class="text-3xl text-white"></ng-icon>
+<div
+  class="relative w-full max-w-7xl mx-auto flex flex-col justify-center items-center overflow-x-clip"
+>
+  <div>
+    <div
+      class="relative w-40 h-40 mt-10 rounded-full bg-gray-50 border border-gray-100"
+    >
+      <div
+        class="absolute bottom-0 left-0 w-14 h-14 rounded-full bg-red-700 flex justify-center items-center z-10"
+      >
+        <ng-icon
+          name="heroPlus"
+          aria-hidden="true"
+          class="text-5xl text-white"
+        ></ng-icon>
+      </div>
+    </div>
   </div>
-  <div
-    class="w-10 h-10 rounded-full bg-red-700 flex justify-center items-center"
-  >
-    <ng-icon name="heroXMark" class="text-3xl text-white"></ng-icon>
-  </div>
-  <div
-    class="w-10 h-10 rounded-full bg-red-700 flex justify-center items-center"
-  >
-    <ng-icon name="heroPlay" class="text-3xl text-white"></ng-icon>
-  </div>
-  <div
-    class="w-10 h-10 rounded-full bg-red-700 flex justify-center items-center"
-  >
-    <ng-icon name="heroPlus" class="text-3xl text-white"></ng-icon>
-  </div>
-  <div
-    class="w-10 h-10 rounded-full bg-red-700 flex justify-center items-center"
-  >
-    <ng-icon name="heroFolderOpen" class="text-3xl text-white"></ng-icon>
+
+  <div class="relative flex flex-col items-center">
+    <h1 class="text-gray-900 text-6xl p-2 pt-8 max-w-lg text-center z-10">
+      Discover digital note taking.
+    </h1>
+    <p
+      class="text-gray-600 text-xl px-4 py-6 max-w-md text-center text-wrap z-10"
+    >
+      Become a master: save playlists, watch videos, and take notes - all for
+      free.
+    </p>
+    <button
+      class="w-fit p-2 px-4 bg-gray-600 hover:bg-gray-700 rounded-md text-white z-10"
+    >
+      Sign Up | Log In
+    </button>
+    <div class="absolute -bottom-60 -left-20 w-96 h-96 rounded-full bg-gray-50">
+      <div
+        class="absolute bottom-28 -right-4 w-20 h-20 rounded-full bg-green-600 flex justify-center items-center"
+      >
+        <ng-icon
+          name="heroCheck"
+          aria-hidden="true"
+          class="text-7xl text-white"
+        ></ng-icon>
+      </div>
+      <div
+        class="absolute bottom-5 right-12 w-14 h-14 rounded-full bg-red-700 flex justify-center items-center"
+      >
+        <ng-icon
+          name="heroPlay"
+          aria-hidden="true"
+          class="text-5xl text-white"
+        ></ng-icon>
+      </div>
+      <div
+        class="absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 w-14 h-14 rounded-full bg-red-700 flex justify-center items-center"
+      >
+        <ng-icon
+          name="heroXMark"
+          aria-hidden="true"
+          class="text-5xl text-white"
+        ></ng-icon>
+      </div>
+    </div>
+    <div
+      class="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-gray-50"
+    ></div>
   </div>
 </div>

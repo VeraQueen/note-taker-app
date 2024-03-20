@@ -42,6 +42,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './shared/dialog/dialog.component';
 import { FooterComponent } from './footer/footer.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { FooterComponent } from './footer/footer.component';
     AuthComponent,
     DialogComponent,
     FooterComponent,
+    HomeComponent,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
