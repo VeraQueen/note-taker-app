@@ -22,6 +22,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onLogout() {
     this.authService.signOut();
     this.isAuthenticated = false;
+    this.closeMobileMenu();
+  }
+
+  closeMobileMenu() {
     this.isOpen = false;
   }
 
