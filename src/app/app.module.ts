@@ -20,7 +20,6 @@ import { NgIconsModule } from '@ng-icons/core';
 import {
   heroArrowLeft,
   heroFolderOpen,
-  heroPlay,
   heroPlus,
   heroArrowUp,
   heroPencilSquare,
@@ -28,6 +27,7 @@ import {
   heroCheck,
   heroArrowDown,
   heroBars2,
+  heroPlayCircle,
 } from '@ng-icons/heroicons/outline';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
@@ -64,7 +64,6 @@ import { HomeComponent } from './home/home.component';
     NgIconsModule.withIcons({
       heroPlus,
       heroFolderOpen,
-      heroPlay,
       heroArrowLeft,
       heroArrowUp,
       heroPencilSquare,
@@ -72,6 +71,7 @@ import { HomeComponent } from './home/home.component';
       heroCheck,
       heroArrowDown,
       heroBars2,
+      heroPlayCircle,
     }),
     InfiniteScrollModule,
     MatDialogModule,
