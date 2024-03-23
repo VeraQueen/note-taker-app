@@ -30,7 +30,7 @@
         <button
           type="button"
           aria-label="Remove from watched videos"
-          [disabled]="!video.watched"
+          [disabled]="video.watched === false"
           [ngClass]="{ watched: video.watched }"
           appRemoveWatchedVideo
           class="w-7 h-7 rounded-full flex items-center justify-center bg-gray-500 focus:outline focus:outline-2 focus:outline-gray-700"

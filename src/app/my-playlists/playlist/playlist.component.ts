@@ -162,12 +162,11 @@ export class PlaylistComponent implements OnInit {
       this.getWatchedVideos();
       this.reloadCurrentRoute();
     } else {
-      this.watchedVideoIds.forEach((el) => {
-        this.videos.forEach((video) => {
+      this.videos.forEach((video) => {
+        video['watched'] = false;
+        this.watchedVideoIds.forEach((el) => {
           if (el === video['snippet'].resourceId.videoId) {
             video['watched'] = true;
-          } else {
-            video['watched'] = false;
           }
         });
       });
