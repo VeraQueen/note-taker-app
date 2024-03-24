@@ -3,7 +3,7 @@
 This web app allows users to save, manage and interact with playlists and videos as well as add personal notes.
 See it [live](https://note-taker-app-400810.web.app/).
 <br>
-<img align="center" height="300" src="https://github.com/VeraQueen/"/>
+<img align="center" height="300" src="https://github.com/VeraQueen/veronikajavor.dev/blob/master/img/project-imgs/project4/note-taker-project.png"/>
 
 ## Description
 
@@ -29,7 +29,7 @@ This project was generated with Angular CLI version 16.2.0. (updated to higher v
 
 1. Download them by clicking the "Code" button.
 2. Open the files in the IDE of your choice.
-3. Run `npm install` command to install dependecies.
+3. Run `npm install` command to install dependencies.
 4. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 5. Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
