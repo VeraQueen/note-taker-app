@@ -9,4 +9,5 @@ export const environment = {
     messagingSenderId: '407343500901',
     measurementId: 'G-CGG06S1SC5',
   },
+  youtubeAPIKey: 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg',
 };

@@ -5,6 +5,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface FetchPlaylistsData {
   kind: string;
@@ -33,7 +34,7 @@ export class HttpYouTubeService {
     const url = 'https://www.googleapis.com/youtube/v3/search';
     const urlParams = new HttpParams()
       .set('part', 'snippet')
-      .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
+      .set('key', environment.youtubeAPIKey)
       .set('q', searchInputValue)
       .set('type', 'playlist')
       .set('maxResults', 24)
@@ -50,7 +51,7 @@ export class HttpYouTubeService {
     const url = 'https://www.googleapis.com/youtube/v3/playlists';
     const urlParams = new HttpParams()
       .set('part', 'snippet, contentDetails')
-      .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
+      .set('key', environment.youtubeAPIKey)
       .set('id', playlistId);
     const options = { params: urlParams };
 
@@ -61,7 +62,7 @@ export class HttpYouTubeService {
     const url = 'https://www.googleapis.com/youtube/v3/playlistItems';
     const urlParamns = new HttpParams()
       .set('part', 'snippet, status')
-      .set('key', 'AIzaSyCAyu-LUc_OMFhctLj27SnFgeSUwHsKdHg')
+      .set('key', environment.youtubeAPIKey)
       .set('maxResults', 24)
       .set('playlistId', playlistId)
       .set('pageToken', pageToken);
