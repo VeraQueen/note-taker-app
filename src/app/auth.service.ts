@@ -41,10 +41,8 @@ export class AuthService {
             id: user.uid,
           };
           this.userSubject.next(newUser);
-          console.log('User is logged in.');
           resolve(newUser);
         } else {
-          console.log('The user is signed out.');
           reject('You are signed out. Sign in again to start noting down!');
         }
       });
