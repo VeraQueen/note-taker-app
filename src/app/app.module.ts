@@ -43,6 +43,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './shared/dialog/dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
+import { ApostrophePipe } from './shared/pipes/apostophe.pipe';
+import { AmpersandPipe } from './shared/pipes/ampersand.pipe';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,8 @@ import { HomeComponent } from './home/home.component';
     MatDialogModule,
     AddedPlaylistDirective,
     RemoveWatchedVideoDirective,
+    ApostrophePipe,
+    AmpersandPipe,
     BackBtnComponent,
     ErrorComponent,
     CssLoaderComponent,

@@ -76,7 +76,6 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   onDelete(playlistId: string) {
     let dialogRef = this.dialog.open(DialogComponent);
     dialogRef.afterClosed().subscribe((res) => {
-      console.log(res);
       if (res) {
         this.firebaseService.deletePlaylist(playlistId, this.user);
       }
