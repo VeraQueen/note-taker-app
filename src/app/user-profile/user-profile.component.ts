@@ -5,8 +5,10 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.css'
+  styleUrl: './user-profile.component.css',
 })
 export class UserProfileComponent {
-
+  userFirstName: string = 'mark';
+  userLastName: string = 'london';
+  userEmail: string = 'mark.london@gmail.com';
 }
