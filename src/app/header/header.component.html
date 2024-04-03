@@ -1,15 +1,19 @@
 <nav class="bg-gray-900">
   <div class="mx-auto max-w-7xl px-6">
     <div class="flex h-16 gap-4 items-center justify-between">
-      <div class="flex gap-4">
-        <a routerLink="/home" (click)="closeMobileMenu()">
+      <div class="flex gap-4 items-center">
+        <a
+          routerLink="/home"
+          (click)="closeMobileMenu()"
+          class="rounded-md focus:outline focus:outline-2 focus:outline-slate-50"
+        >
           <img
-            class="h-6 sm:h-8 w-auto"
+            class="h-6 sm:h-8 w-auto mx-1"
             src="../assets/logos/note-logo-light.svg"
             alt="Note taker app"
           />
         </a>
-        <span class="h-inherit w-1 bg-red-600"></span>
+        <span class="h-8 md:h-10 w-1 bg-red-600"></span>
         <div class="hidden sm:block">
           <a
             routerLink="/playlists"
