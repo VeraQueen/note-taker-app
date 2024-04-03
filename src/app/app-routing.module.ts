@@ -7,6 +7,7 @@ import { PlaylistsComponent } from './my-playlists/playlists/playlists.component
 import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './auth/auth-guard';
 import { HomeComponent } from './home/home.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,11 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'user',
+    component: UserProfileComponent,
     canActivate: [AuthGuard],
   },
   {

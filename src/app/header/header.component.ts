@@ -10,12 +10,14 @@ import { User } from '../auth/user.model';
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   isOpen = false;
+  userFirstName: string = '';
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.authService.userSubject.subscribe((user: User) => {
       this.isAuthenticated = !!user;
+      // this.userFirstName=user.firstName;
     });
   }
 
