@@ -5,6 +5,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from '@angular/fire/auth';
 import { User } from './auth/user.model';
 import { Router } from '@angular/router';
@@ -25,6 +26,10 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
+  updateUserProfile(username: string) {
+    updateProfile(this.auth.currentUser, { displayName: username });
+  }
+
   signOut() {
     signOut(this.auth);
     this.userSubject.next(null);
@@ -39,8 +44,10 @@ export class AuthService {
           const newUser: User = {
             email: user.email,
             id: user.uid,
+            username: user.displayName,
           };
           this.userSubject.next(newUser);
+          console.log(newUser);
           resolve(newUser);
         } else {
           reject('You are signed out. Sign in again to start noting down!');

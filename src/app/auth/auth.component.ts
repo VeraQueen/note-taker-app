@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { ErrorComponent } from '../shared/error/error.component';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [FormsModule, ErrorComponent, NgClass],
+  imports: [FormsModule, ErrorComponent, NgClass, NgIf],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })
@@ -31,6 +31,7 @@ export class AuthComponent implements OnInit {
     }
     const email = authForm.value.email;
     const password = authForm.value.password;
+    const username = authForm.value.username;
     this.isLoading = true;
     if (this.isSignInMode) {
       this.authService
@@ -48,6 +49,7 @@ export class AuthComponent implements OnInit {
       this.authService
         .signUp(email, password)
         .then(() => {
+          this.authService.updateUserProfile(username);
           this.authService.getCurrentUser();
           this.isLoading = false;
           this.router.navigate(['/playlists']);
