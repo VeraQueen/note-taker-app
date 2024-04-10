@@ -1,5 +1,5 @@
-<div class="mx-auto max-w-7xl py-16">
-  <div class="mx-auto grid grid-rows-auto w-11/12 rounded-md bg-white">
+<div class="relative mx-auto max-w-7xl py-16">
+  <div class="mx-auto grid grid-rows-auto">
     <div class="justify-self-center">
       <img
         src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
@@ -11,7 +11,15 @@
       class="pb-5 pt-2 flex flex-col justify-center items-center gap-1 text-lg text-gray-900"
     >
       <p class="font-bold">{{ username }}</p>
-      <p class="pb-4">{{ userEmail }}</p>
+      <div>
+        <p class="pb-4 pr-2 inline-block">{{ userEmail }}</p>
+        <button
+          class="w-fit py-1 px-2 mr-3 rounded-md border border-gray-400 hover:bg-gray-700 hover:text-white focus:outline focus:outline-2 focus:outline-gray-700"
+          (click)="updateEmail()"
+        >
+          Update email
+        </button>
+      </div>
       <div>
         <button
           class="w-fit py-1 px-2 mr-3 rounded-md border border-gray-400 hover:bg-gray-700 hover:text-white focus:outline focus:outline-2 focus:outline-gray-700"
@@ -26,4 +34,11 @@
       </div>
     </div>
   </div>
+  <div
+    *ngIf="successMessage"
+    class="absolute top-2 left-1/2 -translate-x-1/2 bg-green-600 rounded-md max-w-fit p-2 py-1"
+  >
+    <p class="inline-block text-white text-center">{{ successMessage }}</p>
+  </div>
+  <app-error [isLoading]="isLoading" [error]="error"></app-error>
 </div>
