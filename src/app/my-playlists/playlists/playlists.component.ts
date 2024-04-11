@@ -9,7 +9,7 @@ import { HttpYouTubeService } from 'src/app/http-youtube.service';
 import { AuthService } from 'src/app/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { DialogComponent } from 'src/app/shared/dialogs/playlist-dialog/dialog.component';
 
 @Component({
   selector: 'app-playlists',

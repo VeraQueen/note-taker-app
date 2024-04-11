@@ -30,11 +30,10 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateEmail() {
-    this.isLoading = true;
+    const newEmail = '';
     this.authService
-      .updateUserEmail(this.userEmail)
+      .updateUserEmail(newEmail)
       .then(() => {
-        this.isLoading = false;
         this.successMessage = 'Email changed!';
         setTimeout(() => {
           this.successMessage = null;
