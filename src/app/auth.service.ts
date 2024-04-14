@@ -9,6 +9,7 @@ import {
   signOut,
   updateEmail,
   updateProfile,
+  verifyBeforeUpdateEmail,
 } from '@angular/fire/auth';
 import { User } from './auth/user.model';
 import { Router } from '@angular/router';
@@ -35,6 +36,10 @@ export class AuthService {
 
   updateUserEmail(email: string) {
     return updateEmail(this.auth.currentUser, email);
+  }
+
+  verifyUserEmail(email: string) {
+    return verifyBeforeUpdateEmail(this.auth.currentUser, email);
   }
 
   reauthenticateUser() {

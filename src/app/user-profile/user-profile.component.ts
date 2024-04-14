@@ -20,7 +20,6 @@ export class UserProfileComponent implements OnInit {
   user: User;
   successMessage: string;
   error: string;
-  isLoading: boolean;
 
   constructor(private authService: AuthService, private dialog: MatDialog) {}
 
@@ -34,24 +33,26 @@ export class UserProfileComponent implements OnInit {
 
   updateEmail() {
     let dialogRef = this.dialog.open(EmailDialogComponent);
+    let newEmail;
     dialogRef.afterClosed().subscribe((res: NgForm) => {
-      if (res) {
-        console.log(res.value);
+      if (res.value.email) {
+        newEmail = res.value.email;
+        console.log(newEmail);
+        this.authService
+          .updateUserEmail(newEmail)
+          .then(() => {
+            this.successMessage = 'Email changed!';
+            setTimeout(() => {
+              this.successMessage = null;
+            }, 4000);
+          })
+          .catch((error) => {
+            console.log(error);
+            this.authService.verifyUserEmail(newEmail).then(() => {
+              console.log('email verified and changed');
+            });
+          });
       }
     });
-
-    // const newEmail = '';
-    // this.authService
-    //   .updateUserEmail(newEmail)
-    //   .then(() => {
-    //     this.successMessage = 'Email changed!';
-    //     setTimeout(() => {
-    //       this.successMessage = null;
-    //     }, 3000);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     this.error = 'Please reauthenticate again to confirm this action.';
-    //   });
   }
 }
