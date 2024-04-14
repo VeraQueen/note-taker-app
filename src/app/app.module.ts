@@ -40,7 +40,6 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogComponent } from './shared/dialogs/playlist-dialog/dialog.component';
 import { EmailDialogComponent } from './shared/dialogs/email-dialog/email-dialog.component';
 import { FooterComponent } from './footer/footer.component';
@@ -79,7 +78,6 @@ import { AmpersandPipe } from './shared/pipes/ampersand.pipe';
     }),
     InfiniteScrollModule,
     MatDialogModule,
-    MatFormFieldModule,
     AddedPlaylistDirective,
     RemoveWatchedVideoDirective,
     ApostrophePipe,

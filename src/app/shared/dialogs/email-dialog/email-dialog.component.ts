@@ -1,11 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-email-dialog',
@@ -15,8 +16,8 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
     MatDialogContent,
     MatDialogTitle,
     MatDialogClose,
-    MatFormField,
-    MatLabel,
+    FormsModule,
+    CommonModule,
   ],
   templateUrl: './email-dialog.component.html',
 })
