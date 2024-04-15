@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   Auth,
+  EmailAuthCredential,
+  EmailAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   reauthenticateWithCredential,
@@ -34,16 +36,16 @@ export class AuthService {
     updateProfile(this.auth.currentUser, { displayName: username });
   }
 
-  updateUserEmail(email: string) {
-    return updateEmail(this.auth.currentUser, email);
-  }
-
-  verifyUserEmail(email: string) {
+  verifyUserEmailToUpdate(email: string) {
     return verifyBeforeUpdateEmail(this.auth.currentUser, email);
   }
 
-  reauthenticateUser() {
-    // reauthenticateWithCredential(this.auth.currentUser, credential);
+  reauthenticateUser(userProvidedPassword: string) {
+    let credential = EmailAuthProvider.credential(
+      this.auth.currentUser.email,
+      userProvidedPassword
+    );
+    return reauthenticateWithCredential(this.auth.currentUser, credential);
   }
 
   signOut() {

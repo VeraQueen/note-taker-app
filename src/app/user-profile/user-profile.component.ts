@@ -6,6 +6,7 @@ import { NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { EmailDialogComponent } from '../shared/dialogs/email-dialog/email-dialog.component';
 import { NgForm } from '@angular/forms';
+import { PasswordDialogComponent } from '../shared/dialogs/password-dialog/password-dialog.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -39,20 +40,38 @@ export class UserProfileComponent implements OnInit {
         newEmail = res.value.email;
         console.log(newEmail);
         this.authService
-          .updateUserEmail(newEmail)
+          .verifyUserEmailToUpdate(newEmail)
           .then(() => {
-            this.successMessage = 'Email changed!';
-            setTimeout(() => {
-              this.successMessage = null;
-            }, 4000);
+            console.log('email verified and changed');
+            this.successMessage =
+              'Email changed! To start using it, check your email for the verification link.';
+            this.successMessageTimeout();
           })
           .catch((error) => {
-            console.log(error);
-            this.authService.verifyUserEmail(newEmail).then(() => {
-              console.log('email verified and changed');
-            });
+            if (error.message.includes('auth/requires-recent-login')) {
+              let passwordDialogRef = this.dialog.open(PasswordDialogComponent);
+              passwordDialogRef.afterClosed().subscribe((res: NgForm) => {
+                if (res.value.password) {
+                  this.authService
+                    .reauthenticateUser(res.value.password)
+                    .then(() => {
+                      this.successMessage =
+                        'Successfully reauthenticated! Continue to updating your email and then check your email for the verification link.';
+                      this.successMessageTimeout();
+                    });
+                }
+              });
+            } else {
+              this.error = error.message;
+            }
           });
       }
     });
+  }
+
+  private successMessageTimeout() {
+    setTimeout(() => {
+      this.successMessage = null;
+    }, 4000);
   }
 }

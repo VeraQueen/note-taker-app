@@ -42,6 +42,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './shared/dialogs/playlist-dialog/dialog.component';
 import { EmailDialogComponent } from './shared/dialogs/email-dialog/email-dialog.component';
+import { PasswordDialogComponent } from './shared/dialogs/password-dialog/password-dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { ApostrophePipe } from './shared/pipes/apostophe.pipe';
@@ -88,6 +89,7 @@ import { AmpersandPipe } from './shared/pipes/ampersand.pipe';
     AuthComponent,
     DialogComponent,
     EmailDialogComponent,
+    PasswordDialogComponent,
     FooterComponent,
     HomeComponent,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
