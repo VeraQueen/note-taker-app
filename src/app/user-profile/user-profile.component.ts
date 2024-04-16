@@ -33,38 +33,23 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateEmail() {
-    let dialogRef = this.dialog.open(EmailDialogComponent);
-    let newEmail;
-    dialogRef.afterClosed().subscribe((res: NgForm) => {
-      if (res.value.email) {
-        newEmail = res.value.email;
-        console.log(newEmail);
-        this.authService
-          .verifyUserEmailToUpdate(newEmail)
-          .then(() => {
-            console.log('email verified and changed');
-            this.successMessage =
-              'Email changed! To start using it, check your email for the verification link.';
-            this.successMessageTimeout();
-          })
-          .catch((error) => {
-            if (error.message.includes('auth/requires-recent-login')) {
-              let passwordDialogRef = this.dialog.open(PasswordDialogComponent);
-              passwordDialogRef.afterClosed().subscribe((res: NgForm) => {
-                if (res.value.password) {
-                  this.authService
-                    .reauthenticateUser(res.value.password)
-                    .then(() => {
-                      this.successMessage =
-                        'Successfully reauthenticated! Continue to updating your email and then check your email for the verification link.';
-                      this.successMessageTimeout();
-                    });
-                }
+    let passwordDialogRef = this.dialog.open(PasswordDialogComponent);
+    passwordDialogRef.afterClosed().subscribe((res: NgForm) => {
+      if (res.value.password) {
+        this.authService.reauthenticateUser(res.value.password).then(() => {
+          let emailDialogRef = this.dialog.open(EmailDialogComponent);
+          let newEmail;
+          emailDialogRef.afterClosed().subscribe((res: NgForm) => {
+            if (res.value.email) {
+              newEmail = res.value.email;
+              this.authService.verifyUserEmailToUpdate(newEmail).then(() => {
+                this.successMessage =
+                  'Email changed! To complete, check your email for the verification link.';
+                this.successMessageTimeout();
               });
-            } else {
-              this.error = error.message;
             }
           });
+        });
       }
     });
   }

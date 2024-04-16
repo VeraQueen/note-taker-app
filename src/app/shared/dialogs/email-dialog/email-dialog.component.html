@@ -1,14 +1,47 @@
-<div class="w-52 sm:w-64 md:w-96 mx-2 my-1 md:mx-4">
-  <p class="mb-2 text-gray-600 text-md text-center">
-    Are you sure? Please enter new email below:
+<h1 mat-dialog-title class="text-center">
+  Important: Updating Your Sign-In Email
+</h1>
+<mat-dialog-content class="max-w-3xl">
+  <p class="mb-2 text-gray-700">
+    When you update your email address, it becomes your new sign-in email for
+    accessing our platform.
   </p>
-  <form #newEmailForm="ngForm" ngNativeValidate class="flex flex-col gap-2">
+  <p class="mb-2 text-gray-700">Here's what you need to know:</p>
+  <ol class="mb-2 text-gray-700 list-decimal list-inside">
+    <li class="mb-1">
+      <strong>Automatic Log Out</strong>: For security reasons, once you confirm
+      the change, you'll be automatically logged out of your account. This is a
+      standard security measure to ensure that only you have access to your
+      account with the updated email.
+    </li>
+    <li class="mb-1">
+      <strong>Verification Process</strong>: After updating your email, we'll
+      send a verification code to the new email address you provided. Simply
+      click the link to confirm the change.
+    </li>
+    <li>
+      <strong>What to Do Next</strong>: After confirming the change and logging
+      back in with your new email address, you'll have full access to your
+      account as usual.
+    </li>
+  </ol>
+  <p class="mb-3 text-gray-700 text-md text-start">
+    Thank you for helping us maintain the security of your account.
+  </p>
+  <form
+    #newEmailForm="ngForm"
+    ngNativeValidate
+    class="flex flex-col gap-2 items-center"
+  >
+    <p class="text-gray-600 text-md text-center">
+      Please enter new email below:
+    </p>
     <input
       [ngClass]="{
         'invalid:border-red-600 invalid:focus:outline-red-600':
           newEmailForm.touched
       }"
-      class="w-full max-w-md text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700 border"
+      class="w-full text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700 border"
       id="email"
       email
       ngModel
@@ -31,4 +64,4 @@
       </button>
     </mat-dialog-actions>
   </form>
-</div>
+</mat-dialog-content>
