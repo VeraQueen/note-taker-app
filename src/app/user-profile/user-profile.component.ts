@@ -8,13 +8,14 @@ import { EmailDialogComponent } from '../shared/dialogs/email-dialog/email-dialo
 import { NgForm } from '@angular/forms';
 import { PasswordDialogComponent } from '../shared/dialogs/password-dialog/password-dialog.component';
 import { timer } from 'rxjs';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css',
-  imports: [ErrorComponent, NgIf],
+  imports: [ErrorComponent, NgIf, NgIcon],
 })
 export class UserProfileComponent implements OnInit {
   username: string;
