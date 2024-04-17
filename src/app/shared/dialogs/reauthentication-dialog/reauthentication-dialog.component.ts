@@ -9,7 +9,7 @@ import {
 } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-password-dialog',
+  selector: 'app-reauthentication-dialog',
   standalone: true,
   imports: [
     MatDialogActions,
@@ -19,6 +19,6 @@ import {
     FormsModule,
     CommonModule,
   ],
-  templateUrl: './password-dialog.component.html',
+  templateUrl: './reauthentication-dialog.component.html',
 })
-export class PasswordDialogComponent {}
+export class ReauthenticationDialogComponent {}

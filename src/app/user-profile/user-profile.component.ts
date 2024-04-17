@@ -6,7 +6,7 @@ import { NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { EmailDialogComponent } from '../shared/dialogs/email-dialog/email-dialog.component';
 import { NgForm } from '@angular/forms';
-import { PasswordDialogComponent } from '../shared/dialogs/password-dialog/password-dialog.component';
+import { ReauthenticationDialogComponent } from '../shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
 import { timer } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
 
@@ -35,36 +35,52 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateEmail() {
-    let passwordDialogRef = this.dialog.open(PasswordDialogComponent);
-    passwordDialogRef.afterClosed().subscribe((res: NgForm) => {
-      if (res.value.password) {
-        this.authService
-          .reauthenticateUser(res.value.password)
-          .then(() => {
-            let emailDialogRef = this.dialog.open(EmailDialogComponent);
-            let newEmail;
-            emailDialogRef.afterClosed().subscribe((res: NgForm) => {
-              if (res.value.email) {
-                newEmail = res.value.email;
-                this.authService.verifyUserEmailToUpdate(newEmail).then(() => {
-                  this.successMessage =
-                    'Email changed! Check your email for the verification link.';
-                  timer(4000).subscribe(() => {
-                    this.successMessage = null;
-                    this.authService.signOut();
-                  });
-                });
-              }
+    this.reauthentication()
+      .then(() => {
+        let emailDialogRef = this.dialog.open(EmailDialogComponent);
+        let newEmail;
+        emailDialogRef.afterClosed().subscribe((res: NgForm) => {
+          if (res.value.email) {
+            newEmail = res.value.email;
+            this.authService.verifyUserEmailToUpdate(newEmail).then(() => {
+              this.successMessage =
+                'Email changed! Check your email for the verification link.';
+              timer(4000).subscribe(() => {
+                this.successMessage = null;
+                this.authService.signOut();
+              });
             });
-          })
-          .catch((error) => {
-            this.error = error.message;
-          });
-      }
-    });
+          }
+        });
+      })
+      .catch((error) => {
+        this.error = error.message;
+      });
   }
+
+  changePassword() {}
 
   logout() {
     this.authService.signOut();
+  }
+
+  private reauthentication() {
+    let reauthenticationDialogRef = this.dialog.open(
+      ReauthenticationDialogComponent
+    );
+    return new Promise<void>((resolve, reject) => {
+      reauthenticationDialogRef.afterClosed().subscribe((res: NgForm) => {
+        if (res.value.password) {
+          this.authService
+            .reauthenticateUser(res.value.password)
+            .then(() => {
+              resolve();
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        }
+      });
+    });
   }
 }
