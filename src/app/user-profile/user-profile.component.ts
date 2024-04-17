@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EmailDialogComponent } from '../shared/dialogs/email-dialog/email-dialog.component';
 import { NgForm } from '@angular/forms';
 import { PasswordDialogComponent } from '../shared/dialogs/password-dialog/password-dialog.component';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -44,8 +45,11 @@ export class UserProfileComponent implements OnInit {
               newEmail = res.value.email;
               this.authService.verifyUserEmailToUpdate(newEmail).then(() => {
                 this.successMessage =
-                  'Email changed! To complete, check your email for the verification link.';
-                this.successMessageTimeout();
+                  'Email changed! Check your email for the verification link.';
+                timer(4000).subscribe(() => {
+                  this.successMessage = null;
+                  this.autoLogout();
+                });
               });
             }
           });
@@ -54,9 +58,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  private successMessageTimeout() {
-    setTimeout(() => {
-      this.successMessage = null;
-    }, 4000);
+  private autoLogout() {
+    this.authService.signOut();
   }
 }
