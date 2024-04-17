@@ -51,7 +51,7 @@ export class UserProfileComponent implements OnInit {
                     'Email changed! Check your email for the verification link.';
                   timer(4000).subscribe(() => {
                     this.successMessage = null;
-                    this.autoLogout();
+                    this.authService.signOut();
                   });
                 });
               }
@@ -64,7 +64,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  private autoLogout() {
+  logout() {
     this.authService.signOut();
   }
 }
