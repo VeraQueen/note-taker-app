@@ -38,23 +38,28 @@ export class UserProfileComponent implements OnInit {
     let passwordDialogRef = this.dialog.open(PasswordDialogComponent);
     passwordDialogRef.afterClosed().subscribe((res: NgForm) => {
       if (res.value.password) {
-        this.authService.reauthenticateUser(res.value.password).then(() => {
-          let emailDialogRef = this.dialog.open(EmailDialogComponent);
-          let newEmail;
-          emailDialogRef.afterClosed().subscribe((res: NgForm) => {
-            if (res.value.email) {
-              newEmail = res.value.email;
-              this.authService.verifyUserEmailToUpdate(newEmail).then(() => {
-                this.successMessage =
-                  'Email changed! Check your email for the verification link.';
-                timer(4000).subscribe(() => {
-                  this.successMessage = null;
-                  this.autoLogout();
+        this.authService
+          .reauthenticateUser(res.value.password)
+          .then(() => {
+            let emailDialogRef = this.dialog.open(EmailDialogComponent);
+            let newEmail;
+            emailDialogRef.afterClosed().subscribe((res: NgForm) => {
+              if (res.value.email) {
+                newEmail = res.value.email;
+                this.authService.verifyUserEmailToUpdate(newEmail).then(() => {
+                  this.successMessage =
+                    'Email changed! Check your email for the verification link.';
+                  timer(4000).subscribe(() => {
+                    this.successMessage = null;
+                    this.autoLogout();
+                  });
                 });
-              });
-            }
+              }
+            });
+          })
+          .catch((error) => {
+            this.error = error.message;
           });
-        });
       }
     });
   }
