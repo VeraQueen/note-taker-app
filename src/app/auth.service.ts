@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
   Auth,
-  EmailAuthCredential,
   EmailAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   reauthenticateWithCredential,
-  reauthenticateWithPopup,
   signInWithEmailAndPassword,
   signOut,
-  updateEmail,
   updateProfile,
   verifyBeforeUpdateEmail,
 } from '@angular/fire/auth';
@@ -33,7 +30,7 @@ export class AuthService {
   }
 
   updateUserProfile(username: string) {
-    updateProfile(this.auth.currentUser, { displayName: username });
+    return updateProfile(this.auth.currentUser, { displayName: username });
   }
 
   verifyUserEmailToUpdate(email: string) {

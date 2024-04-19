@@ -49,10 +49,11 @@ export class AuthComponent implements OnInit {
       this.authService
         .signUp(email, password)
         .then(() => {
-          this.authService.updateUserProfile(username);
-          this.authService.getCurrentUser();
-          this.isLoading = false;
-          this.router.navigate(['/playlists']);
+          this.authService.updateUserProfile(username).then(() => {
+            this.authService.getCurrentUser();
+            this.isLoading = false;
+            this.router.navigate(['/playlists']);
+          });
         })
         .catch((error) => {
           this.error = error.message;
