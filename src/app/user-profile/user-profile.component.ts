@@ -38,9 +38,9 @@ export class UserProfileComponent implements OnInit {
     this.reauthentication()
       .then(() => {
         let emailDialogRef = this.dialog.open(EmailDialogComponent);
-        let newEmail;
+        let newEmail: string;
         emailDialogRef.afterClosed().subscribe((res: NgForm) => {
-          if (res.value.email) {
+          if (res.value?.email) {
             newEmail = res.value.email;
             this.authService.verifyUserEmailToUpdate(newEmail).then(() => {
               this.successMessage =
@@ -70,7 +70,7 @@ export class UserProfileComponent implements OnInit {
     );
     return new Promise<void>((resolve, reject) => {
       reauthenticationDialogRef.afterClosed().subscribe((res: NgForm) => {
-        if (res.value.password) {
+        if (res.value?.password) {
           this.authService
             .reauthenticateUser(res.value.password)
             .then(() => {
