@@ -58,7 +58,13 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  changePassword() {}
+  changePassword() {
+    this.reauthentication()
+      .then(() => {})
+      .catch((error) => {
+        this.error = error.message;
+      });
+  }
 
   logout() {
     this.authService.signOut();

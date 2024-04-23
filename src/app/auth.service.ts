@@ -7,6 +7,7 @@ import {
   reauthenticateWithCredential,
   signInWithEmailAndPassword,
   signOut,
+  updatePassword,
   updateProfile,
   verifyBeforeUpdateEmail,
 } from '@angular/fire/auth';
@@ -45,7 +46,9 @@ export class AuthService {
     return reauthenticateWithCredential(this.auth.currentUser, credential);
   }
 
-
+  updatePassword(newPassword: string) {
+    return updatePassword(this.auth.currentUser, newPassword);
+  }
 
   signOut() {
     signOut(this.auth);
