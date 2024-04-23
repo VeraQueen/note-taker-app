@@ -29,7 +29,7 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  updateUserProfile(username: string) {
+  setUsername(username: string) {
     return updateProfile(this.auth.currentUser, { displayName: username });
   }
 
@@ -44,6 +44,8 @@ export class AuthService {
     );
     return reauthenticateWithCredential(this.auth.currentUser, credential);
   }
+
+
 
   signOut() {
     signOut(this.auth);
