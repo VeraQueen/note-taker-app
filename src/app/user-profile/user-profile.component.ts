@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { ReauthenticationDialogComponent } from '../shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
 import { timer } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
+import { PasswordDialogComponent } from '../shared/dialogs/password-dialog/password-dialog.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -45,10 +46,7 @@ export class UserProfileComponent implements OnInit {
             this.authService.verifyUserEmailToUpdate(newEmail).then(() => {
               this.successMessage =
                 'Email changed! Check your email for the verification link.';
-              timer(4000).subscribe(() => {
-                this.successMessage = null;
-                this.authService.signOut();
-              });
+              this.successMessageTimerAndLogout();
             });
           }
         });
@@ -60,7 +58,19 @@ export class UserProfileComponent implements OnInit {
 
   changePassword() {
     this.reauthentication()
-      .then(() => {})
+      .then(() => {
+        let passwordDialogRef = this.dialog.open(PasswordDialogComponent);
+        let newPassword: string;
+        passwordDialogRef.afterClosed().subscribe((res: NgForm) => {
+          if (res.value?.password) {
+            newPassword = res.value.password;
+            this.authService.updatePassword(newPassword).then(() => {
+              this.successMessage = 'Password changed!';
+              this.successMessageTimerAndLogout();
+            });
+          }
+        });
+      })
       .catch((error) => {
         this.error = error.message;
       });
@@ -68,6 +78,13 @@ export class UserProfileComponent implements OnInit {
 
   logout() {
     this.authService.signOut();
+  }
+
+  private successMessageTimerAndLogout() {
+    timer(4000).subscribe(() => {
+      this.successMessage = null;
+      this.authService.signOut();
+    });
   }
 
   private reauthentication() {
