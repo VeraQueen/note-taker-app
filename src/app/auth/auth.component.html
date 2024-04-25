@@ -1,4 +1,4 @@
-<div class="mx-auto max-w-7xl m-4">
+<div class="relative mx-auto max-w-7xl m-4">
   <form
     class="mx-auto w-full max-w-md px-2 flex flex-col gap-2"
     (ngSubmit)="onSubmit(authForm)"
@@ -86,5 +86,6 @@
     <p><strong>Email:</strong> test&#64;test.com</p>
     <p><strong>Password:</strong> write numbers 1 to 6</p>
   </div>
+  <app-success-message [successMessage]="successMessage"></app-success-message>
   <app-error [isLoading]="isLoading" [error]="error"></app-error>
 </div>

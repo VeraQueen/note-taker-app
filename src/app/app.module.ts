@@ -14,6 +14,7 @@ import { NotesComponent } from './my-playlists/player/notes/notes.component';
 import { ScrollTopComponent } from './shared/scroll-top/scroll-top.component';
 import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
 import { ErrorComponent } from './shared/error/error.component';
+import { SuccessMessageComponent } from './shared/success-message/success-message.component';
 import { AuthComponent } from './auth/auth.component';
 import { BackBtnComponent } from './shared/back-btn/back-btn.component';
 import { NgIconsModule } from '@ng-icons/core';
@@ -87,6 +88,7 @@ import { AmpersandPipe } from './shared/pipes/ampersand.pipe';
     AmpersandPipe,
     BackBtnComponent,
     ErrorComponent,
+    SuccessMessageComponent,
     CssLoaderComponent,
     AuthComponent,
     DialogComponent,

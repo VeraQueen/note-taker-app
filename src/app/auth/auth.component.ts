@@ -6,18 +6,27 @@ import { NgClass, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { ForgotPasswordDialogComponent } from '../shared/dialogs/forgot-password-dialog/forgot-password-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { timer } from 'rxjs';
+import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [FormsModule, ErrorComponent, NgClass, NgIf],
+  imports: [
+    FormsModule,
+    ErrorComponent,
+    NgClass,
+    NgIf,
+    SuccessMessageComponent,
+  ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })
 export class AuthComponent implements OnInit {
   isSignInMode: boolean = true;
   isLoading = false;
-  error: string = null;
+  error: string;
+  successMessage: string;
 
   constructor(
     private authService: AuthService,
@@ -77,7 +86,17 @@ export class AuthComponent implements OnInit {
     forgotPasswordDialogRef.afterClosed().subscribe((res: NgForm) => {
       if (res.value?.email) {
         currentEmail = res.value.email;
-        console.log(currentEmail);
+        this.authService
+          .passwordReset(currentEmail)
+          .then(() => {
+            this.successMessage = 'Password reset email sent!';
+            timer(4000).subscribe(() => {
+              this.successMessage = null;
+            });
+          })
+          .catch((error) => {
+            this.error = error.message;
+          });
       }
     });
   }

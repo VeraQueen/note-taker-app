@@ -10,13 +10,14 @@ import { ReauthenticationDialogComponent } from '../shared/dialogs/reauthenticat
 import { timer } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
 import { UpdatePasswordDialogComponent } from '../shared/dialogs/update-password-dialog/update-password-dialog.component';
+import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css',
-  imports: [ErrorComponent, NgIf, NgIcon],
+  imports: [ErrorComponent, NgIf, NgIcon, SuccessMessageComponent],
 })
 export class UserProfileComponent implements OnInit {
   username: string;
