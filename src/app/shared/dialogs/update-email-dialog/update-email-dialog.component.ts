@@ -9,7 +9,7 @@ import {
 } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-email-dialog',
+  selector: 'app-update-email-dialog',
   standalone: true,
   imports: [
     MatDialogActions,
@@ -19,6 +19,6 @@ import {
     FormsModule,
     CommonModule,
   ],
-  templateUrl: './email-dialog.component.html',
+  templateUrl: './update-email-dialog.component.html',
 })
-export class EmailDialogComponent {}
+export class UpdateEmailDialogComponent {}

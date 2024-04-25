@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   reauthenticateWithCredential,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   updatePassword,
@@ -32,6 +33,10 @@ export class AuthService {
 
   setUsername(username: string) {
     return updateProfile(this.auth.currentUser, { displayName: username });
+  }
+
+  passwordReset(email: string) {
+    return sendPasswordResetEmail(this.auth, email);
   }
 
   verifyUserEmailToUpdate(email: string) {

@@ -4,12 +4,12 @@ import { User } from '../auth/user.model';
 import { ErrorComponent } from '../shared/error/error.component';
 import { NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { EmailDialogComponent } from '../shared/dialogs/email-dialog/email-dialog.component';
+import { UpdateEmailDialogComponent } from '../shared/dialogs/update-email-dialog/update-email-dialog.component';
 import { NgForm } from '@angular/forms';
 import { ReauthenticationDialogComponent } from '../shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
 import { timer } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
-import { PasswordDialogComponent } from '../shared/dialogs/password-dialog/password-dialog.component';
+import { UpdatePasswordDialogComponent } from '../shared/dialogs/update-password-dialog/update-password-dialog.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -38,7 +38,7 @@ export class UserProfileComponent implements OnInit {
   updateEmail() {
     this.reauthentication()
       .then(() => {
-        let emailDialogRef = this.dialog.open(EmailDialogComponent);
+        let emailDialogRef = this.dialog.open(UpdateEmailDialogComponent);
         let newEmail: string;
         emailDialogRef.afterClosed().subscribe((res: NgForm) => {
           if (res.value?.email) {
@@ -59,7 +59,7 @@ export class UserProfileComponent implements OnInit {
   changePassword() {
     this.reauthentication()
       .then(() => {
-        let passwordDialogRef = this.dialog.open(PasswordDialogComponent);
+        let passwordDialogRef = this.dialog.open(UpdatePasswordDialogComponent);
         let newPassword: string;
         passwordDialogRef.afterClosed().subscribe((res: NgForm) => {
           if (res.value?.password) {

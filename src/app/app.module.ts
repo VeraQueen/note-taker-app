@@ -41,9 +41,10 @@ import { environment } from '../environments/environment';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './shared/dialogs/playlist-dialog/dialog.component';
-import { EmailDialogComponent } from './shared/dialogs/email-dialog/email-dialog.component';
+import { UpdateEmailDialogComponent } from './shared/dialogs/update-email-dialog/update-email-dialog.component';
 import { ReauthenticationDialogComponent } from './shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
-import { PasswordDialogComponent } from './shared/dialogs/password-dialog/password-dialog.component';
+import { UpdatePasswordDialogComponent } from './shared/dialogs/update-password-dialog/update-password-dialog.component';
+import { ForgotPasswordDialogComponent } from './shared/dialogs/forgot-password-dialog/forgot-password-dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { ApostrophePipe } from './shared/pipes/apostophe.pipe';
@@ -89,9 +90,10 @@ import { AmpersandPipe } from './shared/pipes/ampersand.pipe';
     CssLoaderComponent,
     AuthComponent,
     DialogComponent,
-    EmailDialogComponent,
+    UpdateEmailDialogComponent,
     ReauthenticationDialogComponent,
-    PasswordDialogComponent,
+    UpdatePasswordDialogComponent,
+    ForgotPasswordDialogComponent,
     FooterComponent,
     HomeComponent,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
