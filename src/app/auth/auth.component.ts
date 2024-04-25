@@ -4,6 +4,8 @@ import { AuthService } from '../auth.service';
 import { ErrorComponent } from '../shared/error/error.component';
 import { NgClass, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { ForgotPasswordDialogComponent } from '../shared/dialogs/forgot-password-dialog/forgot-password-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-auth',
@@ -17,7 +19,11 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error: string = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {}
 
@@ -61,5 +67,18 @@ export class AuthComponent implements OnInit {
         });
     }
     authForm.reset();
+  }
+
+  onForgotPassword() {
+    let forgotPasswordDialogRef = this.dialog.open(
+      ForgotPasswordDialogComponent
+    );
+    let currentEmail: string;
+    forgotPasswordDialogRef.afterClosed().subscribe((res: NgForm) => {
+      if (res.value?.email) {
+        currentEmail = res.value.email;
+        console.log(currentEmail);
+      }
+    });
   }
 }
