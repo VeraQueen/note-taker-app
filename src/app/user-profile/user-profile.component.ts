@@ -11,6 +11,7 @@ import { timer } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
 import { UpdatePasswordDialogComponent } from '../shared/dialogs/update-password-dialog/update-password-dialog.component';
 import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
+import { UpdateUsernameDialogComponent } from '../shared/dialogs/update-username/update-username.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -29,11 +30,36 @@ export class UserProfileComponent implements OnInit {
   constructor(private authService: AuthService, private dialog: MatDialog) {}
 
   ngOnInit() {
+    this.getCurrentUser();
+  }
+
+  getCurrentUser() {
     this.authService.getCurrentUser().then((user: User) => {
       this.user = user;
       this.userEmail = user.email;
       this.username = user.username;
     });
+  }
+
+  updateUsername() {
+    this.reauthentication()
+      .then(() => {
+        let updateUsernameDialogRef = this.dialog.open(
+          UpdateUsernameDialogComponent
+        );
+        let username: string;
+        updateUsernameDialogRef.afterClosed().subscribe((res: NgForm) => {
+          if (res.value?.username) {
+            username = res.value.username;
+            this.authService.setUsername(username).then(() => {
+              this.getCurrentUser();
+            });
+          }
+        });
+      })
+      .catch((error) => {
+        this.error = error.message;
+      });
   }
 
   updateEmail() {

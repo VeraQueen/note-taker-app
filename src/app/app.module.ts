@@ -46,6 +46,7 @@ import { UpdateEmailDialogComponent } from './shared/dialogs/update-email-dialog
 import { ReauthenticationDialogComponent } from './shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
 import { UpdatePasswordDialogComponent } from './shared/dialogs/update-password-dialog/update-password-dialog.component';
 import { ForgotPasswordDialogComponent } from './shared/dialogs/forgot-password-dialog/forgot-password-dialog.component';
+import { UpdateUsernameDialogComponent } from './shared/dialogs/update-username/update-username.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { ApostrophePipe } from './shared/pipes/apostophe.pipe';
@@ -96,6 +97,7 @@ import { AmpersandPipe } from './shared/pipes/ampersand.pipe';
     ReauthenticationDialogComponent,
     UpdatePasswordDialogComponent,
     ForgotPasswordDialogComponent,
+    UpdateUsernameDialogComponent,
     FooterComponent,
     HomeComponent,
     provideFirebaseApp(() => initializeApp(environment.firebase)),

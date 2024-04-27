@@ -1,0 +1,38 @@
+<h1 mat-dialog-title class="text-center">Updating Your Username</h1>
+<mat-dialog-content class="max-w-3xl">
+  <form
+    #newUsernameForm="ngForm"
+    ngNativeValidate
+    class="flex flex-col gap-2 items-center"
+  >
+    <p class="text-gray-600 text-md text-center">
+      Please enter your new username below:
+    </p>
+    <input
+      [ngClass]="{
+        'invalid:border-red-600 invalid:focus:outline-red-600':
+          newUsernameForm.touched
+      }"
+      class="w-full text-center text-gray-900 bg-gray-200 py-2 rounded-md focus:outline focus:outline-2 focus:outline-gray-700 border"
+      id="username"
+      ngModel
+      name="username"
+      required
+    />
+    <mat-dialog-actions align="center">
+      <button
+        [mat-dialog-close]="newUsernameForm"
+        class="w-fit h-fit px-2 py-1 mr-1 rounded-md bg-red-600 text-md text-white focus:outline focus:outline-2 focus:outline-gray-700 disabled:bg-red-400"
+        [disabled]="newUsernameForm.invalid"
+      >
+        Update
+      </button>
+      <button
+        [mat-dialog-close]="false"
+        class="w-fit h-fit px-2 py-1 rounded-md bg-gray-700 text-md text-white focus:outline focus:outline-2 focus:outline-gray-700"
+      >
+        Cancel
+      </button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

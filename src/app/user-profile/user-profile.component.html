@@ -8,7 +8,17 @@
       />
     </div>
     <div class="pb-5 pt-2 flex flex-col justify-center items-center gap-1">
-      <p class="font-bold">{{ username }}</p>
+      <div class="flex gap-4 justify-center items-center">
+        <p class="inline-block text-gray-900 font-bold">{{ username }}</p>
+        <button
+          aria-label="Update your username"
+          type="button"
+          class="flex justify-center w-fit p-1 rounded-md text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:outline-gray-700"
+          (click)="updateUsername()"
+        >
+          <ng-icon name="heroPencilSquare" class="text-xl"></ng-icon>
+        </button>
+      </div>
 
       <div class="flex gap-4 justify-center items-center pb-4">
         <p class="inline-block text-gray-900">{{ userEmail }}</p>
