@@ -12,6 +12,7 @@ import { NgIcon } from '@ng-icons/core';
 import { UpdatePasswordDialogComponent } from '../shared/dialogs/update-password-dialog/update-password-dialog.component';
 import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
 import { UpdateUsernameDialogComponent } from '../shared/dialogs/update-username/update-username.component';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -27,7 +28,11 @@ export class UserProfileComponent implements OnInit {
   successMessage: string;
   error: string;
 
-  constructor(private authService: AuthService, private dialog: MatDialog) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.getCurrentUser();
@@ -51,7 +56,7 @@ export class UserProfileComponent implements OnInit {
         updateUsernameDialogRef.afterClosed().subscribe((res: NgForm) => {
           if (res.value?.username) {
             username = res.value.username;
-            this.authService.setUsername(username).then(() => {
+            this.userService.setUsername(username).then(() => {
               this.getCurrentUser();
             });
           }
@@ -70,7 +75,7 @@ export class UserProfileComponent implements OnInit {
         emailDialogRef.afterClosed().subscribe((res: NgForm) => {
           if (res.value?.email) {
             newEmail = res.value.email;
-            this.authService.verifyUserEmailToUpdate(newEmail).then(() => {
+            this.userService.verifyUserEmailToUpdate(newEmail).then(() => {
               this.successMessage =
                 'Email changed! Check your email for the verification link.';
               this.successMessageTimerAndLogout();
@@ -91,7 +96,7 @@ export class UserProfileComponent implements OnInit {
         passwordDialogRef.afterClosed().subscribe((res: NgForm) => {
           if (res.value?.password) {
             newPassword = res.value.password;
-            this.authService.updatePassword(newPassword).then(() => {
+            this.userService.updatePassword(newPassword).then(() => {
               this.successMessage = 'Password changed!';
               this.successMessageTimerAndLogout();
             });

@@ -8,6 +8,7 @@ import { ForgotPasswordDialogComponent } from '../shared/dialogs/forgot-password
 import { MatDialog } from '@angular/material/dialog';
 import { timer } from 'rxjs';
 import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-auth',
@@ -30,6 +31,7 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private dialog: MatDialog
   ) {}
@@ -64,7 +66,7 @@ export class AuthComponent implements OnInit {
       this.authService
         .signUp(email, password)
         .then(() => {
-          this.authService.setUsername(username).then(() => {
+          this.userService.setUsername(username).then(() => {
             this.authService.getCurrentUser();
             this.isLoading = false;
             this.router.navigate(['/playlists']);
@@ -86,7 +88,7 @@ export class AuthComponent implements OnInit {
     forgotPasswordDialogRef.afterClosed().subscribe((res: NgForm) => {
       if (res.value?.email) {
         currentEmail = res.value.email;
-        this.authService
+        this.userService
           .passwordReset(currentEmail)
           .then(() => {
             this.successMessage = 'Password reset email sent!';

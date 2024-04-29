@@ -5,12 +5,8 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   reauthenticateWithCredential,
-  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-  updatePassword,
-  updateProfile,
-  verifyBeforeUpdateEmail,
 } from '@angular/fire/auth';
 import { User } from './auth/user.model';
 import { Router } from '@angular/router';
@@ -31,28 +27,12 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  setUsername(username: string) {
-    return updateProfile(this.auth.currentUser, { displayName: username });
-  }
-
-  passwordReset(email: string) {
-    return sendPasswordResetEmail(this.auth, email);
-  }
-
-  verifyUserEmailToUpdate(email: string) {
-    return verifyBeforeUpdateEmail(this.auth.currentUser, email);
-  }
-
   reauthenticateUser(userProvidedPassword: string) {
     let credential = EmailAuthProvider.credential(
       this.auth.currentUser.email,
       userProvidedPassword
     );
     return reauthenticateWithCredential(this.auth.currentUser, credential);
-  }
-
-  updatePassword(newPassword: string) {
-    return updatePassword(this.auth.currentUser, newPassword);
   }
 
   signOut() {
