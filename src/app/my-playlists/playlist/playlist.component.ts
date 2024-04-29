@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Subscription, map, switchMap, take } from 'rxjs';
+import { Subscription, switchMap, take } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { User } from 'src/app/auth/user.model';
-import { HttpFirebaseService } from 'src/app/http-firebase.service';
-import {
-  FetchVideosData,
-  HttpYouTubeService,
-} from 'src/app/http-youtube.service';
+import { FirestoreService } from 'src/app/firestore.service';
+import { FetchVideosData, YouTubeService } from 'src/app/youtube.service';
 import { PlaylistService } from 'src/app/playlist.service';
 
 @Component({
@@ -31,9 +28,9 @@ export class PlaylistComponent implements OnInit {
 
   constructor(
     private playlistService: PlaylistService,
-    private httpService: HttpYouTubeService,
+    private youtubeService: YouTubeService,
     private router: Router,
-    private firebaseService: HttpFirebaseService,
+    private firestoreService: FirestoreService,
     private authService: AuthService
   ) {}
 
@@ -51,11 +48,11 @@ export class PlaylistComponent implements OnInit {
             if (playlistId) {
               this.playlistId = playlistId;
               this.getWatchedVideos();
-              return this.httpService.getVideos(playlistId);
+              return this.youtubeService.getVideos(playlistId);
             } else if (!playlistId && sessionStoragePLaylistId !== null) {
               this.playlistId = sessionStoragePLaylistId;
               this.getWatchedVideos();
-              return this.httpService.getVideos(sessionStoragePLaylistId);
+              return this.youtubeService.getVideos(sessionStoragePLaylistId);
             }
           })
         )
@@ -77,7 +74,7 @@ export class PlaylistComponent implements OnInit {
 
   onScroll() {
     if (this.nextPageToken !== undefined) {
-      this.getVideosSub = this.httpService
+      this.getVideosSub = this.youtubeService
         .getVideos(this.playlistId, this.nextPageToken)
         .subscribe({
           next: (videos: FetchVideosData) => {
@@ -100,13 +97,13 @@ export class PlaylistComponent implements OnInit {
     const videoId = this.videoIds[i];
     this.playlistService.videoIdSubject.next(videoId);
     this.playlistService.playlistIdSubject.next(this.playlistId);
-    this.firebaseService.addVideoNotesCol(this.playlistId, videoId, this.user);
+    this.firestoreService.addVideoNotesCol(this.playlistId, videoId, this.user);
     sessionStorage.setItem('videoId', JSON.stringify(videoId));
     this.router.navigate(['/notes']);
   }
 
   onRemoveFromWatched(i: number) {
-    this.firebaseService.removeFromWatched(
+    this.firestoreService.removeFromWatched(
       this.videos[i]['snippet'].resourceId.videoId,
       this.playlistId,
       this.user
@@ -150,7 +147,7 @@ export class PlaylistComponent implements OnInit {
   }
 
   private getWatchedVideos() {
-    this.firebaseService
+    this.firestoreService
       .getWatchedVideoIds(this.playlistId, this.user)
       .then((data) => {
         this.watchedVideoIds = data.data()?.watchedVideoIds ?? [];

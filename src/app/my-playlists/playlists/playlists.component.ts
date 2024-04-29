@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Playlist } from './playlist.model';
 import { PlaylistService } from 'src/app/playlist.service';
-import { HttpFirebaseService } from 'src/app/http-firebase.service';
-import { HttpYouTubeService } from 'src/app/http-youtube.service';
+import { FirestoreService } from 'src/app/firestore.service';
+import { YouTubeService } from 'src/app/youtube.service';
 import { AuthService } from 'src/app/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,8 +27,8 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
   constructor(
     private playlistService: PlaylistService,
     private router: Router,
-    private firebaseService: HttpFirebaseService,
-    private httpService: HttpYouTubeService,
+    private firebaseService: FirestoreService,
+    private youtubeService: YouTubeService,
     private authService: AuthService,
     private dialog: MatDialog
   ) {}
@@ -42,7 +42,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
         .subscribe((playlists) => {
           this.playlists = [];
           playlists.forEach((playlist) => {
-            this.getPlaylistsSub = this.httpService
+            this.getPlaylistsSub = this.youtubeService
               .getPlaylist(playlist.playlistId)
               .subscribe((data) => {
                 const plName = data['items'][0].snippet.localized.title;

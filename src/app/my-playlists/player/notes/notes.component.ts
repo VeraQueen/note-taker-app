@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NoteService } from 'src/app/notes.service';
 import { Note } from '../note.model';
 import { Subscription } from 'rxjs';
-import { HttpFirebaseService } from 'src/app/http-firebase.service';
+import { FirestoreService } from 'src/app/firestore.service';
 import { PlaylistService } from 'src/app/playlist.service';
 import { AuthService } from 'src/app/auth.service';
 import { User } from 'src/app/auth/user.model';
@@ -24,7 +24,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   constructor(
     private noteService: NoteService,
     private playlistService: PlaylistService,
-    private firebaseService: HttpFirebaseService,
+    private firestoreService: FirestoreService,
     private authService: AuthService
   ) {}
 
@@ -55,7 +55,7 @@ export class NotesComponent implements OnInit, OnDestroy {
           }
         }
       );
-      this.notesSub = this.firebaseService
+      this.notesSub = this.firestoreService
         .getVideoNotes(this.playlistId, this.videoId, this.user)
         .subscribe((allNotes) => {
           this.notes = [];
@@ -93,7 +93,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   onDelete(i: number) {
-    this.firebaseService.deleteNote(
+    this.firestoreService.deleteNote(
       this.playlistId,
       this.videoId,
       this.notes[i],

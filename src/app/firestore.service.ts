@@ -15,7 +15,7 @@ import {
 import { User } from './auth/user.model';
 
 @Injectable({ providedIn: 'root' })
-export class HttpFirebaseService {
+export class FirestoreService {
   constructor(private firestore: Firestore) {}
 
   savePlaylist(playlistId: string, user: User) {

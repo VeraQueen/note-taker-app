@@ -4,7 +4,7 @@ import { take } from 'rxjs/operators';
 import { NoteService } from 'src/app/notes.service';
 import { PlaylistService } from 'src/app/playlist.service';
 import { Note } from './note.model';
-import { HttpFirebaseService } from 'src/app/http-firebase.service';
+import { FirestoreService } from 'src/app/firestore.service';
 import { AuthService } from 'src/app/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { Subscription } from 'rxjs';
@@ -35,7 +35,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   constructor(
     private playlistService: PlaylistService,
     private noteService: NoteService,
-    private firebaseService: HttpFirebaseService,
+    private firestoreService: FirestoreService,
     private authService: AuthService
   ) {}
 
@@ -119,7 +119,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
           let watched = (this.currentTime / this.duration) * 100;
           watched = Math.round(watched);
           if (watched >= 80) {
-            this.firebaseService.addWatchedVideoIds(
+            this.firestoreService.addWatchedVideoIds(
               this.playlistId,
               this.video,
               this.user
@@ -158,7 +158,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
         timestamp,
         timestampSeconds,
       };
-      this.firebaseService.saveNote(
+      this.firestoreService.saveNote(
         this.playlistId,
         this.video,
         newNote,
