@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { User } from '../auth/user.model';
 import { ErrorComponent } from '../shared/error/error.component';
 import { NgIf } from '@angular/common';
@@ -12,7 +12,7 @@ import { NgIcon } from '@ng-icons/core';
 import { UpdatePasswordDialogComponent } from '../shared/dialogs/update-password-dialog/update-password-dialog.component';
 import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
 import { UpdateUsernameDialogComponent } from '../shared/dialogs/update-username/update-username.component';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user-profile',

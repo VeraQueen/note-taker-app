@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { ErrorComponent } from '../shared/error/error.component';
 import { NgClass, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { ForgotPasswordDialogComponent } from '../shared/dialogs/forgot-password
 import { MatDialog } from '@angular/material/dialog';
 import { timer } from 'rxjs';
 import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-auth',

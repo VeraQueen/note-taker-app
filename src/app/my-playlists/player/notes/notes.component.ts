@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NoteService } from 'src/app/notes.service';
+import { NoteService } from 'src/app/services/notes.service';
 import { Note } from '../note.model';
 import { Subscription } from 'rxjs';
-import { FirestoreService } from 'src/app/firestore.service';
-import { PlaylistService } from 'src/app/playlist.service';
-import { AuthService } from 'src/app/auth.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { PlaylistService } from 'src/app/services/playlist.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/auth/user.model';
 
 @Component({

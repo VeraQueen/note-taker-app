@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Subscription, switchMap, take } from 'rxjs';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/auth/user.model';
-import { FirestoreService } from 'src/app/firestore.service';
-import { FetchVideosData, YouTubeService } from 'src/app/youtube.service';
-import { PlaylistService } from 'src/app/playlist.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import {
+  FetchVideosData,
+  YouTubeService,
+} from 'src/app/services/youtube.service';
+import { PlaylistService } from 'src/app/services/playlist.service';
 
 @Component({
   selector: 'app-playlist',

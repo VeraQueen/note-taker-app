@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 import { Playlist } from './playlist.model';
-import { PlaylistService } from 'src/app/playlist.service';
-import { FirestoreService } from 'src/app/firestore.service';
-import { YouTubeService } from 'src/app/youtube.service';
-import { AuthService } from 'src/app/auth.service';
+import { PlaylistService } from 'src/app/services/playlist.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { YouTubeService } from 'src/app/services/youtube.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/shared/dialogs/playlist-dialog/dialog.component';

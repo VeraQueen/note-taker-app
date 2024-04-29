@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Note } from './my-playlists/player/note.model';
+import { Note } from '../my-playlists/player/note.model';
 import {
   Firestore,
   collection,
@@ -12,7 +12,7 @@ import {
   getDoc,
   arrayRemove,
 } from '@angular/fire/firestore';
-import { User } from './auth/user.model';
+import { User } from '../auth/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class FirestoreService {

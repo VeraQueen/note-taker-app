@@ -8,7 +8,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from '@angular/fire/auth';
-import { User } from './auth/user.model';
+import { User } from '../auth/user.model';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 

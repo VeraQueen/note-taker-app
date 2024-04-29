@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { take } from 'rxjs/operators';
-import { NoteService } from 'src/app/notes.service';
-import { PlaylistService } from 'src/app/playlist.service';
+import { NoteService } from 'src/app/services/notes.service';
+import { PlaylistService } from 'src/app/services/playlist.service';
 import { Note } from './note.model';
-import { FirestoreService } from 'src/app/firestore.service';
-import { AuthService } from 'src/app/auth.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { Subscription } from 'rxjs';
 

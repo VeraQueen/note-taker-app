@@ -3,10 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Observable } from 'rxjs';
 
-import { FetchPlaylistsData, YouTubeService } from '../youtube.service';
-import { FirestoreService } from '../firestore.service';
+import {
+  FetchPlaylistsData,
+  YouTubeService,
+} from '../services/youtube.service';
+import { FirestoreService } from '../services/firestore.service';
 import { User } from '../auth/user.model';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-search',
