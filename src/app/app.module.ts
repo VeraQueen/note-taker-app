@@ -38,6 +38,7 @@ import { RemoveWatchedVideoDirective } from './shared/directives/removeWatchedVi
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -103,6 +104,7 @@ import { AmpersandPipe } from './shared/pipes/ampersand.pipe';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+    provideStorage(() => getStorage()),
   ],
   providers: [provideAnimationsAsync('noop')],
   bootstrap: [AppComponent],
