@@ -27,19 +27,19 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
+  signOut() {
+    signOut(this.auth);
+    this.userSubject.next(null);
+    sessionStorage.clear();
+    this.router.navigate(['/auth']);
+  }
+
   reauthenticateUser(userProvidedPassword: string) {
     let credential = EmailAuthProvider.credential(
       this.auth.currentUser.email,
       userProvidedPassword
     );
     return reauthenticateWithCredential(this.auth.currentUser, credential);
-  }
-
-  signOut() {
-    signOut(this.auth);
-    this.userSubject.next(null);
-    sessionStorage.clear();
-    this.router.navigate(['/auth']);
   }
 
   getCurrentUser() {

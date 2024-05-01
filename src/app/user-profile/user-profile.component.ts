@@ -13,6 +13,7 @@ import { UpdatePasswordDialogComponent } from '../shared/dialogs/update-password
 import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
 import { UpdateUsernameDialogComponent } from '../shared/dialogs/update-username/update-username.component';
 import { UserService } from '../services/user.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -31,6 +32,7 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private storageService: StorageService,
     private dialog: MatDialog
   ) {}
 
@@ -44,6 +46,14 @@ export class UserProfileComponent implements OnInit {
       this.userEmail = user.email;
       this.username = user.username;
     });
+  }
+
+  onImageSelected(e) {
+    let profilePic: File = e.target.files[0];
+    console.log(profilePic);
+    if (profilePic) {
+      this.storageService.uploadProfilePicture(profilePic);
+    }
   }
 
   updateUsername() {
