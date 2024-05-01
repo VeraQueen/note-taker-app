@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UpdateEmailDialogComponent } from '../shared/dialogs/update-email-dialog/update-email-dialog.component';
 import { NgForm } from '@angular/forms';
 import { ReauthenticationDialogComponent } from '../shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
-import { timer } from 'rxjs';
+import { Observable, concatMap, timer } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
 import { UpdatePasswordDialogComponent } from '../shared/dialogs/update-password-dialog/update-password-dialog.component';
 import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
@@ -23,6 +23,7 @@ import { StorageService } from '../services/storage.service';
   imports: [ErrorComponent, NgIf, NgIcon, SuccessMessageComponent],
 })
 export class UserProfileComponent implements OnInit {
+  userProfilePicUrl: string;
   username: string;
   userEmail: string;
   user: User;
@@ -50,9 +51,19 @@ export class UserProfileComponent implements OnInit {
 
   onImageSelected(e) {
     let profilePic: File = e.target.files[0];
-    console.log(profilePic);
     if (profilePic) {
-      this.storageService.uploadProfilePicture(profilePic);
+      this.storageService
+        .uploadProfilePicture(profilePic)
+        .then(() => {
+          this.successMessage = 'Profile picture added!';
+          this.successMessageTimer().subscribe(() => {
+            this.successMessage = null;
+            this.storageService.loadProfilePicture().then((url) => {});
+          });
+        })
+        .catch((error) => {
+          this.error = error.message;
+        });
     }
   }
 
@@ -67,7 +78,11 @@ export class UserProfileComponent implements OnInit {
           if (res.value?.username) {
             username = res.value.username;
             this.userService.setUsername(username).then(() => {
+              this.successMessage = 'Username updated!';
               this.getCurrentUser();
+              this.successMessageTimer().subscribe(() => {
+                this.successMessage = null;
+              });
             });
           }
         });
@@ -88,7 +103,10 @@ export class UserProfileComponent implements OnInit {
             this.userService.verifyUserEmailToUpdate(newEmail).then(() => {
               this.successMessage =
                 'Email changed! Check your email for the verification link.';
-              this.successMessageTimerAndLogout();
+              this.successMessageTimer().subscribe(() => {
+                this.successMessage = null;
+                this.authService.signOut();
+              });
             });
           }
         });
@@ -108,7 +126,10 @@ export class UserProfileComponent implements OnInit {
             newPassword = res.value.password;
             this.userService.updatePassword(newPassword).then(() => {
               this.successMessage = 'Password changed!';
-              this.successMessageTimerAndLogout();
+              this.successMessageTimer().subscribe(() => {
+                this.successMessage = null;
+                this.authService.signOut();
+              });
             });
           }
         });
@@ -122,11 +143,8 @@ export class UserProfileComponent implements OnInit {
     this.authService.signOut();
   }
 
-  private successMessageTimerAndLogout() {
-    timer(4000).subscribe(() => {
-      this.successMessage = null;
-      this.authService.signOut();
-    });
+  private successMessageTimer() {
+    return timer(4000);
   }
 
   private reauthentication() {
