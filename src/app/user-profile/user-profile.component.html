@@ -1,13 +1,19 @@
 <div class="relative mx-auto max-w-7xl py-16">
   <div class="mx-auto grid grid-rows-auto">
-    <div
-      class="relative w-40 h-40 md:w-60 md:h-60 rounded-full m-2 border-4 border-red-600 bg-red-600 justify-self-center"
-    >
-      <img
-        [src]="userProfilePicUrl"
-        alt="User profile picture"
-        class="rounded-full"
-      />
+    <div class="relative justify-self-center">
+      <div
+        class="w-40 h-40 md:w-60 md:h-60 rounded-full m-2 border-4 border-red-600 bg-red-600"
+      >
+        <img
+          [src]="
+            userProfilePicUrl
+              ? userProfilePicUrl
+              : 'assets/user-placeholder/uifaces-cartoon-placeholder-image.jpg'
+          "
+          alt="Your profile picture"
+          class="w-full h-full rounded-full object-cover object-center"
+        />
+      </div>
       <button
         type="button"
         aria-label="Add new profile picture"
