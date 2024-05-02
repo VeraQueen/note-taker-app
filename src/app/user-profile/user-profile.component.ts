@@ -46,6 +46,7 @@ export class UserProfileComponent implements OnInit {
       this.user = user;
       this.userEmail = user.email;
       this.username = user.username;
+      this.userProfilePicUrl = user.profilePhoto;
     });
   }
 
@@ -58,7 +59,11 @@ export class UserProfileComponent implements OnInit {
           this.successMessage = 'Profile picture added!';
           this.successMessageTimer().subscribe(() => {
             this.successMessage = null;
-            this.storageService.loadProfilePicture().then((url) => {});
+            this.storageService.loadProfilePicture().then((url) => {
+              this.userService.setProfilePhotoUrl(url).then(() => {
+                this.getCurrentUser();
+              });
+            });
           });
         })
         .catch((error) => {

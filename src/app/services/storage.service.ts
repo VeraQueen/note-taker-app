@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import {
   Storage,
-  getBytes,
   getDownloadURL,
-  getMetadata,
   ref,
   uploadBytes,
 } from '@angular/fire/storage';

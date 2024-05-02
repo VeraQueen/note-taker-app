@@ -50,6 +50,7 @@ export class AuthService {
             email: user.email,
             id: user.uid,
             username: user.displayName,
+            profilePhoto: user.photoURL,
           };
           this.userSubject.next(newUser);
           resolve(newUser);

@@ -21,6 +21,10 @@ export class UserService {
     return updateProfile(this.auth.currentUser, { displayName: username });
   }
 
+  setProfilePhotoUrl(url: string) {
+    return updateProfile(this.auth.currentUser, { photoURL: url });
+  }
+
   updatePassword(newPassword: string) {
     return updatePassword(this.auth.currentUser, newPassword);
   }
