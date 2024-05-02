@@ -31,7 +31,7 @@
           >
         </div>
       </div>
-      <div class="hidden sm:block">
+      <div class="hidden sm:flex sm:justify-items-center sm:items-center">
         <a
           routerLink="/auth"
           routerLinkActive="bg-gray-700"
@@ -41,10 +41,15 @@
         </a>
         <a
           routerLink="/user"
-          routerLinkActive="bg-gray-700"
           *ngIf="isAuthenticated"
-          class="inline-block mr-2 text-gray-300 hover:bg-gray-700 rounded-md px-3 py-2 text-md font-medium hover:text-white focus:outline focus:outline-2 focus:outline-slate-50"
-          >Profile
+          class="inline-block rounded-full mr-2 hover:outline hover:outline-red-600 hover:outline-2 focus:outline focus:outline-2 focus:outline-red-600"
+          ><div class="w-8 h-8 rounded-full">
+            <img
+              src="assets/user-placeholder/uifaces-cartoon-placeholder-image.jpg"
+              alt="Your profile picture"
+              class="w-full h-full rounded-full object-cover object-center"
+            />
+          </div>
         </a>
         <button
           *ngIf="isAuthenticated"
@@ -54,8 +59,23 @@
           Logout
         </button>
       </div>
-      <div (click)="openMobileMenu()" class="sm:hidden">
-        <button class="flex justify-center">
+      <div class="sm:hidden flex gap-4">
+        <a
+          routerLink="/user"
+          *ngIf="isAuthenticated"
+          class="inline-block rounded-full hover:outline hover:outline-red-600 hover:outline-2 focus:outline focus:outline-2 focus:outline-red-600"
+          ><div class="w-8 h-8 rounded-full">
+            <img
+              src="assets/user-placeholder/uifaces-cartoon-placeholder-image.jpg"
+              alt="Your profile picture"
+              class="w-full h-full rounded-full object-cover object-center"
+            />
+          </div>
+        </a>
+        <button
+          (click)="openMobileMenu()"
+          class="flex justify-center items-center"
+        >
           <ng-icon
             name="heroBars2"
             class="text-gray-300 hover:text-white text-3xl"
