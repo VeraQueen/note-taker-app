@@ -10,13 +10,13 @@ import {
 } from '@angular/fire/auth';
 import { User } from '../auth/user.model';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  userSubject = new BehaviorSubject<User>(null);
+  userSubject = new ReplaySubject<User>();
   constructor(private auth: Auth, private router: Router) {}
 
   signUp(email: string, password: string) {
@@ -29,7 +29,7 @@ export class AuthService {
 
   signOut() {
     signOut(this.auth);
-    this.userSubject.next(null);
+    this.userSubject.next({} as User);
     sessionStorage.clear();
     this.router.navigate(['/auth']);
   }
