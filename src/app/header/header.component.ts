@@ -10,13 +10,17 @@ import { User } from '../auth/user.model';
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   isOpen = false;
-  username: string = '';
+  userProfilePicUrl: string;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.authService.userSubject.subscribe((user: User) => {
       this.isAuthenticated = !!user;
+    });
+
+    this.authService.getCurrentUser().then((user: User) => {
+      this.userProfilePicUrl = user.profilePhoto;
     });
   }
 
