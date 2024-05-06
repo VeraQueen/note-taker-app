@@ -14,6 +14,7 @@ import { SuccessMessageComponent } from '../shared/success-message/success-messa
 import { UpdateUsernameDialogComponent } from '../shared/dialogs/update-username/update-username.component';
 import { UserService } from '../services/user.service';
 import { StorageService } from '../services/storage.service';
+import { QuerySnapshot } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-user-profile',

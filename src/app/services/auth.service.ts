@@ -16,7 +16,7 @@ import { BehaviorSubject, ReplaySubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  userSubject = new ReplaySubject<User>();
+  userSubject = new ReplaySubject<User | null>();
   constructor(private auth: Auth, private router: Router) {}
 
   signUp(email: string, password: string) {
@@ -29,7 +29,7 @@ export class AuthService {
 
   signOut() {
     signOut(this.auth);
-    this.userSubject.next({} as User);
+    this.userSubject.next(null);
     sessionStorage.clear();
     this.router.navigate(['/auth']);
   }
