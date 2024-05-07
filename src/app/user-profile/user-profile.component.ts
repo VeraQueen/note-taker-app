@@ -7,14 +7,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { UpdateEmailDialogComponent } from '../shared/dialogs/update-email-dialog/update-email-dialog.component';
 import { NgForm } from '@angular/forms';
 import { ReauthenticationDialogComponent } from '../shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
-import { Observable, concatMap, timer } from 'rxjs';
+import { timer } from 'rxjs';
 import { NgIcon } from '@ng-icons/core';
 import { UpdatePasswordDialogComponent } from '../shared/dialogs/update-password-dialog/update-password-dialog.component';
 import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
 import { UpdateUsernameDialogComponent } from '../shared/dialogs/update-username/update-username.component';
 import { UserService } from '../services/user.service';
 import { StorageService } from '../services/storage.service';
-import { QuerySnapshot } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-user-profile',

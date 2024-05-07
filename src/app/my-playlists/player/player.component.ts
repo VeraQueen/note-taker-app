@@ -93,8 +93,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
       playerVars: {
         playsinline: 1,
         rel: 0,
-        host: 'https://youtube.com',
-        origin: 'https://localhost:4200',
+        host: 'https://www.youtube.com',
+        origin: `https://${window.location.host}`,
       },
       events: {
         onStateChange: this.onPlayerStateChange.bind(this),
