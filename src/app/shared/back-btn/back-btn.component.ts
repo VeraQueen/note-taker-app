@@ -8,7 +8,6 @@ import { NgIcon } from '@ng-icons/core';
   imports: [NgIcon, NgIf],
   selector: 'app-back-btn',
   templateUrl: './back-btn.component.html',
-  styleUrl: './back-btn.component.css',
 })
 export class BackBtnComponent {
   @Input() showButton: boolean = false;

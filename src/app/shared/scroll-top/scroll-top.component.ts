@@ -5,7 +5,6 @@ import { fromEvent, map } from 'rxjs';
 @Component({
   selector: 'app-scroll-to-top',
   templateUrl: 'scroll-top.component.html',
-  styleUrls: ['scroll-top.component.css'],
 })
 export class ScrollTopComponent {
   showScrollToTopBtn: boolean = false;

@@ -9,7 +9,6 @@ import { User } from '../auth/user.model';
   standalone: true,
   imports: [NgIcon, RouterModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   user: User;

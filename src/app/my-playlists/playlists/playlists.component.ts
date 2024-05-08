@@ -14,7 +14,6 @@ import { DialogComponent } from 'src/app/shared/dialogs/playlist-dialog/dialog.c
 @Component({
   selector: 'app-playlists',
   templateUrl: './playlists.component.html',
-  styleUrls: ['./playlists.component.css'],
 })
 export class PlaylistsComponent implements OnInit, OnDestroy {
   userSub: Subscription;

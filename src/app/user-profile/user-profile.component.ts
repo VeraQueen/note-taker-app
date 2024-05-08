@@ -19,7 +19,6 @@ import { StorageService } from '../services/storage.service';
   selector: 'app-user-profile',
   standalone: true,
   templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.css',
   imports: [ErrorComponent, NgIf, NgIcon, SuccessMessageComponent],
 })
 export class UserProfileComponent implements OnInit {

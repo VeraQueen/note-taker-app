@@ -10,7 +10,6 @@ import { User } from 'src/app/auth/user.model';
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
-  styleUrls: ['./notes.component.css'],
 })
 export class NotesComponent implements OnInit, OnDestroy {
   private playlistIdSub: Subscription;

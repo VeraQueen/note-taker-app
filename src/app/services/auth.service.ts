@@ -10,7 +10,7 @@ import {
 } from '@angular/fire/auth';
 import { User } from '../auth/user.model';
 import { Router } from '@angular/router';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

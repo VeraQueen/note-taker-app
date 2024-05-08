@@ -11,6 +11,5 @@ import {
   standalone: true,
   imports: [MatDialogActions, MatDialogContent, MatDialogTitle, MatDialogClose],
   templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.css',
 })
 export class DialogComponent {}
