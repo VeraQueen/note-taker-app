@@ -17,19 +17,6 @@ import { ErrorComponent } from './shared/error/error.component';
 import { SuccessMessageComponent } from './shared/success-message/success-message.component';
 import { AuthComponent } from './auth/auth.component';
 import { BackBtnComponent } from './shared/back-btn/back-btn.component';
-import { NgIconsModule } from '@ng-icons/core';
-import {
-  heroArrowLeft,
-  heroFolderOpen,
-  heroPlus,
-  heroArrowUp,
-  heroPencilSquare,
-  heroXMark,
-  heroCheck,
-  heroArrowDown,
-  heroBars2,
-  heroPlayCircle,
-} from '@ng-icons/heroicons/outline';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AddedPlaylistDirective } from './shared/directives/added-playlist.directive';
@@ -52,6 +39,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { ApostrophePipe } from './shared/pipes/apostophe.pipe';
 import { AmpersandPipe } from './shared/pipes/ampersand.pipe';
+import { IconsModule } from './icons.module';
 
 @NgModule({
   declarations: [
@@ -65,23 +53,12 @@ import { AmpersandPipe } from './shared/pipes/ampersand.pipe';
     ScrollTopComponent,
   ],
   imports: [
+    IconsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgIconsModule.withIcons({
-      heroPlus,
-      heroFolderOpen,
-      heroArrowLeft,
-      heroArrowUp,
-      heroPencilSquare,
-      heroXMark,
-      heroCheck,
-      heroArrowDown,
-      heroBars2,
-      heroPlayCircle,
-    }),
     InfiniteScrollModule,
     MatDialogModule,
     AddedPlaylistDirective,
