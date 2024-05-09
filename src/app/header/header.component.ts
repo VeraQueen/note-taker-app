@@ -1,12 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../auth/user.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  userSubscription: Subscription;
   isAuthenticated = false;
   isOpen = false;
   userProfilePicUrl: string;
@@ -14,11 +16,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.authService.userSubject.subscribe((user: User | null) => {
-      this.isAuthenticated = !!user;
-      if (!user) return;
-      this.userProfilePicUrl = user.profilePhoto;
-    });
+    this.userSubscription = this.authService.userSubject.subscribe(
+      (user: User | null) => {
+        this.isAuthenticated = !!user;
+        if (!user) return;
+        this.userProfilePicUrl = user.profilePhoto;
+      }
+    );
   }
 
   onLogout() {
@@ -35,5 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isOpen = !this.isOpen;
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    if (this.userSubscription) this.userSubscription.unsubscribe();
+  }
 }
