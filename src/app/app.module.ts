@@ -29,19 +29,13 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { environment } from '../environments/environment';
 
-import { MatDialogModule } from '@angular/material/dialog';
-import { DeletePlaylistDialogComponent } from './shared/dialogs/delete-playlist-dialog/delete-playlist-dialog.component';
-import { UpdateEmailDialogComponent } from './shared/dialogs/update-email-dialog/update-email-dialog.component';
-import { ReauthenticationDialogComponent } from './shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
-import { UpdatePasswordDialogComponent } from './shared/dialogs/update-password-dialog/update-password-dialog.component';
-import { ForgotPasswordDialogComponent } from './shared/dialogs/forgot-password-dialog/forgot-password-dialog.component';
-import { UpdateUsernameDialogComponent } from './shared/dialogs/update-username/update-username.component';
-
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { ApostrophePipe } from './shared/pipes/apostophe.pipe';
 import { AmpersandPipe } from './shared/pipes/ampersand.pipe';
+
 import { IconsModule } from './icons.module';
+import { DialogsModule } from './shared/dialogs/dialogs.module';
 
 @NgModule({
   declarations: [
@@ -55,6 +49,7 @@ import { IconsModule } from './icons.module';
     ScrollTopComponent,
   ],
   imports: [
+    DialogsModule,
     IconsModule,
     BrowserModule,
     AppRoutingModule,
@@ -62,7 +57,6 @@ import { IconsModule } from './icons.module';
     ReactiveFormsModule,
     HttpClientModule,
     InfiniteScrollModule,
-    MatDialogModule,
     AddedPlaylistDirective,
     RemoveWatchedVideoDirective,
     ApostrophePipe,
@@ -72,12 +66,6 @@ import { IconsModule } from './icons.module';
     SuccessMessageComponent,
     CssLoaderComponent,
     AuthComponent,
-    DeletePlaylistDialogComponent,
-    UpdateEmailDialogComponent,
-    ReauthenticationDialogComponent,
-    UpdatePasswordDialogComponent,
-    ForgotPasswordDialogComponent,
-    UpdateUsernameDialogComponent,
     FooterComponent,
     HomeComponent,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
