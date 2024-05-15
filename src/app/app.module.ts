@@ -26,15 +26,17 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { environment } from '../environments/environment';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { environment } from '../environments/environment';
+
 import { MatDialogModule } from '@angular/material/dialog';
-import { DialogComponent } from './shared/dialogs/playlist-dialog/dialog.component';
+import { DeletePlaylistDialogComponent } from './shared/dialogs/delete-playlist-dialog/delete-playlist-dialog.component';
 import { UpdateEmailDialogComponent } from './shared/dialogs/update-email-dialog/update-email-dialog.component';
 import { ReauthenticationDialogComponent } from './shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
 import { UpdatePasswordDialogComponent } from './shared/dialogs/update-password-dialog/update-password-dialog.component';
 import { ForgotPasswordDialogComponent } from './shared/dialogs/forgot-password-dialog/forgot-password-dialog.component';
 import { UpdateUsernameDialogComponent } from './shared/dialogs/update-username/update-username.component';
+
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { ApostrophePipe } from './shared/pipes/apostophe.pipe';
@@ -70,7 +72,7 @@ import { IconsModule } from './icons.module';
     SuccessMessageComponent,
     CssLoaderComponent,
     AuthComponent,
-    DialogComponent,
+    DeletePlaylistDialogComponent,
     UpdateEmailDialogComponent,
     ReauthenticationDialogComponent,
     UpdatePasswordDialogComponent,

@@ -10,6 +10,6 @@ import {
   selector: 'app-dialog',
   standalone: true,
   imports: [MatDialogActions, MatDialogContent, MatDialogTitle, MatDialogClose],
-  templateUrl: './dialog.component.html',
+  templateUrl: './delete-playlist-dialog.component.html',
 })
-export class DialogComponent {}
+export class DeletePlaylistDialogComponent {}
