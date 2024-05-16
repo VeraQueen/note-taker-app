@@ -4,9 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+import { FirebaseModule } from './firebase.module';
 import { AppRoutingModule } from './app-routing.module';
 import { IconsModule } from './icons.module';
 import { DialogsModule } from './shared/dialogs/dialogs.module';
+import { DirectivesModule } from './shared/directives/directives.module';
+import { PipesModule } from './shared/pipes/pipes.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -27,12 +30,6 @@ import { SuccessMessageComponent } from './shared/success-message/success-messag
 import { BackBtnComponent } from './shared/back-btn/back-btn.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { AddedPlaylistDirective } from './shared/directives/added-playlist.directive';
-import { RemoveWatchedVideoDirective } from './shared/directives/removeWatchedVideo.directive';
-import { ApostrophePipe } from './shared/pipes/apostophe.pipe';
-import { AmpersandPipe } from './shared/pipes/ampersand.pipe';
-import { FirebaseModule } from './firebase.module';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +42,8 @@ import { FirebaseModule } from './firebase.module';
     ScrollTopComponent,
   ],
   imports: [
+    DirectivesModule,
+    PipesModule,
     DialogsModule,
     IconsModule,
     FirebaseModule,
@@ -54,10 +53,6 @@ import { FirebaseModule } from './firebase.module';
     ReactiveFormsModule,
     HttpClientModule,
     InfiniteScrollModule,
-    AddedPlaylistDirective,
-    RemoveWatchedVideoDirective,
-    ApostrophePipe,
-    AmpersandPipe,
     BackBtnComponent,
     ErrorComponent,
     SuccessMessageComponent,
