@@ -13,9 +13,7 @@ import { PipesModule } from './shared/pipes/pipes.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { AuthComponent } from './auth/auth.component';
 import { FooterComponent } from './footer/footer.component';
-import { HomeComponent } from './home/home.component';
 
 import { PlaylistsComponent } from './my-playlists/playlists/playlists.component';
 import { PlaylistComponent } from './my-playlists/playlist/playlist.component';
@@ -24,9 +22,7 @@ import { SearchComponent } from './search/search.component';
 import { NotesComponent } from './my-playlists/player/notes/notes.component';
 
 import { ScrollTopComponent } from './shared/scroll-top/scroll-top.component';
-import { CssLoaderComponent } from './shared/css-loader/css-loader.component';
 import { ErrorComponent } from './shared/error/error.component';
-import { SuccessMessageComponent } from './shared/success-message/success-message.component';
 import { BackBtnComponent } from './shared/back-btn/back-btn.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
@@ -55,11 +51,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     InfiniteScrollModule,
     BackBtnComponent,
     ErrorComponent,
-    SuccessMessageComponent,
-    CssLoaderComponent,
-    AuthComponent,
     FooterComponent,
-    HomeComponent,
   ],
   providers: [provideAnimationsAsync('noop')],
   bootstrap: [AppComponent],
