@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { NgIcon } from '@ng-icons/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../auth/user.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgIcon, RouterModule],
+  imports: [RouterModule],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {

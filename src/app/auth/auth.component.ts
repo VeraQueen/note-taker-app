@@ -1,25 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
-import { ErrorComponent } from '../shared/error/error.component';
-import { NgClass, NgIf } from '@angular/common';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ForgotPasswordDialogComponent } from '../shared/dialogs/forgot-password-dialog/forgot-password-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 import { timer } from 'rxjs';
-import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
+import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CoreModule } from '../core.module';
+import { SharedModule } from '../shared/shared.module';
+import { ForgotPasswordDialogComponent } from '../shared/dialogs/forgot-password-dialog/forgot-password-dialog.component';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [
-    FormsModule,
-    ErrorComponent,
-    NgClass,
-    NgIf,
-    SuccessMessageComponent,
-  ],
+  imports: [CoreModule, SharedModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })

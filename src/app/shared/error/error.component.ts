@@ -1,10 +1,10 @@
-import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { CssLoaderComponent } from '../css-loader/css-loader.component';
 import { Router } from '@angular/router';
+import { CoreModule } from 'src/app/core.module';
 @Component({
   standalone: true,
-  imports: [NgIf, CssLoaderComponent],
+  imports: [CoreModule, CssLoaderComponent],
   selector: 'app-error',
   templateUrl: 'error.component.html',
 })

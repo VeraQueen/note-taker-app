@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../auth/user.model';
-import { ErrorComponent } from '../shared/error/error.component';
-import { NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateEmailDialogComponent } from '../shared/dialogs/update-email-dialog/update-email-dialog.component';
 import { NgForm } from '@angular/forms';
 import { ReauthenticationDialogComponent } from '../shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
 import { timer } from 'rxjs';
-import { NgIcon } from '@ng-icons/core';
 import { UpdatePasswordDialogComponent } from '../shared/dialogs/update-password-dialog/update-password-dialog.component';
-import { SuccessMessageComponent } from '../shared/success-message/success-message.component';
 import { UpdateUsernameDialogComponent } from '../shared/dialogs/update-username/update-username.component';
 import { UserService } from '../services/user.service';
 import { StorageService } from '../services/storage.service';
+import { CoreModule } from '../core.module';
+import { SharedModule } from '../shared/shared.module';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
   templateUrl: './user-profile.component.html',
-  imports: [ErrorComponent, NgIf, NgIcon, SuccessMessageComponent],
+  imports: [CoreModule, SharedModule],
 })
 export class UserProfileComponent implements OnInit {
   userProfilePicUrl: string;

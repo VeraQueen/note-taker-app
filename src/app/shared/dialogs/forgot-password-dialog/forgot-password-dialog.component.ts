@@ -1,19 +1,17 @@
-import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import {
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { CoreModule } from 'src/app/core.module';
 
 @Component({
   selector: 'app-forgot-password-dialog',
   standalone: true,
   imports: [
-    FormsModule,
-    NgClass,
+    CoreModule,
     MatDialogActions,
     MatDialogContent,
     MatDialogTitle,

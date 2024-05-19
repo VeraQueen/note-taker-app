@@ -1,11 +1,11 @@
-import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
+import { CoreModule } from 'src/app/core.module';
 
 @Component({
   standalone: true,
-  imports: [NgIcon, NgIf],
+  imports: [NgIcon, CoreModule],
   selector: 'app-back-btn',
   templateUrl: './back-btn.component.html',
 })
