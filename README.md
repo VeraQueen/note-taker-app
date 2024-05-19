@@ -19,7 +19,7 @@ A dynamic web application that utilizes Firebase authentication, Firestore for d
 
 ## Tech stack
 
-HTML5, CSS3, TypeScript, Angular, Tailwind CSS, Firebase (authentication, Firestore), YouTube's APIs: YouTube Data API and YouTube Player API
+HTML5, CSS3, TypeScript, Angular, Tailwind CSS, Firebase (authentication, Firestore, Cloud Storage), YouTube's APIs: YouTube Data API and YouTube Player API
 
 ## General information
 
@@ -59,8 +59,8 @@ Currently not accepting contributions. Thank you for consideration.
 
 This project utilizes various third-party services, each of which has its own terms of service and usage policies. Please review the terms of use for each service before using this project:
 
-- **Firebase**: The Firebase services used in this project are subject to Google's [Terms of Service](https://firebase.google.com/terms).
-- **Firestore**: Firestore is a part of the Firebase platform and is subject to Google's [Terms of Service](https://firebase.google.com/terms).
+- **Firebase**: The Firebase services (hosting and authentication) used in this project are subject to Google's [Terms of Service](https://firebase.google.com/terms).
+- **Firestore and Cloud Storage**: Firestore and Cloud Storage are a part of the Firebase platform and are subject to Google's [Terms of Service](https://firebase.google.com/terms).
 - **YouTube's APIs: YouTube Data API and YouTube Player API**: The YouTube's APIs are subject to Google's [Terms of Service](https://developers.google.com/youtube/terms/api-services-terms-of-service).
 
 By using this project, you agree to comply with the terms of service and usage policies of each third-party service.
