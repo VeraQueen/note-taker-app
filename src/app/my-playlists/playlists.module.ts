@@ -22,7 +22,6 @@ import { DialogsModule } from '../shared/dialogs/dialogs.module';
     PlayerComponent,
     SearchComponent,
     NotesComponent,
-    ScrollTopComponent,
   ],
   imports: [
     InfiniteScrollModule,
@@ -34,6 +33,7 @@ import { DialogsModule } from '../shared/dialogs/dialogs.module';
     PipesModule,
     DirectivesModule,
     DialogsModule,
+    ScrollTopComponent,
   ],
   exports: [
     PlaylistsComponent,

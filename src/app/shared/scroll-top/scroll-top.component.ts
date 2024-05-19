@@ -1,8 +1,11 @@
-import { ViewportScroller } from '@angular/common';
+import { NgIf, ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
+import { NgIcon } from '@ng-icons/core';
 import { fromEvent, map } from 'rxjs';
 
 @Component({
+  standalone: true,
+  imports: [NgIf, NgIcon],
   selector: 'app-scroll-to-top',
   templateUrl: 'scroll-top.component.html',
 })
