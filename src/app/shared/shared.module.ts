@@ -16,8 +16,6 @@ import { IconsModule } from '../icons.module';
   declarations: [],
   imports: [
     DialogsModule,
-    FormsModule,
-    ReactiveFormsModule,
     ScrollTopComponent,
     ErrorComponent,
     BackBtnComponent,
@@ -29,8 +27,6 @@ import { IconsModule } from '../icons.module';
   ],
   exports: [
     DialogsModule,
-    FormsModule,
-    ReactiveFormsModule,
     ScrollTopComponent,
     ErrorComponent,
     BackBtnComponent,
