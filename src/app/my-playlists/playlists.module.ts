@@ -1,4 +1,7 @@
+// Angular core libraries
 import { NgModule } from '@angular/core';
+
+// Application-specific imports
 import { SearchComponent } from '../search/search.component';
 import { NotesComponent } from './player/notes/notes.component';
 import { PlayerComponent } from './player/player.component';

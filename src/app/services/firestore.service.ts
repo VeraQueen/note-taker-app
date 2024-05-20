@@ -1,5 +1,5 @@
+// Angular core libraries
 import { Injectable } from '@angular/core';
-import { Note } from '../my-playlists/player/note.model';
 import {
   Firestore,
   collection,
@@ -12,6 +12,9 @@ import {
   getDoc,
   arrayRemove,
 } from '@angular/fire/firestore';
+
+// Application-specific imports
+import { Note } from '../my-playlists/player/note.model';
 import { User } from '../auth/user.model';
 
 @Injectable({ providedIn: 'root' })

@@ -1,9 +1,13 @@
+// Angular core libraries
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+// Thirs-party libraries
 import { Subscription, switchMap, take } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
+
+// Application-specific imports
 import { User } from 'src/app/auth/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import {
   FetchVideosData,

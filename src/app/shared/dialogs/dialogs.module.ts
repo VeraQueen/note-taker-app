@@ -1,4 +1,7 @@
+// Angular core libraries
 import { NgModule } from '@angular/core';
+
+// Application-specific imports
 import { DeletePlaylistDialogComponent } from './delete-playlist-dialog/delete-playlist-dialog.component';
 import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-password-dialog.component';
 import { ReauthenticationDialogComponent } from './reauthentication-dialog/reauthentication-dialog.component';

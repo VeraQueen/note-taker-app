@@ -1,6 +1,11 @@
+// Angular core libraries
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+
+// Third-party libraries
 import { NgIcon } from '@ng-icons/core';
+
+// Application-specific imports
 import { CoreModule } from 'src/app/core.module';
 
 @Component({

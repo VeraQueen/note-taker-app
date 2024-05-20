@@ -1,5 +1,8 @@
+// Angular core libraries
 import { NgIf, ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
+
+// Third-party libraries
 import { NgIcon } from '@ng-icons/core';
 import { fromEvent, map } from 'rxjs';
 

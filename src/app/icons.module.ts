@@ -1,5 +1,10 @@
+// Angular core libraries
 import { NgModule } from '@angular/core';
+
+// Icons module
 import { NgIconsModule } from '@ng-icons/core';
+
+// Application-specific icons
 import {
   heroPlus,
   heroFolderOpen,

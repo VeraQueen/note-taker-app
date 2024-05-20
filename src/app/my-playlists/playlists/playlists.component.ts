@@ -1,15 +1,19 @@
+// Angular core libraries
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+// Thirs-party libraries
 import { Subscription } from 'rxjs';
+
+// Application-specific imports
 import { Playlist } from './playlist.model';
+import { User } from 'src/app/auth/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DeletePlaylistDialogComponent } from 'src/app/shared/dialogs/delete-playlist-dialog/delete-playlist-dialog.component';
 import { PlaylistService } from 'src/app/services/playlist.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { YouTubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/app/auth/user.model';
-import { MatDialog } from '@angular/material/dialog';
-import { DeletePlaylistDialogComponent } from 'src/app/shared/dialogs/delete-playlist-dialog/delete-playlist-dialog.component';
 
 @Component({
   selector: 'app-playlists',

@@ -1,7 +1,12 @@
+// Angular core libraries
 import { Component, OnDestroy, OnInit } from '@angular/core';
+
+// Third-party libraries
+import { Subscription } from 'rxjs';
+
+// Application-specific imports
 import { AuthService } from '../services/auth.service';
 import { User } from '../auth/user.model';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',

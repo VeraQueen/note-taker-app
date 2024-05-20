@@ -1,14 +1,18 @@
+// Angular core libraries
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+// Thirs-party libraries
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Observable } from 'rxjs';
 
+// Application-specific imports
+import { User } from '../auth/user.model';
 import {
   FetchPlaylistsData,
   YouTubeService,
 } from '../services/youtube.service';
 import { FirestoreService } from '../services/firestore.service';
-import { User } from '../auth/user.model';
 import { AuthService } from '../services/auth.service';
 
 @Component({

@@ -1,11 +1,16 @@
+// Angular core libraries
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NoteService } from 'src/app/services/notes.service';
-import { Note } from '../note.model';
+
+// Thirs-party libraries
 import { Subscription } from 'rxjs';
+
+// Application-specific imports
+import { Note } from '../note.model';
+import { User } from 'src/app/auth/user.model';
+import { NoteService } from 'src/app/services/notes.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { PlaylistService } from 'src/app/services/playlist.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/app/auth/user.model';
 
 @Component({
   selector: 'app-notes',

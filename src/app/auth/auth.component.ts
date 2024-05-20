@@ -1,12 +1,17 @@
+// Angular core libraries
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+
+// Third-party libraries
 import { timer } from 'rxjs';
-import { AuthService } from '../services/auth.service';
-import { UserService } from '../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
+
+// Application-specific imports
 import { CoreModule } from '../core.module';
 import { SharedModule } from '../shared/shared.module';
+import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 import { ForgotPasswordDialogComponent } from '../shared/dialogs/forgot-password-dialog/forgot-password-dialog.component';
 
 @Component({

@@ -1,14 +1,19 @@
+// Angular core libraries
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { User } from '../auth/user.model';
 import { MatDialog } from '@angular/material/dialog';
-import { UpdateEmailDialogComponent } from '../shared/dialogs/update-email-dialog/update-email-dialog.component';
 import { NgForm } from '@angular/forms';
-import { ReauthenticationDialogComponent } from '../shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
+
+// Third-party libraries
 import { timer } from 'rxjs';
+
+// Application-specific imports
+import { User } from '../auth/user.model';
+import { UpdateEmailDialogComponent } from '../shared/dialogs/update-email-dialog/update-email-dialog.component';
+import { ReauthenticationDialogComponent } from '../shared/dialogs/reauthentication-dialog/reauthentication-dialog.component';
 import { UpdatePasswordDialogComponent } from '../shared/dialogs/update-password-dialog/update-password-dialog.component';
 import { UpdateUsernameDialogComponent } from '../shared/dialogs/update-username/update-username.component';
 import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { CoreModule } from '../core.module';
 import { SharedModule } from '../shared/shared.module';

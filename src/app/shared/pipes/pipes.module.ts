@@ -1,4 +1,7 @@
+// Angular core libraries
 import { NgModule } from '@angular/core';
+
+// Application-specific imports
 import { AmpersandPipe } from './ampersand.pipe';
 import { ApostrophePipe } from './apostophe.pipe';
 

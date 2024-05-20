@@ -1,5 +1,8 @@
+// Angular core libraries
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+
+// Application-specific imports
 import { AuthService } from '../services/auth.service';
 import { User } from '../auth/user.model';
 

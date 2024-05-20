@@ -1,4 +1,7 @@
+// Angular core libraries
 import { Component, Input } from '@angular/core';
+
+//Application-specific imports
 import { CoreModule } from 'src/app/core.module';
 
 @Component({

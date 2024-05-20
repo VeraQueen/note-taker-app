@@ -1,3 +1,4 @@
+// Angular core libraries
 import { Component } from '@angular/core';
 import {
   MatDialogActions,
@@ -5,6 +6,8 @@ import {
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
+
+// Application-specific imports
 import { CoreModule } from 'src/app/core.module';
 
 @Component({

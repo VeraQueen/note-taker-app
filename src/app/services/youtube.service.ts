@@ -1,10 +1,15 @@
+// Angular core libraries
 import {
   HttpClient,
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+// Third-party libraries
 import { catchError, throwError } from 'rxjs';
+
+// Application-specific imports
 import { environment } from 'src/environments/environment';
 
 export interface FetchPlaylistsData {

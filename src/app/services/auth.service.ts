@@ -1,4 +1,6 @@
+// Angular core libraries
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   Auth,
   EmailAuthProvider,
@@ -8,9 +10,12 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from '@angular/fire/auth';
-import { User } from '../auth/user.model';
-import { Router } from '@angular/router';
+
+// Third-party libraries
 import { ReplaySubject } from 'rxjs';
+
+// Application-specific imports
+import { User } from '../auth/user.model';
 
 @Injectable({
   providedIn: 'root',
