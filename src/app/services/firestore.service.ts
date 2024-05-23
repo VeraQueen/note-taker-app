@@ -11,10 +11,8 @@ import {
   updateDoc,
   getDoc,
   arrayRemove,
-  CollectionReference,
   getDocs,
   writeBatch,
-  docSnapshots,
 } from '@angular/fire/firestore';
 
 // Application-specific imports
