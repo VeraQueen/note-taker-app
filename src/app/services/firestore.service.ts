@@ -11,6 +11,10 @@ import {
   updateDoc,
   getDoc,
   arrayRemove,
+  CollectionReference,
+  getDocs,
+  writeBatch,
+  docSnapshots,
 } from '@angular/fire/firestore';
 
 // Application-specific imports
@@ -31,48 +35,33 @@ export class FirestoreService {
     return collectionData(colRef);
   }
 
-  deletePlaylist(playlistId: string, user: User) {
+  async deletePlaylist(playlistId: string, user: User) {
     const playlistRef = doc(this.firestore, user.id, playlistId);
-    let subcollections = [];
-    let notes = [];
+    const subcollections: string[] = [];
+    const snapshot = await getDoc(playlistRef);
 
-    getDoc(playlistRef)
-      .then((data) => {
-        subcollections = data.data().subcollections;
-        if (!subcollections) return;
-        if (subcollections) {
-          subcollections.forEach((subEl) => {
-            const colRef = collection(
-              this.firestore,
-              `${user.id}/${playlistId}/${subEl}/`
-            );
-            collectionData(colRef).subscribe((data) => {
-              notes = data;
-              notes.forEach((el) => {
-                let notesEl = el;
-                if (!notesEl.note) {
-                  const docRef = doc(
-                    this.firestore,
-                    `${user.id}/${playlistId}/${subEl}/`,
-                    'nullNote'
-                  );
-                  deleteDoc(docRef);
-                } else {
-                  const docRef = doc(
-                    this.firestore,
-                    `${user.id}/${playlistId}/${subEl}/`,
-                    notesEl.note
-                  );
-                  deleteDoc(docRef);
-                }
-              });
-            });
-          });
-        }
-      })
-      .then(() => {
-        deleteDoc(playlistRef);
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      if (data && data.subcollections) {
+        subcollections.push(...data.subcollections);
+      }
+    }
+
+    for (const subcollection of subcollections) {
+      const subColRef = collection(
+        this.firestore,
+        `${user.id}/${playlistId}/${subcollection}/`
+      );
+      const subColSnapshot = await getDocs(subColRef);
+
+      const batch = writeBatch(this.firestore);
+      subColSnapshot.forEach((docSnapshot) => {
+        batch.delete(docSnapshot.ref);
       });
+      await batch.commit();
+    }
+
+    await deleteDoc(playlistRef);
   }
 
   addVideoNotesCol(playlistId: string, videoId: string, user: User) {
